@@ -65,16 +65,16 @@
     <div id="main-website">
 
     <!-- Navbar -->
-    <nav class="w-full border-b-4 border-black bg-white sticky top-0 z-50">
+    <nav class="w-full border-b-4 border-black bg-white sticky top-0 z-50 transition-all duration-300 ease-out">
         <div class="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
             <div class="font-black text-2xl tracking-tighter uppercase bg-brand-yellow px-2 border-2 border-black rotate-[-2deg]">
                 Minpres.
             </div>
             <div class="flex gap-4">
-                <a href="#progres" class="hidden md:flex items-center gap-2 bg-white px-4 py-2 font-bold border-2 border-black shadow-brutal-sm hover:translate-y-1 transition-all">
+                <a href="#progres" class="hidden md:flex items-center gap-2 bg-white px-4 py-2 font-bold border-2 border-black shadow-brutal-sm hover:translate-y-1 active:scale-95 transition-all duration-300 ease-out">
                     <i class="fa-solid fa-magnifying-glass"></i> Cek Progres
                 </a>
-                <a href="https://wa.me/6283115784598" target="_blank" class="bg-black text-white px-5 py-2 font-bold border-2 border-black hover:bg-brand-pink hover:text-black transition-colors">
+                <a href="https://wa.me/6283115784598" target="_blank" class="bg-black text-white px-5 py-2 font-bold border-2 border-black hover:bg-brand-pink hover:text-black active:scale-95 transition-all duration-300 ease-out">
                     Chat Admin
                 </a>
             </div>
@@ -93,7 +93,7 @@
         <div class="absolute top-20 left-10 text-4xl animate-float opacity-50 hidden md:block">📝</div>
         <div class="absolute bottom-20 right-10 text-4xl animate-float opacity-50 hidden md:block" style="animation-delay: 1s;">🎓</div>
 
-        <div class="max-w-4xl mx-auto text-center" data-aos="zoom-in" data-aos-duration="800">
+        <div class="max-w-4xl mx-auto text-center" data-aos="zoom-in">
             <div class="inline-block bg-brand-pink text-black font-bold px-4 py-1 border-2 border-black rounded-full shadow-brutal-sm mb-6 rotate-[2deg]">
                 #SolusiTugasNumpuk
             </div>
@@ -107,7 +107,7 @@
                 Tugas banyak banget? Atau mepet deadline? Jangan panik, <strong class="text-brand-pink font-black text-xl">sini jokiin aja!</strong> 🚀<br>Free Konsultasi dulu juga boleh banget!
             </p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <button onclick="openWaModal('Konsultasi Umum / Tanya-tanya')" class="bg-brand-green text-black border-4 border-black shadow-brutal font-black text-lg py-4 px-8 hover:translate-y-1 hover:shadow-brutal-hover transition-all flex items-center justify-center gap-2 rounded-xl">
+                <button onclick="openWaModal('Konsultasi Umum / Tanya-tanya')" class="bg-brand-green text-black border-4 border-black shadow-brutal font-black text-lg py-4 px-8 hover:translate-y-1 hover:shadow-brutal-hover active:scale-95 transition-all duration-300 ease-out flex items-center justify-center gap-2 rounded-xl">
                     <i class="fa-brands fa-whatsapp text-2xl animate-pulse"></i> KLIK UNTUK NANYA
                 </button>
             </div>
@@ -127,8 +127,8 @@
 
                 <!-- Search Form -->
                 <form id="trackForm" class="relative z-10 flex flex-col md:flex-row gap-3 mb-6">
-                    <input type="text" id="invoiceInput" required placeholder="No. Invoice (cth: MINPRES-012)" class="flex-1 px-4 py-3 border-4 border-black font-bold text-lg rounded-xl focus:outline-none focus:ring-4 focus:ring-brand-pink">
-                    <button type="submit" class="bg-black text-white px-8 py-3 font-black border-4 border-black rounded-xl hover:bg-brand-pink hover:text-black transition-colors shadow-brutal-sm active:translate-y-1">
+                    <input type="text" id="invoiceInput" required placeholder="No. Invoice (cth: MINPRES-012)" class="flex-1 px-4 py-3 border-4 border-black font-bold text-lg rounded-xl focus:outline-none focus:ring-4 focus:ring-brand-pink transition-all duration-300">
+                    <button type="submit" class="bg-black text-white px-8 py-3 font-black border-4 border-black rounded-xl hover:bg-brand-pink hover:text-black active:scale-95 transition-all duration-300 ease-out shadow-brutal-sm">
                         LACAK
                     </button>
                 </form>
@@ -146,7 +146,7 @@
                 </div>
 
                 <!-- Result Tracker -->
-                <div id="trackerResult" class="hidden relative z-10 mt-8 border-t-4 border-black pt-8">
+                <div id="trackerResult" class="hidden relative z-10 mt-8 border-t-4 border-black pt-8 transition-all duration-500 ease-out">
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
                         <div>
                             <h3 class="font-black text-xl md:text-2xl bg-brand-yellow px-3 border-2 border-black inline-block rotate-[-1deg]" id="resultTitle">MINPRES-012</h3>
@@ -173,7 +173,7 @@
         </div>
     </section>
 
-    <!-- Services Section -->
+    <!-- Services Section (DIROMBAK SESUAI DAFTAR BARU) -->
     <section class="py-16 px-4 max-w-6xl mx-auto" id="layanan">
         <div class="flex items-center justify-center gap-4 mb-12" data-aos="fade-up">
             <h2 class="text-3xl md:text-5xl font-black uppercase bg-black text-white px-6 py-3 rotate-[-2deg] shadow-brutal text-center">
@@ -183,72 +183,94 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             
-            <!-- Layanan 1 -->
-            <button onclick="openWaModal('Tugas Makalah / Paper')" class="bg-white border-4 border-black p-6 rounded-2xl shadow-brutal hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all group text-left relative overflow-hidden" data-aos="fade-up" data-aos-delay="100">
-                <div class="absolute -right-6 -bottom-6 bg-brand-yellow w-24 h-24 rounded-full border-4 border-black group-hover:scale-150 transition-transform duration-500 z-0"></div>
+            <!-- Layanan 1: Tugas SMA, Makalah, KKN -->
+            <button onclick="openWaModal('Tugas Sekolah & Kuliah')" class="bg-white border-4 border-black p-6 rounded-2xl shadow-brutal hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:scale-95 transition-all duration-300 ease-out group text-left relative overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+                <div class="absolute -right-6 -bottom-6 bg-brand-yellow w-24 h-24 rounded-full border-4 border-black group-hover:scale-150 transition-transform duration-500 ease-out z-0"></div>
                 <div class="relative z-10">
-                    <i class="fa-solid fa-file-word text-4xl mb-4 text-black bg-white p-3 rounded-xl border-2 border-black inline-block rotate-[-5deg]"></i>
-                    <h3 class="text-2xl font-black mb-2">Makalah & Paper</h3>
-                    <p class="font-bold text-gray-700 text-sm mb-4">Selesai rapi, sesuai format, anti-plagiasi.</p>
-                    <span class="inline-block bg-black text-white font-black text-xs px-3 py-1 rounded border-2 border-black group-hover:bg-brand-yellow group-hover:text-black transition-colors">Tanya & Order <i class="fa-solid fa-arrow-right"></i></span>
+                    <i class="fa-solid fa-book-open text-4xl mb-4 text-black bg-white p-3 rounded-xl border-2 border-black inline-block rotate-[-5deg]"></i>
+                    <h3 class="text-2xl font-black mb-3">Tugas & Makalah</h3>
+                    <p class="font-bold text-gray-700 text-sm mb-4 leading-relaxed">
+                        • Tugas SMA & Mahasiswa<br>
+                        • Makalah dan Paper<br>
+                        • Laporan KKN & Magang
+                    </p>
+                    <span class="inline-block bg-black text-white font-black text-xs px-3 py-1 rounded border-2 border-black group-hover:bg-brand-yellow group-hover:text-black transition-colors duration-300">Tanya & Order <i class="fa-solid fa-arrow-right"></i></span>
                 </div>
             </button>
 
-            <!-- Layanan 2 -->
-            <button onclick="openWaModal('Penyusunan Skripsi / Proposal')" class="bg-brand-pink border-4 border-black p-6 rounded-2xl shadow-brutal hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all group text-left relative overflow-hidden" data-aos="fade-up" data-aos-delay="200">
-                <div class="absolute -right-6 -bottom-6 bg-white w-24 h-24 rounded-full border-4 border-black group-hover:scale-150 transition-transform duration-500 z-0"></div>
+            <!-- Layanan 2: Skripsi & Proposal -->
+            <button onclick="openWaModal('Skripsi & Proposal')" class="bg-brand-pink border-4 border-black p-6 rounded-2xl shadow-brutal hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:scale-95 transition-all duration-300 ease-out group text-left relative overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+                <div class="absolute -right-6 -bottom-6 bg-white w-24 h-24 rounded-full border-4 border-black group-hover:scale-150 transition-transform duration-500 ease-out z-0"></div>
                 <div class="relative z-10">
                     <i class="fa-solid fa-graduation-cap text-4xl mb-4 text-black bg-white p-3 rounded-xl border-2 border-black inline-block rotate-[5deg]"></i>
-                    <h3 class="text-2xl font-black mb-2">Skripsi & Proposal</h3>
-                    <p class="font-bold text-gray-900 text-sm mb-4">Bimbingan sampai ACC! Olah data s/d bab akhir.</p>
-                    <span class="inline-block bg-black text-white font-black text-xs px-3 py-1 rounded border-2 border-black group-hover:bg-brand-blue transition-colors">Tanya & Order <i class="fa-solid fa-arrow-right"></i></span>
+                    <h3 class="text-2xl font-black mb-3">Skripsi & Proposal</h3>
+                    <p class="font-bold text-gray-900 text-sm mb-4 leading-relaxed">
+                        • Proposal Skripsi & Draf Proposal<br>
+                        • Merapikan dokumen seperti spripsi proposal dll
+                    </p>
+                    <span class="inline-block bg-black text-white font-black text-xs px-3 py-1 rounded border-2 border-black group-hover:bg-brand-blue transition-colors duration-300">Tanya & Order <i class="fa-solid fa-arrow-right"></i></span>
                 </div>
             </button>
 
-            <!-- Layanan 3 -->
-            <button onclick="openWaModal('Desain PPT Estetik')" class="bg-brand-blue border-4 border-black p-6 rounded-2xl shadow-brutal hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all group text-left relative overflow-hidden" data-aos="fade-up" data-aos-delay="300">
+            <!-- Layanan 3: KTI, PKM, Artikel, Opini -->
+            <button onclick="openWaModal('Karya Tulis & PKM')" class="bg-brand-blue border-4 border-black p-6 rounded-2xl shadow-brutal hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:scale-95 transition-all duration-300 ease-out group text-left relative overflow-hidden" data-aos="fade-up" data-aos-delay="300">
+                <div class="absolute -right-6 -bottom-6 bg-brand-yellow w-24 h-24 rounded-full border-4 border-black group-hover:scale-150 transition-transform duration-500 ease-out z-0"></div>
                 <div class="relative z-10">
-                    <i class="fa-solid fa-desktop text-4xl mb-4 text-black bg-white p-3 rounded-xl border-2 border-black inline-block rotate-[-2deg]"></i>
-                    <h3 class="text-2xl font-black mb-2">PPT Estetik</h3>
-                    <p class="font-bold text-gray-900 text-sm mb-4">Presentasi auto dilirik dosen. Desain kekinian & pro.</p>
-                    <span class="inline-block bg-black text-white font-black text-xs px-3 py-1 rounded border-2 border-black group-hover:bg-brand-pink transition-colors">Tanya & Order <i class="fa-solid fa-arrow-right"></i></span>
+                    <i class="fa-solid fa-pen-nib text-4xl mb-4 text-black bg-white p-3 rounded-xl border-2 border-black inline-block rotate-[-2deg]"></i>
+                    <h3 class="text-2xl font-black mb-3">Karya Tulis & PKM</h3>
+                    <p class="font-bold text-gray-900 text-sm mb-4 leading-relaxed">
+                        • Karya Tulis Ilmiah<br>
+                        • PKM Semua Bidang<br>
+                        • Artikel & Opini
+                    </p>
+                    <span class="inline-block bg-black text-white font-black text-xs px-3 py-1 rounded border-2 border-black group-hover:bg-brand-pink transition-colors duration-300">Tanya & Order <i class="fa-solid fa-arrow-right"></i></span>
                 </div>
             </button>
 
-            <!-- Layanan 4 -->
-            <button onclick="openWaModal('Olah Data SPSS')" class="bg-brand-yellow border-4 border-black p-6 rounded-2xl shadow-brutal hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all group text-left relative overflow-hidden" data-aos="fade-up" data-aos-delay="400">
+            <!-- Layanan 4: SPSS & Turnitin -->
+            <button onclick="openWaModal('Olah Data & Turnitin')" class="bg-brand-yellow border-4 border-black p-6 rounded-2xl shadow-brutal hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:scale-95 transition-all duration-300 ease-out group text-left relative overflow-hidden" data-aos="fade-up" data-aos-delay="400">
+                <div class="absolute -right-6 -bottom-6 bg-white w-24 h-24 rounded-full border-4 border-black group-hover:scale-150 transition-transform duration-500 ease-out z-0"></div>
                 <div class="relative z-10">
                     <i class="fa-solid fa-chart-pie text-4xl mb-4 text-black bg-white p-3 rounded-xl border-2 border-black inline-block rotate-[3deg]"></i>
-                    <h3 class="text-2xl font-black mb-2">Olah Data SPSS</h3>
-                    <p class="font-bold text-gray-800 text-sm mb-4">Uji validitas, reliabilitas, regresi. Dijamin akurat!</p>
-                    <span class="inline-block bg-black text-white font-black text-xs px-3 py-1 rounded border-2 border-black group-hover:bg-brand-green transition-colors">Tanya & Order <i class="fa-solid fa-arrow-right"></i></span>
+                    <h3 class="text-2xl font-black mb-3">Data & Turnitin</h3>
+                    <p class="font-bold text-gray-800 text-sm mb-4 leading-relaxed">
+                        • Olah data SPSS<br>
+                        • Cek Turnitin termurah
+                    </p>
+                    <span class="inline-block bg-black text-white font-black text-xs px-3 py-1 rounded border-2 border-black group-hover:bg-brand-green transition-colors duration-300">Tanya & Order <i class="fa-solid fa-arrow-right"></i></span>
                 </div>
             </button>
 
-            <!-- Layanan 5 -->
-            <button onclick="openWaModal('Cek / Lolos Turnitin')" class="bg-brand-green border-4 border-black p-6 rounded-2xl shadow-brutal hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all group text-left relative overflow-hidden" data-aos="fade-up" data-aos-delay="500">
+            <!-- Layanan 5: PPT & Mind Mapping -->
+            <button onclick="openWaModal('PPT & Mind Mapping')" class="bg-brand-green border-4 border-black p-6 rounded-2xl shadow-brutal hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:scale-95 transition-all duration-300 ease-out group text-left relative overflow-hidden" data-aos="fade-up" data-aos-delay="500">
+                <div class="absolute -right-6 -bottom-6 bg-brand-yellow w-24 h-24 rounded-full border-4 border-black group-hover:scale-150 transition-transform duration-500 ease-out z-0"></div>
                 <div class="relative z-10">
-                    <i class="fa-solid fa-magnifying-glass-chart text-4xl mb-4 text-black bg-white p-3 rounded-xl border-2 border-black inline-block rotate-[-4deg]"></i>
-                    <h3 class="text-2xl font-black mb-2">Cek & Parafrase Turnitin</h3>
-                    <p class="font-bold text-gray-800 text-sm mb-4">Turunkan persentase plagiasi. No repository!</p>
-                    <span class="inline-block bg-black text-white font-black text-xs px-3 py-1 rounded border-2 border-black group-hover:bg-brand-yellow transition-colors">Tanya & Order <i class="fa-solid fa-arrow-right"></i></span>
+                    <i class="fa-solid fa-desktop text-4xl mb-4 text-black bg-white p-3 rounded-xl border-2 border-black inline-block rotate-[-4deg]"></i>
+                    <h3 class="text-2xl font-black mb-3">Desain & Presentasi</h3>
+                    <p class="font-bold text-gray-800 text-sm mb-4 leading-relaxed">
+                        • Membuat PPT<br>
+                        • Mind Mapping
+                    </p>
+                    <span class="inline-block bg-black text-white font-black text-xs px-3 py-1 rounded border-2 border-black group-hover:bg-brand-yellow transition-colors duration-300">Tanya & Order <i class="fa-solid fa-arrow-right"></i></span>
                 </div>
             </button>
 
-            <!-- Layanan 6 -->
-            <button onclick="openWaModal('Tugas Umum / Lainnya')" class="bg-white border-4 border-black p-6 rounded-2xl shadow-brutal hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all group text-left border-dashed relative" data-aos="fade-up" data-aos-delay="600">
-                <div class="relative z-10 flex flex-col items-center justify-center h-full text-center py-4">
-                    <i class="fa-solid fa-circle-question text-5xl mb-3 text-brand-purple animate-pulse"></i>
-                    <h3 class="text-2xl font-black mb-2">Tugas Lainnya?</h3>
-                    <p class="font-bold text-gray-600 text-sm">Resume, Esai, Mind Mapping, Poster, Ketik, dll.</p>
+            <!-- Layanan 6: Esai, Resume & Lainnya -->
+            <button onclick="openWaModal('Tugas Lainnya / Esai / Resume')" class="bg-white border-4 border-black p-6 rounded-2xl shadow-brutal hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:scale-95 transition-all duration-300 ease-out group text-left border-dashed relative" data-aos="fade-up" data-aos-delay="600">
+                <div class="absolute -right-6 -bottom-6 bg-brand-purple w-24 h-24 rounded-full border-4 border-black group-hover:scale-150 transition-transform duration-500 ease-out z-0 opacity-20"></div>
+                <div class="relative z-10 flex flex-col justify-center h-full">
+                    <i class="fa-solid fa-circle-question text-4xl mb-4 text-black bg-white p-3 rounded-xl border-2 border-black inline-block w-max rotate-[2deg]"></i>
+                    <h3 class="text-2xl font-black mb-3">Esai, Resume DLL</h3>
+                    <p class="font-bold text-gray-600 text-sm mb-4 leading-relaxed">
+                        • Esai & Resume<br>
+                        • Tugas lain bisa tanya dulu!
+                    </p>
+                    <span class="inline-block bg-black text-white font-black text-xs px-3 py-1 rounded border-2 border-black group-hover:bg-brand-purple transition-colors duration-300 w-max">Tanya & Order <i class="fa-solid fa-arrow-right"></i></span>
                 </div>
             </button>
 
         </div>
 
-        <div class="mt-10 bg-brand-yellow border-4 border-black p-5 text-center font-black text-xl shadow-brutal rounded-xl transform rotate-1 animate-pulse-fast" data-aos="zoom-in">
-            ✨ Tugas lain belum ada di atas? Bisa tanya-tanya dulu ya! ✨
-        </div>
     </section>
 
     <!-- How It Works -->
@@ -256,25 +278,25 @@
         <div class="max-w-6xl mx-auto px-4">
             <h2 class="text-3xl md:text-4xl font-black text-center uppercase mb-12" data-aos="fade-up">Cara Order Joki</h2>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <div class="border-4 border-black p-6 rounded-2xl bg-brand-pink text-center shadow-brutal relative" data-aos="fade-up" data-aos-delay="100">
+                <div class="border-4 border-black p-6 rounded-2xl bg-brand-pink text-center shadow-brutal relative transition-transform duration-300 hover:-translate-y-2" data-aos="fade-up" data-aos-delay="100">
                     <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-white border-4 border-black font-black text-2xl w-12 h-12 flex items-center justify-center rounded-full">1</div>
                     <i class="fa-brands fa-whatsapp text-4xl mb-4 mt-2"></i>
                     <h3 class="font-black text-xl mb-2">Pilih Jasa & Chat</h3>
                     <p class="font-bold text-sm">Klik layanan dan isi form WhatsApp.</p>
                 </div>
-                <div class="border-4 border-black p-6 rounded-2xl bg-brand-yellow text-center shadow-brutal relative" data-aos="fade-up" data-aos-delay="200">
+                <div class="border-4 border-black p-6 rounded-2xl bg-brand-yellow text-center shadow-brutal relative transition-transform duration-300 hover:-translate-y-2" data-aos="fade-up" data-aos-delay="200">
                     <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-white border-4 border-black font-black text-2xl w-12 h-12 flex items-center justify-center rounded-full">2</div>
                     <i class="fa-solid fa-money-bill-wave text-4xl mb-4 mt-2"></i>
                     <h3 class="font-black text-xl mb-2">Pembayaran</h3>
                     <p class="font-bold text-sm">Bayar DP atau full lewat metode yang tersedia.</p>
                 </div>
-                <div class="border-4 border-black p-6 rounded-2xl bg-brand-blue text-white text-center shadow-brutal relative" data-aos="fade-up" data-aos-delay="300">
+                <div class="border-4 border-black p-6 rounded-2xl bg-brand-blue text-white text-center shadow-brutal relative transition-transform duration-300 hover:-translate-y-2" data-aos="fade-up" data-aos-delay="300">
                     <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-white text-black border-4 border-black font-black text-2xl w-12 h-12 flex items-center justify-center rounded-full">3</div>
                     <i class="fa-solid fa-laptop-code text-4xl mb-4 mt-2"></i>
                     <h3 class="font-black text-xl mb-2">Pengerjaan</h3>
                     <p class="font-bold text-sm">Tugas dikerjakan tim. Pantau via Lacak Progres!</p>
                 </div>
-                <div class="border-4 border-black p-6 rounded-2xl bg-brand-green text-center shadow-brutal relative" data-aos="fade-up" data-aos-delay="400">
+                <div class="border-4 border-black p-6 rounded-2xl bg-brand-green text-center shadow-brutal relative transition-transform duration-300 hover:-translate-y-2" data-aos="fade-up" data-aos-delay="400">
                     <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-white border-4 border-black font-black text-2xl w-12 h-12 flex items-center justify-center rounded-full">4</div>
                     <i class="fa-solid fa-file-circle-check text-4xl mb-4 mt-2"></i>
                     <h3 class="font-black text-xl mb-2">Beres!</h3>
@@ -286,20 +308,20 @@
 
     <!-- Pricing & Payment -->
     <section class="py-16 px-4 max-w-5xl mx-auto">
-        <div class="bg-white border-4 border-black shadow-brutal rounded-3xl overflow-hidden flex flex-col md:flex-row" data-aos="zoom-in">
+        <div class="bg-white border-4 border-black shadow-brutal rounded-3xl overflow-hidden flex flex-col md:flex-row transition-all duration-500 ease-out" data-aos="zoom-in">
             <div class="bg-black text-white p-8 md:p-12 md:w-1/2 flex flex-col justify-center items-center text-center">
                 <p class="text-2xl font-bold mb-2">Harga Bersahabat!</p>
-                <div class="text-brand-yellow font-black text-6xl md:text-7xl mb-4 rotate-[-3deg] drop-shadow-lg">Start 5K</div>
+                <div class="text-brand-yellow font-black text-6xl md:text-7xl mb-4 rotate-[-3deg] drop-shadow-lg hover:scale-105 transition-transform duration-300">Start 5K</div>
                 <p class="bg-brand-pink text-black font-black text-lg px-4 py-2 border-2 border-black rounded-full mt-2 rotate-2 animate-pulse">(Wow murah banget! 😱)</p>
             </div>
             <div class="p-8 md:p-12 md:w-1/2 flex flex-col justify-center bg-[#fdfbf7]">
                 <h4 class="text-2xl font-black mb-6 uppercase border-b-4 border-black pb-2 inline-block w-max">Bisa Bayar Via:</h4>
                 <div class="flex flex-wrap gap-3">
-                    <span class="flex items-center gap-2 bg-white border-4 border-black px-4 py-2 font-black text-lg rounded-xl shadow-brutal-sm hover:-translate-y-1 transition-transform"><i class="fa-solid fa-qrcode text-brand-pink"></i> QRIS</span>
-                    <span class="flex items-center gap-2 bg-white border-4 border-black px-4 py-2 font-black text-lg rounded-xl shadow-brutal-sm hover:-translate-y-1 transition-transform"><i class="fa-solid fa-building-columns text-brand-blue"></i> Bank</span>
-                    <span class="flex items-center gap-2 bg-[#118EEA] text-white border-4 border-black px-4 py-2 font-black text-lg rounded-xl shadow-brutal-sm hover:-translate-y-1 transition-transform">DANA</span>
-                    <span class="flex items-center gap-2 bg-[#4C3494] text-white border-4 border-black px-4 py-2 font-black text-lg rounded-xl shadow-brutal-sm hover:-translate-y-1 transition-transform">OVO</span>
-                    <span class="flex items-center gap-2 bg-[#00AED6] text-white border-4 border-black px-4 py-2 font-black text-lg rounded-xl shadow-brutal-sm hover:-translate-y-1 transition-transform">GoPay</span>
+                    <span class="flex items-center gap-2 bg-white border-4 border-black px-4 py-2 font-black text-lg rounded-xl shadow-brutal-sm hover:-translate-y-1 transition-transform duration-300 ease-out cursor-default"><i class="fa-solid fa-qrcode text-brand-pink"></i> QRIS</span>
+                    <span class="flex items-center gap-2 bg-white border-4 border-black px-4 py-2 font-black text-lg rounded-xl shadow-brutal-sm hover:-translate-y-1 transition-transform duration-300 ease-out cursor-default"><i class="fa-solid fa-building-columns text-brand-blue"></i> Bank</span>
+                    <span class="flex items-center gap-2 bg-[#118EEA] text-white border-4 border-black px-4 py-2 font-black text-lg rounded-xl shadow-brutal-sm hover:-translate-y-1 transition-transform duration-300 ease-out cursor-default">DANA</span>
+                    <span class="flex items-center gap-2 bg-[#4C3494] text-white border-4 border-black px-4 py-2 font-black text-lg rounded-xl shadow-brutal-sm hover:-translate-y-1 transition-transform duration-300 ease-out cursor-default">OVO</span>
+                    <span class="flex items-center gap-2 bg-[#00AED6] text-white border-4 border-black px-4 py-2 font-black text-lg rounded-xl shadow-brutal-sm hover:-translate-y-1 transition-transform duration-300 ease-out cursor-default">GoPay</span>
                 </div>
             </div>
         </div>
@@ -309,17 +331,17 @@
     <section class="py-12 px-4 max-w-6xl mx-auto">
         <h2 class="text-3xl font-black text-center uppercase mb-10" data-aos="fade-up">Kata Mereka 🗣️</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-white border-4 border-black p-6 shadow-brutal rounded-2xl rotate-[-1deg]" data-aos="fade-up" data-aos-delay="100">
+            <div class="bg-white border-4 border-black p-6 shadow-brutal rounded-2xl rotate-[-1deg] hover:rotate-0 transition-transform duration-300 ease-out" data-aos="fade-up" data-aos-delay="100">
                 <div class="flex text-brand-yellow mb-3 text-xl"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
                 <p class="font-bold mb-4">"Gila sih cepet banget! Deadline besok pagi, diselamatin Minpres malamnya. Harganya juga masuk kantong mahasiswa."</p>
                 <div class="font-black border-t-2 border-black pt-3">- Budi, Mahasiswa Sem 5</div>
             </div>
-            <div class="bg-brand-pink border-4 border-black p-6 shadow-brutal rounded-2xl rotate-[2deg]" data-aos="fade-up" data-aos-delay="200">
+            <div class="bg-brand-pink border-4 border-black p-6 shadow-brutal rounded-2xl rotate-[2deg] hover:rotate-0 transition-transform duration-300 ease-out" data-aos="fade-up" data-aos-delay="200">
                 <div class="flex text-brand-yellow mb-3 text-xl"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
                 <p class="font-bold mb-4">"Revisi makalah langsung acc dosen. Format rapi banget, turnitin juga rendah. Fix bakal order lagi kesini!"</p>
                 <div class="font-black border-t-2 border-black pt-3">- Siska, Siswi SMA</div>
             </div>
-            <div class="bg-white border-4 border-black p-6 shadow-brutal rounded-2xl rotate-[-2deg]" data-aos="fade-up" data-aos-delay="300">
+            <div class="bg-white border-4 border-black p-6 shadow-brutal rounded-2xl rotate-[-2deg] hover:rotate-0 transition-transform duration-300 ease-out" data-aos="fade-up" data-aos-delay="300">
                 <div class="flex text-brand-yellow mb-3 text-xl"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
                 <p class="font-bold mb-4">"PPT nya estetik parah woy! Temen-temen sekelas pada nanya bikin dimana hahaha. Makasih Minpres!"</p>
                 <div class="font-black border-t-2 border-black pt-3">- Reza, Mahasiswa Sem 2</div>
@@ -329,12 +351,12 @@
 
     <!-- Channel WhatsApp Banner -->
     <section class="py-16 px-4 mb-10">
-        <div class="max-w-4xl mx-auto bg-brand-green border-4 border-black shadow-brutal p-8 md:p-14 text-center rounded-3xl relative overflow-hidden" data-aos="flip-up">
+        <div class="max-w-4xl mx-auto bg-brand-green border-4 border-black shadow-brutal p-8 md:p-14 text-center rounded-3xl relative overflow-hidden transition-all duration-300 ease-out" data-aos="flip-up">
             <i class="fa-solid fa-message absolute -top-4 -left-4 text-7xl opacity-20 rotate-[-15deg]"></i>
             <h2 class="text-3xl md:text-5xl font-black mb-4 relative z-10 uppercase">Mau Info & Diskon Khusus?</h2>
             <p class="font-bold text-xl mb-10 relative z-10 bg-white inline-block px-4 py-1 border-2 border-black rotate-[-1deg]">Join channel WhatsApp kita sekarang juga!</p>
             <br>
-            <a href="https://whatsapp.com/channel/0029VbC2QWO002THuNipPE20" target="_blank" class="inline-block bg-black text-brand-yellow font-black text-2xl py-4 px-10 border-4 border-black shadow-brutal-sm hover:translate-y-1 hover:bg-white hover:text-black transition-all rounded-full relative z-10">
+            <a href="https://whatsapp.com/channel/0029VbC2QWO002THuNipPE20" target="_blank" class="inline-block bg-black text-brand-yellow font-black text-2xl py-4 px-10 border-4 border-black shadow-brutal-sm hover:-translate-y-1 hover:bg-white hover:text-black active:scale-95 transition-all duration-300 ease-out rounded-full relative z-10">
                 <i class="fa-brands fa-whatsapp mr-2"></i> Join Channel
             </a>
         </div>
@@ -352,7 +374,7 @@
         
         <!-- Link Rahasia Login Admin di Footer -->
         <div class="mt-4">
-            <button id="btnOpenAdmin" class="text-xs text-slate-600 hover:text-brand-pink transition-colors font-bold"><i class="fa-solid fa-lock"></i> Login Admin</button>
+            <button id="btnOpenAdmin" class="text-xs text-slate-600 hover:text-brand-pink active:scale-95 transition-all duration-300 font-bold"><i class="fa-solid fa-lock"></i> Login Admin</button>
         </div>
     </footer>
 
@@ -362,11 +384,11 @@
     <!-- ========================================== -->
     <!-- MODAL POPUP INPUT NOMOR WA PELANGGAN -->
     <!-- ========================================== -->
-    <div id="waModal" class="hidden fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
-        <div class="bg-white w-full max-w-md border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] rounded-2xl p-6 relative transform scale-95 transition-transform duration-300" id="waModalContent">
+    <div id="waModal" class="hidden fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 transition-all duration-300 ease-out">
+        <div class="bg-white w-full max-w-md border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] rounded-2xl p-6 relative transform scale-95 transition-transform duration-300 ease-out" id="waModalContent">
             
             <!-- Tombol Close -->
-            <button onclick="closeWaModal()" class="absolute -top-4 -right-4 bg-brand-pink border-4 border-black text-black w-10 h-10 rounded-full font-black text-xl hover:bg-red-500 hover:text-white transition-colors flex items-center justify-center z-10 shadow-brutal-sm">
+            <button onclick="closeWaModal()" class="absolute -top-4 -right-4 bg-brand-pink border-4 border-black text-black w-10 h-10 rounded-full font-black text-xl hover:bg-red-500 hover:text-white active:scale-95 transition-all duration-300 ease-out flex items-center justify-center z-10 shadow-brutal-sm">
                 <i class="fa-solid fa-xmark"></i>
             </button>
 
@@ -383,14 +405,14 @@
                 
                 <div>
                     <label class="font-black text-sm block mb-1">Nama Panggilan Kamu:</label>
-                    <input type="text" id="waName" required placeholder="Contoh: Budi" class="w-full px-4 py-3 border-4 border-black font-bold rounded-xl focus:outline-none focus:ring-4 focus:ring-brand-blue bg-gray-50">
+                    <input type="text" id="waName" required placeholder="Contoh: Budi" class="w-full px-4 py-3 border-4 border-black font-bold rounded-xl focus:outline-none focus:ring-4 focus:ring-brand-blue bg-gray-50 transition-all duration-300 ease-out">
                 </div>
                 <div>
                     <label class="font-black text-sm block mb-1">Nomor WhatsApp Kamu:</label>
-                    <input type="tel" id="waNumber" required placeholder="Contoh: 081234567890" class="w-full px-4 py-3 border-4 border-black font-bold rounded-xl focus:outline-none focus:ring-4 focus:ring-brand-blue bg-gray-50">
+                    <input type="tel" id="waNumber" required placeholder="Contoh: 081234567890" class="w-full px-4 py-3 border-4 border-black font-bold rounded-xl focus:outline-none focus:ring-4 focus:ring-brand-blue bg-gray-50 transition-all duration-300 ease-out">
                 </div>
                 
-                <button type="submit" id="btnSubmitWa" class="w-full bg-brand-green text-black font-black text-lg py-4 rounded-xl border-4 border-black hover:bg-green-500 transition-colors shadow-brutal-sm active:translate-y-1 flex items-center justify-center gap-2 mt-4">
+                <button type="submit" id="btnSubmitWa" class="w-full bg-brand-green text-black font-black text-lg py-4 rounded-xl border-4 border-black hover:bg-green-500 active:scale-95 transition-all duration-300 ease-out shadow-brutal-sm flex items-center justify-center gap-2 mt-4">
                     <i class="fa-brands fa-whatsapp text-2xl"></i> Lanjut Chat Admin
                 </button>
             </form>
@@ -401,7 +423,7 @@
     <!-- ========================================== -->
     <!-- RUANG ADMIN TERPISAH (WORKSPACE) -->
     <!-- ========================================== -->
-    <div id="admin-workspace" class="hidden min-h-screen bg-gray-100 flex-col font-sans">
+    <div id="admin-workspace" class="hidden min-h-screen bg-gray-100 flex-col font-sans transition-opacity duration-300 ease-out">
         
         <!-- HALAMAN LOGIN ADMIN -->
         <div id="admin-login" class="flex-1 flex items-center justify-center p-4">
@@ -413,14 +435,14 @@
                 <p class="text-gray-500 mb-8 font-semibold text-sm">Gunakan Email & Password untuk masuk.</p>
                 
                 <form id="loginForm" class="space-y-4">
-                    <input type="email" id="adminEmail" placeholder="Email Admin" class="w-full px-4 py-3 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black text-center" required>
-                    <input type="password" id="adminPass" placeholder="Password" class="w-full px-4 py-3 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black text-center" required>
+                    <input type="email" id="adminEmail" placeholder="Email Admin" class="w-full px-4 py-3 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black text-center transition-colors duration-300" required>
+                    <input type="password" id="adminPass" placeholder="Password" class="w-full px-4 py-3 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black text-center transition-colors duration-300" required>
                     
                     <div id="adminLoginError" class="hidden bg-red-100 text-red-600 border border-red-300 font-bold py-2 px-4 rounded text-sm animate-pulse">Email/Password Salah!</div>
                     
-                    <button type="submit" class="w-full bg-black text-white font-black py-3 rounded-lg hover:bg-gray-800 transition-colors shadow-lg active:translate-y-1">MASUK DASHBOARD</button>
+                    <button type="submit" class="w-full bg-black text-white font-black py-3 rounded-lg hover:bg-gray-800 active:scale-95 transition-all duration-300 ease-out shadow-lg">MASUK DASHBOARD</button>
                 </form>
-                <button id="btnCloseAdmin" class="mt-6 text-sm text-gray-500 hover:text-black font-bold transition-colors">← Kembali ke Website Pelanggan</button>
+                <button id="btnCloseAdmin" class="mt-6 text-sm text-gray-500 hover:text-black active:scale-95 font-bold transition-all duration-300">← Kembali ke Website Pelanggan</button>
             </div>
         </div>
 
@@ -428,7 +450,7 @@
         <div id="admin-dashboard" class="hidden flex-1 flex flex-col">
             <nav class="bg-black text-white py-4 px-6 flex justify-between items-center sticky top-0 z-50 shadow-md">
                 <div class="font-black text-xl tracking-widest">MINPRES<span class="text-brand-yellow">/ADMIN</span></div>
-                <button id="btnLogout" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition-colors text-sm flex items-center gap-2">
+                <button id="btnLogout" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded active:scale-95 transition-all duration-300 text-sm flex items-center gap-2">
                     <i class="fa-solid fa-power-off"></i> Keluar
                 </button>
             </nav>
@@ -442,32 +464,32 @@
                         <div>
                             <label class="font-bold text-sm text-gray-700 block mb-1">Nomor Invoice:</label>
                             <div class="flex gap-2">
-                                <input type="text" id="adminInv" required placeholder="MINPRES-XXX" class="flex-1 px-4 py-2 border-2 border-gray-300 font-bold uppercase rounded-lg focus:outline-none focus:border-black bg-gray-50">
-                                <button type="button" id="btnGenerateInv" class="bg-black text-white font-black px-3 rounded-lg border-2 border-black hover:bg-brand-yellow hover:text-black transition-colors shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"><i class="fa-solid fa-bolt"></i> Generate</button>
+                                <input type="text" id="adminInv" required placeholder="MINPRES-XXX" class="flex-1 px-4 py-2 border-2 border-gray-300 font-bold uppercase rounded-lg focus:outline-none focus:border-black bg-gray-50 transition-colors duration-300">
+                                <button type="button" id="btnGenerateInv" class="bg-black text-white font-black px-3 rounded-lg border-2 border-black hover:bg-brand-yellow hover:text-black active:scale-95 transition-all duration-300 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"><i class="fa-solid fa-bolt"></i> Generate</button>
                             </div>
                         </div>
                         <div>
                             <label class="font-bold text-sm text-gray-700 block mb-1">Nama Klien:</label>
-                            <input type="text" id="adminName" required placeholder="Nama pemesan" class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50">
+                            <input type="text" id="adminName" required placeholder="Nama pemesan" class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50 transition-colors duration-300">
                         </div>
                         <div>
                             <label class="font-bold text-sm text-gray-700 block mb-1">Detail Tugas:</label>
-                            <input type="text" id="adminTask" required placeholder="Makalah Biologi Bab 2" class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50">
+                            <input type="text" id="adminTask" required placeholder="Makalah Biologi Bab 2" class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50 transition-colors duration-300">
                         </div>
                         <div>
                             <label class="font-bold text-sm text-gray-700 block mb-1">Deadline:</label>
-                            <input type="datetime-local" id="adminDeadline" required class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50">
+                            <input type="datetime-local" id="adminDeadline" required class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50 transition-colors duration-300">
                         </div>
                         <div>
                             <label class="font-bold text-sm text-gray-700 block mb-1">Status Progres:</label>
-                            <select id="adminStatus" class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50">
+                            <select id="adminStatus" class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50 transition-colors duration-300">
                                 <option value="1">Langkah 1 - Pembayaran Diterima</option>
                                 <option value="2">Langkah 2 - Sedang Dikerjakan Tim</option>
                                 <option value="3">Langkah 3 - Quality Control (QC)</option>
                                 <option value="4">Langkah 4 - Tugas Selesai / Dikirim</option>
                             </select>
                         </div>
-                        <button type="submit" id="btnSaveData" class="w-full bg-brand-green text-black font-black py-3 rounded-lg hover:bg-green-500 transition-colors shadow flex items-center justify-center gap-2 border-2 border-black shadow-brutal-sm active:translate-y-1">
+                        <button type="submit" id="btnSaveData" class="w-full bg-brand-green text-black font-black py-3 rounded-lg hover:bg-green-500 active:scale-95 transition-all duration-300 shadow flex items-center justify-center gap-2 border-2 border-black shadow-brutal-sm">
                             <i class="fa-solid fa-floppy-disk"></i> Simpan Data Real-Time
                         </button>
                         <div id="adminNotif" class="hidden text-center font-bold bg-green-100 text-green-700 p-3 rounded-lg border border-green-200">
@@ -507,7 +529,15 @@
 
     <!-- Scripts Khusus UI (AOS) -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>AOS.init({ once: true, offset: 50 });</script>
+    <script>
+        // Animasi AOS yang lebih smooth dan durasi seimbang
+        AOS.init({ 
+            once: true, 
+            offset: 50, 
+            duration: 600, 
+            easing: 'ease-out-cubic' 
+        });
+    </script>
 
     <!-- LOGIKA GOOGLE APPS SCRIPT & MODAL WA -->
     <script>
@@ -676,10 +706,10 @@
 
                 const html = `
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-black ${bgIconClass} ${textIconClass} shadow-brutal-sm shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 ${pulseClass}">
+                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-black ${bgIconClass} ${textIconClass} shadow-brutal-sm shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 ${pulseClass} transition-colors duration-300 ease-out">
                             <i class="fa-solid ${step.icon}"></i>
                         </div>
-                        <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border-4 border-black ${boxClass} shadow-brutal-sm md:group-odd:text-right transition-all">
+                        <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border-4 border-black ${boxClass} shadow-brutal-sm md:group-odd:text-right transition-all duration-300 ease-out">
                             <h4 class="font-black text-lg ${isActive ? '' : 'text-gray-500'}">${step.title}</h4>
                             <p class="text-sm font-semibold text-gray-600">${step.desc}</p>
                         </div>
@@ -868,8 +898,8 @@
                                     <span class="${badgeColor} border px-3 py-1 rounded-full text-xs">${statusName}</span>
                                 </td>
                                 <td class="p-4 text-center space-x-1 opacity-50 group-hover:opacity-100 transition-opacity flex">
-                                    <button class="btn-edit bg-gray-200 text-gray-700 hover:bg-gray-300 px-3 py-1.5 rounded transition-colors" data-id="${inv}" title="Edit"><i class="fa-solid fa-pen"></i></button>
-                                    <button class="btn-delete bg-red-100 text-red-600 hover:bg-red-200 px-3 py-1.5 rounded transition-colors" data-id="${inv}" title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                    <button class="btn-edit bg-gray-200 text-gray-700 hover:bg-gray-300 active:scale-95 px-3 py-1.5 rounded transition-all duration-300" data-id="${inv}" title="Edit"><i class="fa-solid fa-pen"></i></button>
+                                    <button class="btn-delete bg-red-100 text-red-600 hover:bg-red-200 active:scale-95 px-3 py-1.5 rounded transition-all duration-300" data-id="${inv}" title="Hapus"><i class="fa-solid fa-trash"></i></button>
                                 </td>
                             </tr>
                         `;
@@ -885,7 +915,7 @@
                             document.getElementById('adminTask').value = docData.task;
                             document.getElementById('adminDeadline').value = docData.deadline || "";
                             document.getElementById('adminStatus').value = docData.status;
-                            window.scrollTo(0, 0);
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
                         });
                     });
 
