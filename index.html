@@ -555,7 +555,7 @@
             else if(wa.startsWith('+')) { wa = wa.substring(1); }
 
             // Kirim data ke Google Spreadsheet secara asinkronus (no-cors)
-            const fetchUrl = `${GOOGLE_SCRIPT_URL}?nama=${encodeURIComponent(name)}&wa=${encodeURIComponent(wa)}&layanan=${encodeURIComponent(service)}`;
+            const fetchUrl = `${https://script.google.com/macros/s/AKfycby1FaPkk2V-NkJw2Qbx3GYYgaAgjFhOR-EHYPp_gAW-H1JQYhtxjkf-kSwZlflnLelC1w/exec}?nama=${encodeURIComponent(name)}&wa=${encodeURIComponent(wa)}&layanan=${encodeURIComponent(service)}`;
             
             fetch(fetchUrl, { mode: 'no-cors' })
             .then(() => {
