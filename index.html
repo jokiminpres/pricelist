@@ -373,4 +373,410 @@
                         <div>
                             <label class="font-bold text-sm text-gray-700 block mb-1">Nomor Invoice:</label>
                             <div class="flex gap-2">
-                                <input type="text" id="adminInv" required placeholder="MINPRES-XXX
+                                <input type="text" id="adminInv" required placeholder="MINPRES-XXX" class="flex-1 px-4 py-2 border-2 border-gray-300 font-bold uppercase rounded-lg focus:outline-none focus:border-black bg-gray-50">
+                                <button type="button" id="btnGenerateInv" class="bg-black text-white font-black px-3 rounded-lg border-2 border-black hover:bg-brand-yellow hover:text-black transition-colors shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"><i class="fa-solid fa-bolt"></i> Generate</button>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="font-bold text-sm text-gray-700 block mb-1">Nama Klien:</label>
+                            <input type="text" id="adminName" required placeholder="Nama pemesan" class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50">
+                        </div>
+                        <div>
+                            <label class="font-bold text-sm text-gray-700 block mb-1">Detail Tugas:</label>
+                            <input type="text" id="adminTask" required placeholder="Makalah Biologi Bab 2" class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50">
+                        </div>
+                        <div>
+                            <label class="font-bold text-sm text-gray-700 block mb-1">Deadline:</label>
+                            <input type="datetime-local" id="adminDeadline" required class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50">
+                        </div>
+                        <div>
+                            <label class="font-bold text-sm text-gray-700 block mb-1">Status Progres:</label>
+                            <select id="adminStatus" class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50">
+                                <option value="1">Langkah 1 - Pembayaran Diterima</option>
+                                <option value="2">Langkah 2 - Sedang Dikerjakan Tim</option>
+                                <option value="3">Langkah 3 - Quality Control (QC)</option>
+                                <option value="4">Langkah 4 - Tugas Selesai / Dikirim</option>
+                            </select>
+                        </div>
+                        <button type="submit" id="btnSaveData" class="w-full bg-brand-green text-black font-black py-3 rounded-lg hover:bg-green-500 transition-colors shadow flex items-center justify-center gap-2 border-2 border-black shadow-brutal-sm active:translate-y-1">
+                            <i class="fa-solid fa-floppy-disk"></i> Simpan Data Real-Time
+                        </button>
+                        <div id="adminNotif" class="hidden text-center font-bold bg-green-100 text-green-700 p-3 rounded-lg border border-green-200">
+                            Data Berhasil Tersimpan! ✅
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Database List -->
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200 xl:col-span-2 overflow-hidden flex flex-col">
+                    <h3 class="font-black text-lg mb-6 flex items-center gap-2 pb-3 border-b border-gray-100"><i class="fa-solid fa-server text-brand-pink"></i> Database Progres Klien</h3>
+                    <div class="overflow-x-auto flex-1">
+                        <table class="w-full text-left border-collapse min-w-[600px]">
+                            <thead>
+                                <tr class="bg-gray-100 text-gray-700 text-sm">
+                                    <th class="p-4 font-black rounded-tl-lg">INVOICE</th>
+                                    <th class="p-4 font-black">NAMA & TUGAS</th>
+                                    <th class="p-4 font-black">DEADLINE</th>
+                                    <th class="p-4 font-black">STATUS</th>
+                                    <th class="p-4 font-black text-center rounded-tr-lg">AKSI</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminTableBody" class="divide-y divide-gray-200 text-sm font-bold text-gray-800">
+                                <!-- Data list dari Firebase Firestore -->
+                            </tbody>
+                        </table>
+                        <div id="emptyDataState" class="hidden py-10 text-center text-gray-400">
+                            <i class="fa-solid fa-box-open text-4xl mb-3"></i>
+                            <p class="font-bold">Belum ada data tugas.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts Khusus UI (AOS) -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init({ once: true, offset: 50 });</script>
+
+    <!-- FIREBASE & LOGIKA UTAMA (TYPE MODULE) -->
+    <script type="module">
+        // Import Firebase dari CDN
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // Konfigurasi Firebase Anda yang TERBARU
+        const firebaseConfig = {
+            apiKey: "AIzaSyCy5s2FMCYNed3kTDk6bt49fcTq05DgCp8",
+            authDomain: "minprespricelist-77c41.firebaseapp.com",
+            projectId: "minprespricelist-77c41",
+            storageBucket: "minprespricelist-77c41.firebasestorage.app",
+            messagingSenderId: "657769381662",
+            appId: "1:657769381662:web:3cb4151010ddb13692930f",
+            measurementId: "G-YLX6HEE42V"
+        };
+
+        // Inisialisasi Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Status Detail Konstanta
+        const statusDetail = [
+            { id: 1, title: 'Pembayaran Diterima', desc: 'Admin telah mengkonfirmasi pembayaranmu.', color: 'bg-brand-yellow', icon: 'fa-money-bill-wave' },
+            { id: 2, title: 'Sedang Dikerjakan', desc: 'Tim Minpres sedang menyusun tugas kamu dengan teliti.', color: 'bg-brand-pink', icon: 'fa-pen-nib' },
+            { id: 3, title: 'Quality Control (Review)', desc: 'Pengecekan turnitin, plagiasi & kesesuaian format dosen.', color: 'bg-brand-blue', icon: 'fa-magnifying-glass' },
+            { id: 4, title: 'Tugas Selesai!', desc: 'Hore! File tugas sudah siap dikirim ke WhatsApp kamu.', color: 'bg-brand-green', icon: 'fa-flag-checkered' }
+        ];
+
+        let countdownInterval; // Variabel global untuk timer
+
+        // ----------------------------------------------------
+        // LOGIKA KLIEN: LACAK PROGRES
+        // ----------------------------------------------------
+        document.getElementById('trackForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const inputVal = document.getElementById('invoiceInput').value.trim().toUpperCase();
+            
+            // Kata sandi rahasia untuk buka admin dari kolom pencarian
+            if (inputVal === 'ADMIN123') {
+                openAdminWorkspace();
+                document.getElementById('invoiceInput').value = '';
+                return;
+            }
+
+            const loading = document.getElementById('loadingState');
+            const result = document.getElementById('trackerResult');
+            const errorMsg = document.getElementById('trackerError');
+            
+            result.classList.add('hidden');
+            errorMsg.classList.add('hidden');
+            loading.classList.remove('hidden');
+
+            try {
+                // Ambil data dari Firestore
+                const docRef = doc(db, "orders", inputVal);
+                const docSnap = await getDoc(docRef);
+
+                loading.classList.add('hidden');
+
+                if (docSnap.exists()) {
+                    const orderData = docSnap.data();
+                    renderTimeline(inputVal, orderData);
+                    startCountdown(orderData.deadline); // Mulai hitung mundur
+                    result.classList.remove('hidden');
+                    result.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else {
+                    errorMsg.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error("Error mengambil data:", error);
+                loading.classList.add('hidden');
+                errorMsg.innerHTML = "Terjadi gangguan jaringan, coba lagi!";
+                errorMsg.classList.remove('hidden');
+            }
+        });
+
+        function renderTimeline(inv, order) {
+            document.getElementById('resultTitle').innerText = inv;
+            document.getElementById('resultCustomer').innerText = `Pelanggan: ${order.name} (${order.task})`;
+            
+            const currentStatusObj = statusDetail.find(s => s.id == order.status);
+            const badge = document.getElementById('resultBadge');
+            badge.innerText = currentStatusObj.title;
+            badge.className = `${currentStatusObj.color} text-black font-bold px-3 py-1 border-2 border-black rounded-full text-sm animate-pulse-fast`;
+
+            const timelineContainer = document.getElementById('timelineContainer');
+            timelineContainer.innerHTML = '';
+
+            statusDetail.forEach((step) => {
+                const isActive = step.id <= order.status;
+                const isCurrent = step.id == order.status;
+                
+                const bgIconClass = isActive ? step.color : 'bg-gray-200';
+                const textIconClass = isActive ? 'text-black' : 'text-gray-400';
+                const boxClass = isActive ? 'bg-white opacity-100' : 'bg-gray-50 opacity-50';
+                const pulseClass = isCurrent ? 'animate-pulse' : '';
+
+                const html = `
+                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-black ${bgIconClass} ${textIconClass} shadow-brutal-sm shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 ${pulseClass}">
+                            <i class="fa-solid ${step.icon}"></i>
+                        </div>
+                        <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border-4 border-black ${boxClass} shadow-brutal-sm md:group-odd:text-right transition-all">
+                            <h4 class="font-black text-lg ${isActive ? '' : 'text-gray-500'}">${step.title}</h4>
+                            <p class="text-sm font-semibold text-gray-600">${step.desc}</p>
+                        </div>
+                    </div>
+                `;
+                timelineContainer.innerHTML += html;
+            });
+        }
+
+        // FUNGSI HITUNG MUNDUR (COUNTDOWN)
+        function startCountdown(deadlineString) {
+            clearInterval(countdownInterval); // Hapus timer lama jika ada
+            const timerContainer = document.getElementById('countdownTimer');
+            
+            if(!deadlineString) {
+                timerContainer.innerHTML = '<span class="text-black font-bold bg-white px-3 py-1 border-2 border-black rounded">Deadline belum diatur admin</span>';
+                return;
+            }
+
+            const countDownDate = new Date(deadlineString).getTime();
+
+            countdownInterval = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = countDownDate - now;
+
+                if (distance < 0) {
+                    clearInterval(countdownInterval);
+                    timerContainer.innerHTML = '<span class="bg-red-500 text-white font-black px-4 py-2 border-2 border-black rounded shadow-brutal-sm">WAKTU HABIS / TUGAS SELESAI</span>';
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                timerContainer.innerHTML = `
+                    <div class="bg-black px-3 py-2 rounded border-2 border-white flex flex-col"><span class="font-black text-xl">${days}</span><span class="text-xs">Hari</span></div>
+                    <div class="bg-black px-3 py-2 rounded border-2 border-white flex flex-col"><span class="font-black text-xl">${hours}</span><span class="text-xs">Jam</span></div>
+                    <div class="bg-black px-3 py-2 rounded border-2 border-white flex flex-col"><span class="font-black text-xl">${minutes}</span><span class="text-xs">Mnt</span></div>
+                    <div class="bg-black px-3 py-2 rounded border-2 border-white flex flex-col"><span class="font-black text-xl">${seconds}</span><span class="text-xs">Dtk</span></div>
+                `;
+            }, 1000);
+        }
+
+        // ----------------------------------------------------
+        // MANAJEMEN UI RUANG ADMIN
+        // ----------------------------------------------------
+        function openAdminWorkspace() {
+            window.scrollTo(0, 0);
+            document.getElementById('main-website').classList.add('hidden');
+            document.getElementById('admin-workspace').classList.remove('hidden');
+            document.getElementById('admin-workspace').classList.add('flex');
+        }
+
+        document.getElementById('btnOpenAdmin').addEventListener('click', openAdminWorkspace);
+
+        document.getElementById('btnCloseAdmin').addEventListener('click', () => {
+            window.scrollTo(0, 0);
+            document.getElementById('admin-workspace').classList.add('hidden');
+            document.getElementById('admin-workspace').classList.remove('flex');
+            document.getElementById('main-website').classList.remove('hidden');
+        });
+
+        // ----------------------------------------------------
+        // FIREBASE AUTHENTICATION (LOGIN)
+        // ----------------------------------------------------
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('adminEmail').value;
+            const pass = document.getElementById('adminPass').value;
+            const btn = e.target.querySelector('button');
+            const errorMsg = document.getElementById('adminLoginError');
+            
+            btn.innerText = "MEMPROSES...";
+            errorMsg.classList.add('hidden');
+
+            signInWithEmailAndPassword(auth, email, pass)
+                .then(() => {
+                    btn.innerText = "MASUK DASHBOARD";
+                    document.getElementById('adminEmail').value = '';
+                    document.getElementById('adminPass').value = '';
+                })
+                .catch((error) => {
+                    btn.innerText = "MASUK DASHBOARD";
+                    errorMsg.classList.remove('hidden');
+                    console.error(error.message);
+                });
+        });
+
+        document.getElementById('btnLogout').addEventListener('click', () => {
+            signOut(auth);
+        });
+
+        // Pantau Status Login
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // Sedang Login
+                document.getElementById('admin-login').classList.add('hidden');
+                document.getElementById('admin-dashboard').classList.remove('hidden');
+                document.getElementById('admin-dashboard').classList.add('flex');
+                fetchDataRealtime(); // Mulai tarik data
+            } else {
+                // Belum/Logout
+                document.getElementById('admin-dashboard').classList.add('hidden');
+                document.getElementById('admin-dashboard').classList.remove('flex');
+                document.getElementById('admin-login').classList.remove('hidden');
+            }
+        });
+
+        // ----------------------------------------------------
+        // FIREBASE FIRESTORE (DATABASE ADMIN)
+        // ----------------------------------------------------
+        
+        // Fitur Generate Invoice Button
+        document.getElementById('btnGenerateInv').addEventListener('click', () => {
+            const randomNum = Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('adminInv').value = `MINPRES-${randomNum}`;
+        });
+
+        // Fitur Simpan Data Baru/Update
+        document.getElementById('adminForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btnSave = document.getElementById('btnSaveData');
+            btnSave.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan...';
+            
+            const inv = document.getElementById('adminInv').value.trim().toUpperCase();
+            const name = document.getElementById('adminName').value.trim();
+            const task = document.getElementById('adminTask').value.trim();
+            const deadline = document.getElementById('adminDeadline').value; // Format: YYYY-MM-DDTHH:mm
+            const status = parseInt(document.getElementById('adminStatus').value);
+
+            try {
+                await setDoc(doc(db, "orders", inv), {
+                    name: name,
+                    task: task,
+                    deadline: deadline,
+                    status: status,
+                    updatedAt: new Date()
+                });
+                
+                // Notif Sukses
+                const notif = document.getElementById('adminNotif');
+                notif.classList.remove('hidden');
+                setTimeout(() => notif.classList.add('hidden'), 3000);
+                document.getElementById('adminForm').reset();
+            } catch (error) {
+                console.error("Gagal simpan data: ", error);
+                alert("Gagal menyimpan data! Pastikan Aturan Firestore (Rules) sudah diset.");
+            } finally {
+                btnSave.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Data Real-Time';
+            }
+        });
+
+        // Fitur Baca Data Real-Time & Render Table
+        function fetchDataRealtime() {
+            onSnapshot(collection(db, "orders"), (querySnapshot) => {
+                const tbody = document.getElementById('adminTableBody');
+                const emptyState = document.getElementById('emptyDataState');
+                tbody.innerHTML = '';
+                
+                if (querySnapshot.empty) {
+                    emptyState.classList.remove('hidden');
+                } else {
+                    emptyState.classList.add('hidden');
+                    querySnapshot.forEach((docSnap) => {
+                        const inv = docSnap.id;
+                        const data = docSnap.data();
+                        
+                        const statusName = statusDetail.find(s => s.id == data.status).title;
+                        
+                        let badgeColor = 'bg-gray-200 text-gray-800';
+                        if(data.status == 1) badgeColor = 'bg-yellow-100 text-yellow-800 border-yellow-300';
+                        if(data.status == 2) badgeColor = 'bg-pink-100 text-pink-800 border-pink-300';
+                        if(data.status == 3) badgeColor = 'bg-blue-100 text-blue-800 border-blue-300';
+                        if(data.status == 4) badgeColor = 'bg-green-100 text-green-800 border-green-300';
+
+                        // Format Deadline Teks di Tabel
+                        let deadlineText = "Belum diatur";
+                        if(data.deadline) {
+                            const d = new Date(data.deadline);
+                            deadlineText = `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+                        }
+
+                        tbody.innerHTML += `
+                            <tr class="hover:bg-gray-50 transition-colors group">
+                                <td class="p-4 tracking-wider">${inv}</td>
+                                <td class="p-4">
+                                    <div class="text-base text-black">${data.name}</div>
+                                    <div class="text-xs text-gray-500 font-semibold mt-1">${data.task}</div>
+                                </td>
+                                <td class="p-4 font-mono text-xs">
+                                    ${deadlineText}
+                                </td>
+                                <td class="p-4">
+                                    <span class="${badgeColor} border px-3 py-1 rounded-full text-xs">${statusName}</span>
+                                </td>
+                                <td class="p-4 text-center space-x-1 opacity-50 group-hover:opacity-100 transition-opacity flex">
+                                    <button class="btn-edit bg-gray-200 text-gray-700 hover:bg-gray-300 px-3 py-1.5 rounded transition-colors" data-id="${inv}" title="Edit"><i class="fa-solid fa-pen"></i></button>
+                                    <button class="btn-delete bg-red-100 text-red-600 hover:bg-red-200 px-3 py-1.5 rounded transition-colors" data-id="${inv}" title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+
+                    // Pasang event listener ke tombol Edit & Hapus
+                    document.querySelectorAll('.btn-edit').forEach(btn => {
+                        btn.addEventListener('click', async (e) => {
+                            const id = e.currentTarget.getAttribute('data-id');
+                            const docData = (await getDoc(doc(db, "orders", id))).data();
+                            
+                            document.getElementById('adminInv').value = id;
+                            document.getElementById('adminName').value = docData.name;
+                            document.getElementById('adminTask').value = docData.task;
+                            document.getElementById('adminDeadline').value = docData.deadline || "";
+                            document.getElementById('adminStatus').value = docData.status;
+                            window.scrollTo(0, 0); // Scroll ke atas (ke form)
+                        });
+                    });
+
+                    document.querySelectorAll('.btn-delete').forEach(btn => {
+                        btn.addEventListener('click', async (e) => {
+                            const id = e.currentTarget.getAttribute('data-id');
+                            if(confirm(`Yakin ingin menghapus data progres ${id}?`)) {
+                                await deleteDoc(doc(db, "orders", id));
+                            }
+                        });
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+</html>
