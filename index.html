@@ -173,7 +173,7 @@
         </div>
     </section>
 
-    <!-- Services Section (DIROMBAK: Setiap Klik Mengarah ke Modal WA & Spreadsheet) -->
+    <!-- Services Section -->
     <section class="py-16 px-4 max-w-6xl mx-auto" id="layanan">
         <div class="flex items-center justify-center gap-4 mb-12" data-aos="fade-up">
             <h2 class="text-3xl md:text-5xl font-black uppercase bg-black text-white px-6 py-3 rotate-[-2deg] shadow-brutal text-center">
@@ -511,7 +511,7 @@
 
     <!-- LOGIKA GOOGLE APPS SCRIPT & MODAL WA -->
     <script>
-        // Masukkan URL Web App Google Apps Script Spreadsheet Anda di bawah ini:
+        // URL Web App Google Apps Script Anda yang sudah di-deploy:
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby1FaPkk2V-NkJw2Qbx3GYYgaAgjFhOR-EHYPp_gAW-H1JQYhtxjkf-kSwZlflnLelC1w/exec"; 
         const ADMIN_WA_NUMBER = "6283115784598"; // Nomor WA Admin Minpres
 
@@ -555,7 +555,7 @@
             else if(wa.startsWith('+')) { wa = wa.substring(1); }
 
             // Kirim data ke Google Spreadsheet secara asinkronus (no-cors)
-            const fetchUrl = `${https://script.google.com/macros/s/AKfycby1FaPkk2V-NkJw2Qbx3GYYgaAgjFhOR-EHYPp_gAW-H1JQYhtxjkf-kSwZlflnLelC1w/exec}?nama=${encodeURIComponent(name)}&wa=${encodeURIComponent(wa)}&layanan=${encodeURIComponent(service)}`;
+            const fetchUrl = `${GOOGLE_SCRIPT_URL}?nama=${encodeURIComponent(name)}&wa=${encodeURIComponent(wa)}&layanan=${encodeURIComponent(service)}`;
             
             fetch(fetchUrl, { mode: 'no-cors' })
             .then(() => {
@@ -570,7 +570,6 @@
             })
             .catch(err => {
                 console.error("Gagal simpan ke DB Spreadsheet", err);
-                alert("Terjadi kesalahan koneksi, namun Anda tetap dialihkan ke WhatsApp.");
                 const waMessage = `Halo admin Joki Minpres, saya *${name}* mau tanya jasa *${service}*.`;
                 window.open(`https://wa.me/${ADMIN_WA_NUMBER}?text=${waMessage}`, '_blank');
             })
