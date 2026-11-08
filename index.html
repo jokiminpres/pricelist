@@ -57,6 +57,11 @@
         ::-webkit-scrollbar { width: 10px; }
         ::-webkit-scrollbar-track { background: #fdfbf7; border-left: 2px solid black; }
         ::-webkit-scrollbar-thumb { background: #FF74B1; border: 2px solid black; }
+        
+        /* Tambahan untuk scroll tabel admin di HP */
+        .admin-table-wrapper {
+            -webkit-overflow-scrolling: touch;
+        }
     </style>
 </head>
 <body class="text-black font-sans antialiased overflow-x-hidden selection:bg-brand-yellow selection:text-black">
@@ -455,10 +460,11 @@
                 </button>
             </nav>
 
-            <div class="flex-1 p-6 lg:p-10 max-w-7xl mx-auto w-full grid grid-cols-1 xl:grid-cols-3 gap-8 items-start">
+            <div class="flex-1 p-4 lg:p-10 max-w-7xl mx-auto w-full grid grid-cols-1 xl:grid-cols-3 gap-6 lg:gap-8 items-start">
                 
                 <!-- Form Update/Tambah -->
-                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200 xl:col-span-1 sticky top-24">
+                <!-- PENTING: Dihapus 'sticky top-24' untuk mobile, agar bisa discroll di HP. Hanya sticky di layar besar (xl) -->
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200 xl:col-span-1 xl:sticky xl:top-24 mb-2 xl:mb-0">
                     <h3 class="font-black text-lg mb-6 flex items-center gap-2 pb-3 border-b border-gray-100"><i class="fa-solid fa-pen-to-square text-brand-blue"></i> Buat / Update Data</h3>
                     <form id="adminForm" class="space-y-4">
                         <div>
@@ -473,7 +479,6 @@
                             <input type="text" id="adminName" required placeholder="Nama pemesan" class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50 transition-colors duration-300">
                         </div>
                         
-                        <!-- KOLOM BARU UNTUK NOMOR WA KLIEN -->
                         <div>
                             <label class="font-bold text-sm text-gray-700 block mb-1">Nomor WA Klien:</label>
                             <input type="tel" id="adminWa" required placeholder="08123456789" class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50 transition-colors duration-300">
@@ -508,15 +513,15 @@
                 <!-- Database List -->
                 <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200 xl:col-span-2 overflow-hidden flex flex-col">
                     <h3 class="font-black text-lg mb-6 flex items-center gap-2 pb-3 border-b border-gray-100"><i class="fa-solid fa-server text-brand-pink"></i> Database Progres Klien</h3>
-                    <div class="overflow-x-auto flex-1">
-                        <table class="w-full text-left border-collapse min-w-[650px]">
+                    <div class="overflow-x-auto flex-1 admin-table-wrapper">
+                        <table class="w-full text-left border-collapse min-w-[700px]">
                             <thead>
                                 <tr class="bg-gray-100 text-gray-700 text-sm">
-                                    <th class="p-4 font-black rounded-tl-lg">INVOICE</th>
+                                    <th class="p-4 font-black rounded-tl-lg whitespace-nowrap">INVOICE</th>
                                     <th class="p-4 font-black">NAMA & TUGAS</th>
-                                    <th class="p-4 font-black">DEADLINE</th>
-                                    <th class="p-4 font-black">STATUS</th>
-                                    <th class="p-4 font-black text-center rounded-tr-lg">AKSI</th>
+                                    <th class="p-4 font-black whitespace-nowrap">DEADLINE</th>
+                                    <th class="p-4 font-black whitespace-nowrap">STATUS</th>
+                                    <th class="p-4 font-black text-center rounded-tr-lg whitespace-nowrap">AKSI</th>
                                 </tr>
                             </thead>
                             <tbody id="adminTableBody" class="divide-y divide-gray-200 text-sm font-bold text-gray-800">
@@ -596,9 +601,9 @@
             
             fetch(fetchUrl, { mode: 'no-cors' })
             .then(() => {
-                // Susun pesan otomatis ke WhatsApp Admin
-                const waMessage = `Halo admin Joki Minpres!%0A%0ASaya *${name}*, nomor WA: ${wa}.%0ASaya ingin konsultasi mengenai jasa *${service}*.%0A%0AMohon info harga dan prosesnya ya min. Terima kasih!`;
-                const waLink = `https://wa.me/${ADMIN_WA_NUMBER}?text=${waMessage}`;
+                // Susun pesan otomatis ke WhatsApp Admin (DENGAN ENCODE URI COMPONENT AGAR EMOJI TERBACA)
+                const waMessage = `Halo admin Joki Minpres!\n\nSaya *${name}*, nomor WA: ${wa}.\nSaya ingin konsultasi mengenai jasa *${service}*.\n\nMohon info harga dan prosesnya ya min. Terima kasih! 🙏`;
+                const waLink = `https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(waMessage)}`;
                 
                 window.open(waLink, '_blank');
                 
@@ -608,7 +613,7 @@
             .catch(err => {
                 console.error("Gagal simpan ke DB Spreadsheet", err);
                 const waMessage = `Halo admin Joki Minpres, saya *${name}* mau tanya jasa *${service}*.`;
-                window.open(`https://wa.me/${ADMIN_WA_NUMBER}?text=${waMessage}`, '_blank');
+                window.open(`https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(waMessage)}`, '_blank');
             })
             .finally(() => {
                 btnSubmit.innerHTML = originalBtnText;
@@ -897,31 +902,33 @@
                             deadlineText = `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
                         }
 
-                        // Menggabungkan 4 Tombol Aksi (Kirim Invoice WA, Selesai WA, Edit, Hapus)
+                        // Jarak antar tombol (gap-2) diperbesar agar mudah di klik pada HP
                         tbody.innerHTML += `
-                            <tr class="hover:bg-gray-50 transition-colors group">
-                                <td class="p-4 tracking-wider">${inv}</td>
-                                <td class="p-4">
+                            <tr class="hover:bg-gray-50 transition-colors group border-b">
+                                <td class="p-4 tracking-wider whitespace-nowrap">${inv}</td>
+                                <td class="p-4 min-w-[200px]">
                                     <div class="text-base text-black">${data.name}</div>
                                     <div class="text-xs text-gray-500 font-semibold mt-1">${data.task}</div>
                                 </td>
-                                <td class="p-4 font-mono text-xs">
+                                <td class="p-4 font-mono text-xs whitespace-nowrap">
                                     ${deadlineText}
                                 </td>
-                                <td class="p-4">
+                                <td class="p-4 whitespace-nowrap">
                                     <span class="${badgeColor} border px-3 py-1 rounded-full text-xs">${statusName}</span>
                                 </td>
-                                <td class="p-4 text-center gap-1.5 opacity-100 md:opacity-50 group-hover:opacity-100 transition-opacity flex flex-wrap justify-center items-center">
-                                    <button class="btn-wa-inv bg-green-100 text-green-700 hover:bg-green-200 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300" data-id="${inv}" data-name="${data.name}" data-wa="${data.wa || ''}" title="Kirim WA Invoice"><i class="fa-solid fa-paper-plane"></i></button>
-                                    <button class="btn-wa-done bg-brand-green text-black hover:bg-green-500 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300" data-id="${inv}" data-name="${data.name}" data-task="${data.task}" data-wa="${data.wa || ''}" title="Kirim WA Selesai"><i class="fa-brands fa-whatsapp"></i></button>
-                                    <button class="btn-edit bg-gray-200 text-gray-700 hover:bg-gray-300 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300" data-id="${inv}" title="Edit"><i class="fa-solid fa-pen"></i></button>
-                                    <button class="btn-delete bg-red-100 text-red-600 hover:bg-red-200 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300" data-id="${inv}" title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                <td class="p-4 text-center">
+                                    <div class="flex flex-wrap justify-center items-center gap-2 opacity-100 md:opacity-50 group-hover:opacity-100 transition-opacity min-w-[140px]">
+                                        <button class="btn-wa-inv bg-green-100 text-green-700 hover:bg-green-200 active:scale-95 px-3 py-2 rounded transition-all duration-300" data-id="${inv}" data-name="${data.name}" data-wa="${data.wa || ''}" title="Kirim WA Invoice"><i class="fa-solid fa-paper-plane"></i></button>
+                                        <button class="btn-wa-done bg-brand-green text-black hover:bg-green-500 active:scale-95 px-3 py-2 rounded transition-all duration-300" data-id="${inv}" data-name="${data.name}" data-task="${data.task}" data-wa="${data.wa || ''}" title="Kirim WA Selesai"><i class="fa-brands fa-whatsapp"></i></button>
+                                        <button class="btn-edit bg-gray-200 text-gray-700 hover:bg-gray-300 active:scale-95 px-3 py-2 rounded transition-all duration-300" data-id="${inv}" title="Edit"><i class="fa-solid fa-pen"></i></button>
+                                        <button class="btn-delete bg-red-100 text-red-600 hover:bg-red-200 active:scale-95 px-3 py-2 rounded transition-all duration-300" data-id="${inv}" title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                    </div>
                                 </td>
                             </tr>
                         `;
                     });
 
-                    // Tombol WA: Kirim Invoice
+                    // Tombol WA: Kirim Invoice (MENGGUNAKAN ENCODE URI COMPONENT)
                     document.querySelectorAll('.btn-wa-inv').forEach(btn => {
                         btn.addEventListener('click', (e) => {
                             const id = e.currentTarget.getAttribute('data-id');
@@ -931,12 +938,12 @@
                             if(!wa) { alert("Nomor WA kosong! Silakan klik tombol Edit dan isi Nomor WA klien terlebih dahulu."); return; }
                             
                             const websiteUrl = "https://jokiminpres.github.io/pricelist/";
-                            const text = `Halo *${name}*,%0A%0ATerima kasih sudah order di Joki Kilat Minpres! 🙏%0A%0ANomor Invoice kamu adalah: *${id}*%0A%0AKamu bisa cek progres tugasmu secara real-time di website kami:%0A${websiteUrl}%0A%0AMasukkan nomor invoice di atas pada menu *Cek Progres*. Terima kasih! ✨`;
-                            window.open(`https://wa.me/${wa}?text=${text}`, '_blank');
+                            const text = `Halo *${name}*,\n\nTerima kasih sudah order di Joki Kilat Minpres! 🙏\n\nNomor Invoice kamu adalah: *${id}*\n\nKamu bisa cek progres tugasmu secara real-time di website kami:\n${websiteUrl}\n\nMasukkan nomor invoice di atas pada menu *Cek Progres*. Terima kasih! ✨`;
+                            window.open(`https://wa.me/${wa}?text=${encodeURIComponent(text)}`, '_blank');
                         });
                     });
 
-                    // Tombol WA: Tugas Selesai
+                    // Tombol WA: Tugas Selesai (MENGGUNAKAN ENCODE URI COMPONENT)
                     document.querySelectorAll('.btn-wa-done').forEach(btn => {
                         btn.addEventListener('click', (e) => {
                             const id = e.currentTarget.getAttribute('data-id');
@@ -946,8 +953,8 @@
                             
                             if(!wa) { alert("Nomor WA kosong! Silakan klik tombol Edit dan isi Nomor WA klien terlebih dahulu."); return; }
                             
-                            const text = `Halo *${name}*,%0A%0AKabar gembira! Tugas *${task}* kamu (Invoice: ${id}) sudah *SELESAI* dikerjakan tim Minpres! 🎉%0A%0ASilakan cek file yang kami kirimkan ya. Jika ada yang ingin direvisi atau ditanyakan, langsung balas pesan ini.%0A%0ATerima kasih sudah mempercayakan tugasmu di Joki Kilat Minpres! ✨`;
-                            window.open(`https://wa.me/${wa}?text=${text}`, '_blank');
+                            const text = `Halo *${name}*,\n\nKabar gembira! Tugas *${task}* kamu (Invoice: ${id}) sudah *SELESAI* dikerjakan tim Minpres! 🎉\n\nSilakan cek file yang kami kirimkan ya. Jika ada yang ingin direvisi atau ditanyakan, langsung balas pesan ini.\n\nTerima kasih sudah mempercayakan tugasmu di Joki Kilat Minpres! ✨`;
+                            window.open(`https://wa.me/${wa}?text=${encodeURIComponent(text)}`, '_blank');
                         });
                     });
 
