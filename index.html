@@ -107,9 +107,9 @@
                 Tugas banyak banget? Atau mepet deadline? Jangan panik, <strong class="text-brand-pink font-black text-xl">sini jokiin aja!</strong> 🚀<br>Free Konsultasi dulu juga boleh banget!
             </p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="https://wa.me/6283115784598" target="_blank" class="bg-brand-green text-black border-4 border-black shadow-brutal font-black text-lg py-4 px-8 hover:translate-y-1 hover:shadow-brutal-hover transition-all flex items-center justify-center gap-2 rounded-xl">
+                <button onclick="openWaModal('Konsultasi Umum / Tanya-tanya')" class="bg-brand-green text-black border-4 border-black shadow-brutal font-black text-lg py-4 px-8 hover:translate-y-1 hover:shadow-brutal-hover transition-all flex items-center justify-center gap-2 rounded-xl">
                     <i class="fa-brands fa-whatsapp text-2xl animate-pulse"></i> KLIK UNTUK NANYA
-                </a>
+                </button>
             </div>
         </div>
     </section>
@@ -173,49 +173,79 @@
         </div>
     </section>
 
-    <!-- Services Section -->
-    <section class="py-16 px-4 max-w-6xl mx-auto">
-        <div class="flex items-center gap-4 mb-10" data-aos="fade-right">
-            <h2 class="text-3xl md:text-4xl font-black uppercase bg-black text-white px-4 py-2 rotate-[-2deg]">Daftar Jasa Kami</h2>
-            <div class="h-1 w-full bg-black flex-1 hidden md:block"></div>
+    <!-- Services Section (DIROMBAK: Setiap Klik Mengarah ke Modal WA & Spreadsheet) -->
+    <section class="py-16 px-4 max-w-6xl mx-auto" id="layanan">
+        <div class="flex items-center justify-center gap-4 mb-12" data-aos="fade-up">
+            <h2 class="text-3xl md:text-5xl font-black uppercase bg-black text-white px-6 py-3 rotate-[-2deg] shadow-brutal text-center">
+                Pilih Jasa Kami
+            </h2>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="bg-white border-4 border-black p-6 md:p-8 shadow-brutal rounded-2xl relative transition-transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="100">
-                <div class="absolute -top-4 -right-4 text-4xl bg-brand-yellow rounded-full w-14 h-14 flex items-center justify-center border-4 border-black shadow-brutal-sm rotate-12">🎓</div>
-                <h3 class="text-2xl font-black mb-6 border-b-4 border-black pb-2 inline-block">Tugas Utama</h3>
-                <ul class="space-y-4 font-semibold text-lg">
-                    <li class="flex items-center gap-3"><span class="bg-brand-green border-2 border-black rounded-full w-8 h-8 flex items-center justify-center"><i class="fa-solid fa-check"></i></span> Tugas SMA & Mahasiswa</li>
-                    <li class="flex items-center gap-3"><span class="bg-brand-green border-2 border-black rounded-full w-8 h-8 flex items-center justify-center"><i class="fa-solid fa-check"></i></span> Makalah dan Paper</li>
-                    <li class="flex items-center gap-3"><span class="bg-brand-green border-2 border-black rounded-full w-8 h-8 flex items-center justify-center"><i class="fa-solid fa-check"></i></span> Draf Proposal & Skripsi</li>
-                    <li class="flex items-center gap-3"><span class="bg-brand-green border-2 border-black rounded-full w-8 h-8 flex items-center justify-center"><i class="fa-solid fa-check"></i></span> Laporan KKN & Magang</li>
-                    <li class="flex items-center gap-3"><span class="bg-brand-green border-2 border-black rounded-full w-8 h-8 flex items-center justify-center"><i class="fa-solid fa-check"></i></span> Artikel & Opini</li>
-                    <li class="flex items-center gap-3"><span class="bg-brand-green border-2 border-black rounded-full w-8 h-8 flex items-center justify-center"><i class="fa-solid fa-check"></i></span> Karya Tulis Ilmiah (KTI)</li>
-                    <li class="flex items-center gap-3"><span class="bg-brand-green border-2 border-black rounded-full w-8 h-8 flex items-center justify-center"><i class="fa-solid fa-check"></i></span> PKM Semua Bidang</li>
-                </ul>
-            </div>
-            <div class="space-y-8">
-                <div class="bg-brand-purple border-4 border-black p-6 md:p-8 shadow-brutal rounded-2xl transition-transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="200">
-                    <h3 class="text-2xl font-black mb-4">Pengolahan & Lainnya</h3>
-                    <ul class="space-y-3 font-semibold text-lg">
-                        <li class="flex items-center gap-3 bg-white px-4 py-2 border-2 border-black rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"><i class="fa-solid fa-chart-pie text-brand-pink text-xl"></i> Olah data SPSS</li>
-                        <li class="flex items-center gap-3 bg-white px-4 py-2 border-2 border-black rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"><i class="fa-solid fa-magnifying-glass text-brand-blue text-xl"></i> Cek Turnitin Termurah</li>
-                        <li class="flex items-center gap-3 bg-white px-4 py-2 border-2 border-black rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"><i class="fa-solid fa-pen-nib text-brand-green text-xl"></i> Esai & Resume</li>
-                        <li class="flex items-center gap-3 bg-white px-4 py-2 border-2 border-black rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"><i class="fa-solid fa-sitemap text-brand-yellow text-xl"></i> Mind Mapping</li>
-                    </ul>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <!-- Layanan 1 -->
+            <button onclick="openWaModal('Tugas Makalah / Paper')" class="bg-white border-4 border-black p-6 rounded-2xl shadow-brutal hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all group text-left relative overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+                <div class="absolute -right-6 -bottom-6 bg-brand-yellow w-24 h-24 rounded-full border-4 border-black group-hover:scale-150 transition-transform duration-500 z-0"></div>
+                <div class="relative z-10">
+                    <i class="fa-solid fa-file-word text-4xl mb-4 text-black bg-white p-3 rounded-xl border-2 border-black inline-block rotate-[-5deg]"></i>
+                    <h3 class="text-2xl font-black mb-2">Makalah & Paper</h3>
+                    <p class="font-bold text-gray-700 text-sm mb-4">Selesai rapi, sesuai format, anti-plagiasi.</p>
+                    <span class="inline-block bg-black text-white font-black text-xs px-3 py-1 rounded border-2 border-black group-hover:bg-brand-yellow group-hover:text-black transition-colors">Tanya & Order <i class="fa-solid fa-arrow-right"></i></span>
                 </div>
-                <div class="bg-brand-blue border-4 border-black p-6 shadow-brutal rounded-2xl transition-transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="300">
-                    <h3 class="text-xl font-black mb-3 text-white drop-shadow-md">Selain itu kami juga buka:</h3>
-                    <div class="flex flex-wrap gap-2 mt-2">
-                        <span class="bg-white border-2 border-black font-bold px-3 py-1 rounded-full text-sm hover:bg-brand-yellow cursor-pointer">Jasa Tulis & Ketik</span>
-                        <span class="bg-white border-2 border-black font-bold px-3 py-1 rounded-full text-sm hover:bg-brand-yellow cursor-pointer">Membuat PPT</span>
-                        <span class="bg-white border-2 border-black font-bold px-3 py-1 rounded-full text-sm hover:bg-brand-yellow cursor-pointer">Poster & CV</span>
-                        <span class="bg-white border-2 border-black font-bold px-3 py-1 rounded-full text-sm hover:bg-brand-yellow cursor-pointer">Edit Video</span>
-                        <span class="bg-white border-2 border-black font-bold px-3 py-1 rounded-full text-sm hover:bg-brand-yellow cursor-pointer">Profil LinkedIn</span>
-                        <span class="bg-white border-2 border-black font-bold px-3 py-1 rounded-full text-sm hover:bg-brand-yellow cursor-pointer">Game Edukasi</span>
-                    </div>
+            </button>
+
+            <!-- Layanan 2 -->
+            <button onclick="openWaModal('Penyusunan Skripsi / Proposal')" class="bg-brand-pink border-4 border-black p-6 rounded-2xl shadow-brutal hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all group text-left relative overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+                <div class="absolute -right-6 -bottom-6 bg-white w-24 h-24 rounded-full border-4 border-black group-hover:scale-150 transition-transform duration-500 z-0"></div>
+                <div class="relative z-10">
+                    <i class="fa-solid fa-graduation-cap text-4xl mb-4 text-black bg-white p-3 rounded-xl border-2 border-black inline-block rotate-[5deg]"></i>
+                    <h3 class="text-2xl font-black mb-2">Skripsi & Proposal</h3>
+                    <p class="font-bold text-gray-900 text-sm mb-4">Bimbingan sampai ACC! Olah data s/d bab akhir.</p>
+                    <span class="inline-block bg-black text-white font-black text-xs px-3 py-1 rounded border-2 border-black group-hover:bg-brand-blue transition-colors">Tanya & Order <i class="fa-solid fa-arrow-right"></i></span>
                 </div>
-            </div>
+            </button>
+
+            <!-- Layanan 3 -->
+            <button onclick="openWaModal('Desain PPT Estetik')" class="bg-brand-blue border-4 border-black p-6 rounded-2xl shadow-brutal hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all group text-left relative overflow-hidden" data-aos="fade-up" data-aos-delay="300">
+                <div class="relative z-10">
+                    <i class="fa-solid fa-desktop text-4xl mb-4 text-black bg-white p-3 rounded-xl border-2 border-black inline-block rotate-[-2deg]"></i>
+                    <h3 class="text-2xl font-black mb-2">PPT Estetik</h3>
+                    <p class="font-bold text-gray-900 text-sm mb-4">Presentasi auto dilirik dosen. Desain kekinian & pro.</p>
+                    <span class="inline-block bg-black text-white font-black text-xs px-3 py-1 rounded border-2 border-black group-hover:bg-brand-pink transition-colors">Tanya & Order <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </button>
+
+            <!-- Layanan 4 -->
+            <button onclick="openWaModal('Olah Data SPSS')" class="bg-brand-yellow border-4 border-black p-6 rounded-2xl shadow-brutal hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all group text-left relative overflow-hidden" data-aos="fade-up" data-aos-delay="400">
+                <div class="relative z-10">
+                    <i class="fa-solid fa-chart-pie text-4xl mb-4 text-black bg-white p-3 rounded-xl border-2 border-black inline-block rotate-[3deg]"></i>
+                    <h3 class="text-2xl font-black mb-2">Olah Data SPSS</h3>
+                    <p class="font-bold text-gray-800 text-sm mb-4">Uji validitas, reliabilitas, regresi. Dijamin akurat!</p>
+                    <span class="inline-block bg-black text-white font-black text-xs px-3 py-1 rounded border-2 border-black group-hover:bg-brand-green transition-colors">Tanya & Order <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </button>
+
+            <!-- Layanan 5 -->
+            <button onclick="openWaModal('Cek / Lolos Turnitin')" class="bg-brand-green border-4 border-black p-6 rounded-2xl shadow-brutal hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all group text-left relative overflow-hidden" data-aos="fade-up" data-aos-delay="500">
+                <div class="relative z-10">
+                    <i class="fa-solid fa-magnifying-glass-chart text-4xl mb-4 text-black bg-white p-3 rounded-xl border-2 border-black inline-block rotate-[-4deg]"></i>
+                    <h3 class="text-2xl font-black mb-2">Cek & Parafrase Turnitin</h3>
+                    <p class="font-bold text-gray-800 text-sm mb-4">Turunkan persentase plagiasi. No repository!</p>
+                    <span class="inline-block bg-black text-white font-black text-xs px-3 py-1 rounded border-2 border-black group-hover:bg-brand-yellow transition-colors">Tanya & Order <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </button>
+
+            <!-- Layanan 6 -->
+            <button onclick="openWaModal('Tugas Umum / Lainnya')" class="bg-white border-4 border-black p-6 rounded-2xl shadow-brutal hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all group text-left border-dashed relative" data-aos="fade-up" data-aos-delay="600">
+                <div class="relative z-10 flex flex-col items-center justify-center h-full text-center py-4">
+                    <i class="fa-solid fa-circle-question text-5xl mb-3 text-brand-purple animate-pulse"></i>
+                    <h3 class="text-2xl font-black mb-2">Tugas Lainnya?</h3>
+                    <p class="font-bold text-gray-600 text-sm">Resume, Esai, Mind Mapping, Poster, Ketik, dll.</p>
+                </div>
+            </button>
+
         </div>
+
         <div class="mt-10 bg-brand-yellow border-4 border-black p-5 text-center font-black text-xl shadow-brutal rounded-xl transform rotate-1 animate-pulse-fast" data-aos="zoom-in">
             ✨ Tugas lain belum ada di atas? Bisa tanya-tanya dulu ya! ✨
         </div>
@@ -229,8 +259,8 @@
                 <div class="border-4 border-black p-6 rounded-2xl bg-brand-pink text-center shadow-brutal relative" data-aos="fade-up" data-aos-delay="100">
                     <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-white border-4 border-black font-black text-2xl w-12 h-12 flex items-center justify-center rounded-full">1</div>
                     <i class="fa-brands fa-whatsapp text-4xl mb-4 mt-2"></i>
-                    <h3 class="font-black text-xl mb-2">Chat Admin</h3>
-                    <p class="font-bold text-sm">Konsultasi tugas kamu dan deal harga.</p>
+                    <h3 class="font-black text-xl mb-2">Pilih Jasa & Chat</h3>
+                    <p class="font-bold text-sm">Klik layanan dan isi form WhatsApp.</p>
                 </div>
                 <div class="border-4 border-black p-6 rounded-2xl bg-brand-yellow text-center shadow-brutal relative" data-aos="fade-up" data-aos-delay="200">
                     <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-white border-4 border-black font-black text-2xl w-12 h-12 flex items-center justify-center rounded-full">2</div>
@@ -242,7 +272,7 @@
                     <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-white text-black border-4 border-black font-black text-2xl w-12 h-12 flex items-center justify-center rounded-full">3</div>
                     <i class="fa-solid fa-laptop-code text-4xl mb-4 mt-2"></i>
                     <h3 class="font-black text-xl mb-2">Pengerjaan</h3>
-                    <p class="font-bold text-sm">Tugas dikerjakan tim. Bisa pantau via Lacak Progres!</p>
+                    <p class="font-bold text-sm">Tugas dikerjakan tim. Pantau via Lacak Progres!</p>
                 </div>
                 <div class="border-4 border-black p-6 rounded-2xl bg-brand-green text-center shadow-brutal relative" data-aos="fade-up" data-aos-delay="400">
                     <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-white border-4 border-black font-black text-2xl w-12 h-12 flex items-center justify-center rounded-full">4</div>
@@ -327,6 +357,45 @@
     </footer>
 
     </div> <!-- AKHIR DARI WEB UTAMA -->
+
+
+    <!-- ========================================== -->
+    <!-- MODAL POPUP INPUT NOMOR WA PELANGGAN -->
+    <!-- ========================================== -->
+    <div id="waModal" class="hidden fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="bg-white w-full max-w-md border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] rounded-2xl p-6 relative transform scale-95 transition-transform duration-300" id="waModalContent">
+            
+            <!-- Tombol Close -->
+            <button onclick="closeWaModal()" class="absolute -top-4 -right-4 bg-brand-pink border-4 border-black text-black w-10 h-10 rounded-full font-black text-xl hover:bg-red-500 hover:text-white transition-colors flex items-center justify-center z-10 shadow-brutal-sm">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center mb-6 mt-2">
+                <div class="bg-brand-yellow border-2 border-black px-3 py-1 font-black text-sm inline-block rounded mb-3 rotate-[-2deg]" id="modalServiceLabel">
+                    Tugas Makalah
+                </div>
+                <h3 class="text-2xl font-black mb-1">Konsultasi Admin</h3>
+                <p class="font-bold text-gray-500 text-sm">Isi form singkat ini agar admin tahu siapa kamu!</p>
+            </div>
+
+            <form id="waForm" class="space-y-4">
+                <input type="hidden" id="waService" value="">
+                
+                <div>
+                    <label class="font-black text-sm block mb-1">Nama Panggilan Kamu:</label>
+                    <input type="text" id="waName" required placeholder="Contoh: Budi" class="w-full px-4 py-3 border-4 border-black font-bold rounded-xl focus:outline-none focus:ring-4 focus:ring-brand-blue bg-gray-50">
+                </div>
+                <div>
+                    <label class="font-black text-sm block mb-1">Nomor WhatsApp Kamu:</label>
+                    <input type="tel" id="waNumber" required placeholder="Contoh: 081234567890" class="w-full px-4 py-3 border-4 border-black font-bold rounded-xl focus:outline-none focus:ring-4 focus:ring-brand-blue bg-gray-50">
+                </div>
+                
+                <button type="submit" id="btnSubmitWa" class="w-full bg-brand-green text-black font-black text-lg py-4 rounded-xl border-4 border-black hover:bg-green-500 transition-colors shadow-brutal-sm active:translate-y-1 flex items-center justify-center gap-2 mt-4">
+                    <i class="fa-brands fa-whatsapp text-2xl"></i> Lanjut Chat Admin
+                </button>
+            </form>
+        </div>
+    </div>
 
 
     <!-- ========================================== -->
@@ -440,14 +509,84 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>AOS.init({ once: true, offset: 50 });</script>
 
-    <!-- FIREBASE & LOGIKA UTAMA (TYPE MODULE) -->
+    <!-- LOGIKA GOOGLE APPS SCRIPT & MODAL WA -->
+    <script>
+        // Masukkan URL Web App Google Apps Script Spreadsheet Anda di bawah ini:
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzQz6T34K9p3H_4.../exec"; 
+        const ADMIN_WA_NUMBER = "6283115784598"; // Nomor WA Admin Minpres
+
+        const waModal = document.getElementById('waModal');
+        const waModalContent = document.getElementById('waModalContent');
+
+        function openWaModal(layanan) {
+            document.getElementById('modalServiceLabel').innerText = layanan;
+            document.getElementById('waService').value = layanan;
+            
+            waModal.classList.remove('hidden');
+            setTimeout(() => {
+                waModal.classList.remove('opacity-0');
+                waModalContent.classList.remove('scale-95');
+                waModalContent.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeWaModal() {
+            waModal.classList.add('opacity-0');
+            waModalContent.classList.remove('scale-100');
+            waModalContent.classList.add('scale-95');
+            setTimeout(() => {
+                waModal.classList.add('hidden');
+            }, 300);
+        }
+
+        document.getElementById('waForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const btnSubmit = document.getElementById('btnSubmitWa');
+            const originalBtnText = btnSubmit.innerHTML;
+            btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-2xl"></i> Membuka WA...';
+            btnSubmit.disabled = true;
+
+            const name = document.getElementById('waName').value.trim();
+            let wa = document.getElementById('waNumber').value.trim();
+            const service = document.getElementById('waService').value;
+
+            if(wa.startsWith('0')) { wa = '62' + wa.substring(1); }
+            else if(wa.startsWith('+')) { wa = wa.substring(1); }
+
+            // Kirim data ke Google Spreadsheet secara asinkronus (no-cors)
+            const fetchUrl = `${GOOGLE_SCRIPT_URL}?nama=${encodeURIComponent(name)}&wa=${encodeURIComponent(wa)}&layanan=${encodeURIComponent(service)}`;
+            
+            fetch(fetchUrl, { mode: 'no-cors' })
+            .then(() => {
+                // Susun pesan otomatis ke WhatsApp Admin
+                const waMessage = `Halo admin Joki Minpres!%0A%0ASaya *${name}*, nomor WA: ${wa}.%0ASaya ingin konsultasi mengenai jasa *${service}*.%0A%0AMohon info harga dan prosesnya ya min. Terima kasih!`;
+                const waLink = `https://wa.me/${ADMIN_WA_NUMBER}?text=${waMessage}`;
+                
+                window.open(waLink, '_blank');
+                
+                closeWaModal();
+                document.getElementById('waForm').reset();
+            })
+            .catch(err => {
+                console.error("Gagal simpan ke DB Spreadsheet", err);
+                alert("Terjadi kesalahan koneksi, namun Anda tetap dialihkan ke WhatsApp.");
+                const waMessage = `Halo admin Joki Minpres, saya *${name}* mau tanya jasa *${service}*.`;
+                window.open(`https://wa.me/${ADMIN_WA_NUMBER}?text=${waMessage}`, '_blank');
+            })
+            .finally(() => {
+                btnSubmit.innerHTML = originalBtnText;
+                btnSubmit.disabled = false;
+            });
+        });
+    </script>
+
+    <!-- FIREBASE & LOGIKA UTAMA TRACKER & ADMIN (TYPE MODULE) -->
     <script type="module">
-        // Import Firebase dari CDN
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, getDoc, collection, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // Konfigurasi Firebase Anda yang TERBARU
         const firebaseConfig = {
             apiKey: "AIzaSyCy5s2FMCYNed3kTDk6bt49fcTq05DgCp8",
             authDomain: "minprespricelist-77c41.firebaseapp.com",
@@ -458,12 +597,10 @@
             measurementId: "G-YLX6HEE42V"
         };
 
-        // Inisialisasi Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // Status Detail Konstanta
         const statusDetail = [
             { id: 1, title: 'Pembayaran Diterima', desc: 'Admin telah mengkonfirmasi pembayaranmu.', color: 'bg-brand-yellow', icon: 'fa-money-bill-wave' },
             { id: 2, title: 'Sedang Dikerjakan', desc: 'Tim Minpres sedang menyusun tugas kamu dengan teliti.', color: 'bg-brand-pink', icon: 'fa-pen-nib' },
@@ -471,7 +608,7 @@
             { id: 4, title: 'Tugas Selesai!', desc: 'Hore! File tugas sudah siap dikirim ke WhatsApp kamu.', color: 'bg-brand-green', icon: 'fa-flag-checkered' }
         ];
 
-        let countdownInterval; // Variabel global untuk timer
+        let countdownInterval;
 
         // ----------------------------------------------------
         // LOGIKA KLIEN: LACAK PROGRES
@@ -480,7 +617,6 @@
             e.preventDefault();
             const inputVal = document.getElementById('invoiceInput').value.trim().toUpperCase();
             
-            // Kata sandi rahasia untuk buka admin dari kolom pencarian
             if (inputVal === 'ADMIN123') {
                 openAdminWorkspace();
                 document.getElementById('invoiceInput').value = '';
@@ -496,7 +632,6 @@
             loading.classList.remove('hidden');
 
             try {
-                // Ambil data dari Firestore
                 const docRef = doc(db, "orders", inputVal);
                 const docSnap = await getDoc(docRef);
 
@@ -505,7 +640,7 @@
                 if (docSnap.exists()) {
                     const orderData = docSnap.data();
                     renderTimeline(inputVal, orderData);
-                    startCountdown(orderData.deadline); // Mulai hitung mundur
+                    startCountdown(orderData.deadline);
                     result.classList.remove('hidden');
                     result.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 } else {
@@ -555,9 +690,8 @@
             });
         }
 
-        // FUNGSI HITUNG MUNDUR (COUNTDOWN)
         function startCountdown(deadlineString) {
-            clearInterval(countdownInterval); // Hapus timer lama jika ada
+            clearInterval(countdownInterval);
             const timerContainer = document.getElementById('countdownTimer');
             
             if(!deadlineString) {
@@ -640,16 +774,13 @@
             signOut(auth);
         });
 
-        // Pantau Status Login
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // Sedang Login
                 document.getElementById('admin-login').classList.add('hidden');
                 document.getElementById('admin-dashboard').classList.remove('hidden');
                 document.getElementById('admin-dashboard').classList.add('flex');
-                fetchDataRealtime(); // Mulai tarik data
+                fetchDataRealtime();
             } else {
-                // Belum/Logout
                 document.getElementById('admin-dashboard').classList.add('hidden');
                 document.getElementById('admin-dashboard').classList.remove('flex');
                 document.getElementById('admin-login').classList.remove('hidden');
@@ -659,14 +790,11 @@
         // ----------------------------------------------------
         // FIREBASE FIRESTORE (DATABASE ADMIN)
         // ----------------------------------------------------
-        
-        // Fitur Generate Invoice Button
         document.getElementById('btnGenerateInv').addEventListener('click', () => {
             const randomNum = Math.floor(1000 + Math.random() * 9000);
             document.getElementById('adminInv').value = `MINPRES-${randomNum}`;
         });
 
-        // Fitur Simpan Data Baru/Update
         document.getElementById('adminForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btnSave = document.getElementById('btnSaveData');
@@ -675,7 +803,7 @@
             const inv = document.getElementById('adminInv').value.trim().toUpperCase();
             const name = document.getElementById('adminName').value.trim();
             const task = document.getElementById('adminTask').value.trim();
-            const deadline = document.getElementById('adminDeadline').value; // Format: YYYY-MM-DDTHH:mm
+            const deadline = document.getElementById('adminDeadline').value;
             const status = parseInt(document.getElementById('adminStatus').value);
 
             try {
@@ -687,20 +815,18 @@
                     updatedAt: new Date()
                 });
                 
-                // Notif Sukses
                 const notif = document.getElementById('adminNotif');
                 notif.classList.remove('hidden');
                 setTimeout(() => notif.classList.add('hidden'), 3000);
                 document.getElementById('adminForm').reset();
             } catch (error) {
                 console.error("Gagal simpan data: ", error);
-                alert("Gagal menyimpan data! Pastikan Aturan Firestore (Rules) sudah diset.");
+                alert("Gagal menyimpan data! Pastikan aturan Firestore Rules sudah benar.");
             } finally {
                 btnSave.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Data Real-Time';
             }
         });
 
-        // Fitur Baca Data Real-Time & Render Table
         function fetchDataRealtime() {
             onSnapshot(collection(db, "orders"), (querySnapshot) => {
                 const tbody = document.getElementById('adminTableBody');
@@ -723,7 +849,6 @@
                         if(data.status == 3) badgeColor = 'bg-blue-100 text-blue-800 border-blue-300';
                         if(data.status == 4) badgeColor = 'bg-green-100 text-green-800 border-green-300';
 
-                        // Format Deadline Teks di Tabel
                         let deadlineText = "Belum diatur";
                         if(data.deadline) {
                             const d = new Date(data.deadline);
@@ -751,7 +876,6 @@
                         `;
                     });
 
-                    // Pasang event listener ke tombol Edit & Hapus
                     document.querySelectorAll('.btn-edit').forEach(btn => {
                         btn.addEventListener('click', async (e) => {
                             const id = e.currentTarget.getAttribute('data-id');
@@ -762,7 +886,7 @@
                             document.getElementById('adminTask').value = docData.task;
                             document.getElementById('adminDeadline').value = docData.deadline || "";
                             document.getElementById('adminStatus').value = docData.status;
-                            window.scrollTo(0, 0); // Scroll ke atas (ke form)
+                            window.scrollTo(0, 0);
                         });
                     });
 
