@@ -165,7 +165,7 @@
                         <span id="resultBadge" class="bg-brand-green text-black font-bold px-3 py-1 border-2 border-black rounded-full text-sm animate-pulse-fast">Sedang Dikerjakan</span>
                     </div>
 
-                    <!-- TOMBOL DOWNLOAD: Muncul jika ada link dan status selesai -->
+                    <!-- TOMBOL DOWNLOAD: Muncul jika ada link -->
                     <div id="fileDownloadContainer" class="hidden mb-8">
                         <h4 class="font-black uppercase text-center mb-3">Tugas Selesai! 🎉</h4>
                         <a href="#" id="btnDownloadClient" target="_blank" class="block w-full bg-brand-green text-black text-center font-black text-xl py-4 border-4 border-black rounded-xl shadow-brutal hover:-translate-y-1 hover:shadow-brutal-hover active:scale-95 transition-all">
@@ -733,7 +733,7 @@
             { id: 3, title: 'Tugas Selesai!', desc: 'Hore! File tugas sudah siap. Silakan klik tombol download di atas.', color: 'bg-brand-green', icon: 'fa-flag-checkered' }
         ];
 
-        // TRACKER KLIEN
+        // TRACKER KLIEN (DIPERBARUI: TOMBOL DOWNLOAD MUNCUL JIKA LINK ADA)
         let countdownInterval;
         document.getElementById('trackForm').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -757,31 +757,24 @@
                     const orderData = docSnap.data();
                     renderTimeline(inputVal, orderData);
                     
-                    // LOGIKA TOMBOL DOWNLOAD & FALLBACK
-                    const fixedStatus = orderData.status > 3 ? 3 : orderData.status;
                     const dlContainer = document.getElementById('fileDownloadContainer');
                     const fallbackSelesai = document.getElementById('fallbackSelesai');
                     const countdownBox = document.getElementById('countdownBox');
 
-                    if (fixedStatus == 3) {
-                        countdownBox.classList.add('hidden'); // Sembunyikan countdown jika sudah selesai
-
-                        if (orderData.fileUrl && orderData.fileUrl.trim() !== "") {
-                            // Jika link disematkan
-                            let finalUrl = orderData.fileUrl.trim();
-                            // Jika admin lupa ketik https, tambahkan otomatis agar tombol bisa diklik
-                            if(!finalUrl.startsWith('http')) { finalUrl = 'https://' + finalUrl; } 
-                            
-                            document.getElementById('btnDownloadClient').href = finalUrl;
-                            dlContainer.classList.remove('hidden');
-                            fallbackSelesai.classList.add('hidden');
-                        } else {
-                            // Jika link dikosongkan tapi tugas sudah selesai
-                            dlContainer.classList.add('hidden');
-                            fallbackSelesai.classList.remove('hidden');
-                        }
+                    // JIKA ADA LINK FILE, TOMBOL DOWNLOAD DIPAKSA TAMPIL
+                    if (orderData.fileUrl && orderData.fileUrl.trim() !== "") {
+                        let finalUrl = orderData.fileUrl.trim();
+                        if(!finalUrl.startsWith('http')) { finalUrl = 'https://' + finalUrl; } 
+                        
+                        document.getElementById('btnDownloadClient').href = finalUrl;
+                        dlContainer.classList.remove('hidden');
+                        fallbackSelesai.classList.add('hidden');
+                        countdownBox.classList.add('hidden');
+                    } else if (orderData.status >= 3) {
+                        dlContainer.classList.add('hidden');
+                        fallbackSelesai.classList.remove('hidden');
+                        countdownBox.classList.add('hidden');
                     } else {
-                        // Jika belum selesai (Langkah 1 atau 2)
                         dlContainer.classList.add('hidden');
                         fallbackSelesai.classList.add('hidden');
                         countdownBox.classList.remove('hidden');
@@ -934,7 +927,7 @@
                     price: price,
                     dp: dp,
                     sisa: sisa,
-                    fileUrl: document.getElementById('adminFileUrl').value.trim(), // MENYIMPAN LINK DOWNLOAD
+                    fileUrl: document.getElementById('adminFileUrl').value.trim(),
                     deadline: document.getElementById('adminDeadline').value,
                     status: parseInt(document.getElementById('adminStatus').value),
                     updatedAt: new Date()
@@ -1046,7 +1039,6 @@
                         dpBadge = '<span class="bg-yellow-100 text-yellow-800 text-[10px] px-2 py-0.5 rounded border border-yellow-300 font-bold">DP Sebagian</span>';
                     }
 
-                    // Tambahkan ikon Link jika sudah ada file URL
                     let fileLinkIcon = (data.fileUrl && data.fileUrl.trim() !== "") ? `<a href="${data.fileUrl.startsWith('http') ? data.fileUrl : 'https://'+data.fileUrl}" target="_blank" class="text-blue-500 hover:text-blue-700 ml-1 inline-block" title="Link File Aktif"><i class="fa-solid fa-link"></i></a>` : '';
 
                     tbody.innerHTML += `
@@ -1117,12 +1109,12 @@
                     btn.addEventListener('click', (e) => {
                         const id = e.currentTarget.getAttribute('data-id'), name = e.currentTarget.getAttribute('data-name'), task = e.currentTarget.getAttribute('data-task'), wa = e.currentTarget.getAttribute('data-wa');
                         if(!wa) { alert("Nomor WA kosong!"); return; }
-                        const txt = `Halo *${name}*,\n\nTugas *${task}* (Invoice: ${id}) sudah *SELESAI* dikerjakan tim Minpres! 🎉\n\nSilakan cek link download file yang kami sediakan di web atau file yang kami kirimkan ya. Terima kasih! ✨`;
+                        const txt = `Halo *${name}*,\n\nTugas *${task}* (Invoice: ${id}) sudah *SELESAI* dikerjakan tim Minpres! 🎉\n\nSilakan cek link download file yang kami sediakan di web ya. Terima kasih! ✨`;
                         window.open(`https://wa.me/${wa}?text=${encodeURIComponent(txt)}`, '_blank');
                     });
                 });
                 
-                // PERBAIKAN BUG TOMBOL EDIT
+                // TOMBOL EDIT DENGAN PENGUNCIAN STATUS
                 document.querySelectorAll('.btn-edit').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         const id = e.currentTarget.getAttribute('data-id');
@@ -1136,14 +1128,12 @@
                         document.getElementById('adminDp').value = docData.dp || "";
                         document.getElementById('adminFileUrl').value = docData.fileUrl || ""; 
                         
-                        // Perbaikan penanganan deadline kosong agar form tidak error
                         if(docData.deadline) {
                             document.getElementById('adminDeadline').value = docData.deadline;
                         } else {
                             document.getElementById('adminDeadline').value = "";
                         }
 
-                        // Perbaikan status agar selalu sesuai dengan data asli saat ini
                         let currentStatus = docData.status;
                         if (!currentStatus || currentStatus < 1) currentStatus = 1;
                         if (currentStatus > 3) currentStatus = 3;
