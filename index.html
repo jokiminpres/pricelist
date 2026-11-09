@@ -456,25 +456,25 @@
 
             <div class="flex-1 p-4 lg:p-10 max-w-7xl mx-auto w-full flex flex-col gap-6 lg:gap-8">
                 
-                <!-- KOTAK REKAP KEUANGAN & OMZET -->
+                <!-- KOTAK REKAP OMZET KOTOR, OMZET BERSIH, & SISA PIUTANG -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-white p-5 rounded-xl shadow-md border-l-4 border-brand-yellow flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-bold text-gray-500">Omzet Kotor (Potensi Order)</p>
+                            <h4 class="text-2xl font-black text-black" id="dashOmzetKotor">Rp 0</h4>
+                        </div>
+                        <div class="bg-yellow-100 w-12 h-12 rounded-full flex items-center justify-center text-yellow-700 text-xl"><i class="fa-solid fa-chart-pie"></i></div>
+                    </div>
                     <div class="bg-white p-5 rounded-xl shadow-md border-l-4 border-brand-green flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-bold text-gray-500">Total Omzet</p>
-                            <h4 class="text-2xl font-black text-black" id="dashOmzet">Rp 0</h4>
+                            <p class="text-sm font-bold text-gray-500">Omzet Bersih (Uang Masuk / DP)</p>
+                            <h4 class="text-2xl font-black text-black" id="dashOmzetBersih">Rp 0</h4>
                         </div>
                         <div class="bg-green-100 w-12 h-12 rounded-full flex items-center justify-center text-green-600 text-xl"><i class="fa-solid fa-wallet"></i></div>
                     </div>
-                    <div class="bg-white p-5 rounded-xl shadow-md border-l-4 border-brand-blue flex items-center justify-between">
-                        <div>
-                            <p class="text-sm font-bold text-gray-500">Total DP Masuk</p>
-                            <h4 class="text-2xl font-black text-black" id="dashTotalDp">Rp 0</h4>
-                        </div>
-                        <div class="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center text-blue-600 text-xl"><i class="fa-solid fa-money-bill-transfer"></i></div>
-                    </div>
                     <div class="bg-white p-5 rounded-xl shadow-md border-l-4 border-brand-pink flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-bold text-gray-500">Sisa Piutang (Belum Lunas)</p>
+                            <p class="text-sm font-bold text-gray-500">Sisa Piutang Belum Lunas</p>
                             <h4 class="text-2xl font-black text-black" id="dashTotalSisa">Rp 0</h4>
                         </div>
                         <div class="bg-pink-100 w-12 h-12 rounded-full flex items-center justify-center text-pink-600 text-xl"><i class="fa-solid fa-clock-rotate-left"></i></div>
@@ -662,7 +662,7 @@
             const fetchUrl = `${GOOGLE_SCRIPT_URL}?nama=${encodeURIComponent(name)}&wa=${encodeURIComponent(wa)}&layanan=${encodeURIComponent(service)}`;
             
             fetch(fetchUrl, { mode: 'no-cors' }).then(() => {
-                const waMessage = `Halo admin Joki Minpres!\n\nSaya *${name}*, nomor WA: ${wa}.\nIgin konsultasi mengenai jasa *${service}*.\n\nMohon info harga dan prosesnya ya min. Terima kasih! 🙏`;
+                const waMessage = `Halo admin Joki Minpres!\n\nSaya *${name}*, nomor WA: ${wa}.\nSaya ingin konsultasi mengenai jasa *${service}*.\n\nMohon info harga dan prosesnya ya min. Terima kasih! 🙏`;
                 window.open(`https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(waMessage)}`, '_blank');
                 closeWaModal();
                 document.getElementById('waForm').reset();
@@ -921,22 +921,22 @@
             const searchQuery = document.getElementById('searchFilter').value.toLowerCase();
             const statusQuery = document.getElementById('statusFilter').value;
 
-            // KEUANGAN / OMZET REKAP
-            let totalOmzet = 0;
-            let totalDp = 0;
+            // KEUANGAN: OMZET KOTOR, OMZET BERSIH, & SISA PIUTANG
+            let omzetKotor = 0;
+            let omzetBersih = 0;
             let totalSisa = 0;
 
             allOrdersData.forEach(item => {
                 let p = item.price || 0;
                 let d = item.dp || 0;
                 let s = item.sisa !== undefined ? item.sisa : (p - d);
-                totalOmzet += p;
-                totalDp += d;
-                totalSisa += s;
+                omzetKotor += p;       // Total seluruh harga tugas (meskipun belum DP)
+                omzetBersih += d;      // Total uang yang sudah masuk ke tangan (DP / Pelunasan)
+                totalSisa += s;        // Sisa tagihan
             });
 
-            document.getElementById('dashOmzet').innerText = formatRupiah(totalOmzet);
-            document.getElementById('dashTotalDp').innerText = formatRupiah(totalDp);
+            document.getElementById('dashOmzetKotor').innerText = formatRupiah(omzetKotor);
+            document.getElementById('dashOmzetBersih').innerText = formatRupiah(omzetBersih);
             document.getElementById('dashTotalSisa').innerText = formatRupiah(totalSisa);
 
             let filteredData = allOrdersData.filter(item => {
@@ -1012,7 +1012,6 @@
                                 <div class="font-mono text-xs text-gray-500"><i class="fa-regular fa-clock"></i> ${deadlineText}</div>
                             </td>
                             <td class="p-4 text-center">
-                                <!-- FITUR BARU: CHECKBOX PELUNASAN DI BAGIAN AKSI -->
                                 <div class="flex flex-col items-center gap-2 bg-gray-50 p-2 rounded-lg border border-gray-200">
                                     <label class="flex items-center gap-2 cursor-pointer font-bold text-xs select-none">
                                         <input type="checkbox" class="checkbox-lunas w-4 h-4 accent-brand-green cursor-pointer" data-id="${inv}" data-price="${price}" ${isFullyPaid ? 'checked' : ''}>
@@ -1030,14 +1029,12 @@
                     `;
                 });
 
-                // Bind Event Checkbox Lunas Otomatis
                 document.querySelectorAll('.checkbox-lunas').forEach(chk => {
                     chk.addEventListener('change', async (e) => {
                         const id = e.target.getAttribute('data-id');
                         const price = parseInt(e.target.getAttribute('data-price') || 0);
                         const isChecked = e.target.checked;
 
-                        // Jika dicentang, DP diset sama dengan harga (Sisa = 0). Jika di-uncheck, DP dikembalikan ke 0 atau dibiarkan.
                         const newDp = isChecked ? price : 0;
                         const newSisa = price - newDp;
 
@@ -1108,8 +1105,8 @@
                     "Nama Klien": item.name,
                     "No WA": item.wa || "-",
                     "Detail Tugas": item.task,
-                    "Total Harga": p,
-                    "Sudah DP": d,
+                    "Omzet Kotor (Harga)": p,
+                    "Omzet Bersih (DP Masuk)": d,
                     "Sisa Pelunasan": s,
                     "Status Pembayaran": statusBayar,
                     "Deadline": item.deadline ? item.deadline.replace('T', ' ') : '-',
@@ -1139,13 +1136,13 @@
             doc.text(`Tanggal Cetak: ${new Date().toLocaleDateString('id-ID')}`, 14, 28);
 
             let tableRows = [];
-            let totalOmzet = 0, totalDp = 0, totalSisa = 0;
+            let totalKotor = 0, totalBersih = 0, totalSisa = 0;
 
             allOrdersData.forEach(item => {
                 let p = item.price || 0;
                 let d = item.dp || 0;
                 let s = item.sisa !== undefined ? item.sisa : (p - d);
-                totalOmzet += p; totalDp += d; totalSisa += s;
+                totalKotor += p; totalBersih += d; totalSisa += s;
 
                 let st = item.status == 1 ? "Pembayaran Diterima" : (item.status == 2 ? "Proses" : "Selesai");
                 let statusBayar = s <= 0 ? "Lunas" : (d > 0 ? "DP Sebagian" : "Belum DP");
@@ -1162,7 +1159,7 @@
 
             doc.autoTable({
                 startY: 35,
-                head: [['Invoice', 'Klien', 'Tugas', 'Harga', 'DP', 'Sisa', 'Status Bayar']],
+                head: [['Invoice', 'Klien', 'Tugas', 'Omzet Kotor', 'Omzet Bersih', 'Sisa', 'Status Bayar']],
                 body: tableRows,
                 theme: 'grid',
                 headStyles: { fillColor: [17, 17, 17] },
@@ -1171,8 +1168,8 @@
 
             let finalY = doc.lastAutoTable.finalY + 10;
             doc.setFont("helvetica", "bold");
-            doc.text(`Total Omzet Keseluruhan: Rp ${totalOmzet.toLocaleString('id-ID')}`, 14, finalY);
-            doc.text(`Total DP Masuk: Rp ${totalDp.toLocaleString('id-ID')}`, 14, finalY + 6);
+            doc.text(`Total Omzet Kotor (Potensi): Rp ${totalKotor.toLocaleString('id-ID')}`, 14, finalY);
+            doc.text(`Total Omzet Bersih (Uang Masuk/DP): Rp ${totalBersih.toLocaleString('id-ID')}`, 14, finalY + 6);
             doc.text(`Total Sisa Piutang: Rp ${totalSisa.toLocaleString('id-ID')}`, 14, finalY + 12);
 
             doc.save(`Laporan_Keuangan_Minpres_${new Date().toISOString().slice(0,10)}.pdf`);
