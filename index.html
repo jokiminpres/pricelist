@@ -61,10 +61,7 @@
         ::-webkit-scrollbar-track { background: #fdfbf7; border-left: 2px solid black; }
         ::-webkit-scrollbar-thumb { background: #FF74B1; border: 2px solid black; }
         
-        /* Tambahan untuk scroll tabel admin di HP */
-        .admin-table-wrapper {
-            -webkit-overflow-scrolling: touch;
-        }
+        .admin-table-wrapper { -webkit-overflow-scrolling: touch; }
     </style>
 </head>
 <body class="text-black font-sans antialiased overflow-x-hidden selection:bg-brand-yellow selection:text-black">
@@ -335,28 +332,6 @@
         </div>
     </section>
 
-    <!-- Testimoni / Reviews -->
-    <section class="py-12 px-4 max-w-6xl mx-auto">
-        <h2 class="text-3xl font-black text-center uppercase mb-10" data-aos="fade-up">Kata Mereka 🗣️</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-white border-4 border-black p-6 shadow-brutal rounded-2xl rotate-[-1deg] hover:rotate-0 transition-transform duration-300 ease-out" data-aos="fade-up" data-aos-delay="100">
-                <div class="flex text-brand-yellow mb-3 text-xl"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                <p class="font-bold mb-4">"Gila sih cepet banget! Deadline besok pagi, diselamatin Minpres malamnya. Harganya juga masuk kantong mahasiswa."</p>
-                <div class="font-black border-t-2 border-black pt-3">- Budi, Mahasiswa Sem 5</div>
-            </div>
-            <div class="bg-brand-pink border-4 border-black p-6 shadow-brutal rounded-2xl rotate-[2deg] hover:rotate-0 transition-transform duration-300 ease-out" data-aos="fade-up" data-aos-delay="200">
-                <div class="flex text-brand-yellow mb-3 text-xl"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                <p class="font-bold mb-4">"Revisi makalah langsung acc dosen. Format rapi banget, turnitin juga rendah. Fix bakal order lagi kesini!"</p>
-                <div class="font-black border-t-2 border-black pt-3">- Siska, Siswi SMA</div>
-            </div>
-            <div class="bg-white border-4 border-black p-6 shadow-brutal rounded-2xl rotate-[-2deg] hover:rotate-0 transition-transform duration-300 ease-out" data-aos="fade-up" data-aos-delay="300">
-                <div class="flex text-brand-yellow mb-3 text-xl"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                <p class="font-bold mb-4">"PPT nya estetik parah woy! Temen-temen sekelas pada nanya bikin dimana hahaha. Makasih Minpres!"</p>
-                <div class="font-black border-t-2 border-black pt-3">- Reza, Mahasiswa Sem 2</div>
-            </div>
-        </div>
-    </section>
-
     <!-- Channel WhatsApp Banner -->
     <section class="py-16 px-4 mb-10">
         <div class="max-w-4xl mx-auto bg-brand-green border-4 border-black shadow-brutal p-8 md:p-14 text-center rounded-3xl relative overflow-hidden transition-all duration-300 ease-out" data-aos="flip-up">
@@ -395,7 +370,6 @@
     <div id="waModal" class="hidden fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 transition-all duration-300 ease-out">
         <div class="bg-white w-full max-w-md border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] rounded-2xl p-6 relative transform scale-95 transition-transform duration-300 ease-out" id="waModalContent">
             
-            <!-- Tombol Close -->
             <button onclick="closeWaModal()" class="absolute -top-4 -right-4 bg-brand-pink border-4 border-black text-black w-10 h-10 rounded-full font-black text-xl hover:bg-red-500 hover:text-white active:scale-95 transition-all duration-300 ease-out flex items-center justify-center z-10 shadow-brutal-sm">
                 <i class="fa-solid fa-xmark"></i>
             </button>
@@ -465,12 +439,37 @@
 
             <div class="flex-1 p-4 lg:p-10 max-w-7xl mx-auto w-full flex flex-col gap-6 lg:gap-8">
                 
+                <!-- KOTAK REKAP KEUANGAN & STATISTIK (FITUR BARU) -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-white p-5 rounded-xl shadow-md border-l-4 border-brand-green flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-bold text-gray-500">Total Omzet</p>
+                            <h4 class="text-2xl font-black text-black" id="dashOmzet">Rp 0</h4>
+                        </div>
+                        <div class="bg-green-100 w-12 h-12 rounded-full flex items-center justify-center text-green-600 text-xl"><i class="fa-solid fa-wallet"></i></div>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl shadow-md border-l-4 border-brand-blue flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-bold text-gray-500">Total Order Keseluruhan</p>
+                            <h4 class="text-2xl font-black text-black" id="dashTotalOrder">0</h4>
+                        </div>
+                        <div class="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center text-blue-600 text-xl"><i class="fa-solid fa-file-invoice"></i></div>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl shadow-md border-l-4 border-brand-pink flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-bold text-gray-500">Tugas Sedang Aktif</p>
+                            <h4 class="text-2xl font-black text-black" id="dashActiveOrder">0</h4>
+                        </div>
+                        <div class="bg-pink-100 w-12 h-12 rounded-full flex items-center justify-center text-pink-600 text-xl"><i class="fa-solid fa-spinner fa-spin"></i></div>
+                    </div>
+                </div>
+
                 <!-- CHART ANALYTICS KUNJUNGAN -->
                 <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200 w-full">
                     <h3 class="font-black text-lg mb-4 flex items-center gap-2 pb-3 border-b border-gray-100">
                         <i class="fa-solid fa-chart-line text-brand-green"></i> Statistik Pengunjung Web (7 Hari Terakhir)
                     </h3>
-                    <div class="w-full h-52 md:h-64 relative">
+                    <div class="w-full h-40 md:h-52 relative">
                         <canvas id="visitChart"></canvas>
                     </div>
                 </div>
@@ -503,13 +502,19 @@
                                 <label class="font-bold text-sm text-gray-700 block mb-1">Detail Tugas:</label>
                                 <input type="text" id="adminTask" required placeholder="Makalah Biologi Bab 2" class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50 transition-colors duration-300">
                             </div>
+
+                            <!-- FITUR BARU: INPUT HARGA -->
+                            <div>
+                                <label class="font-bold text-sm text-gray-700 block mb-1">Harga Tugas (Rp):</label>
+                                <input type="number" id="adminPrice" required placeholder="Contoh: 50000" class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50 transition-colors duration-300">
+                            </div>
+
                             <div>
                                 <label class="font-bold text-sm text-gray-700 block mb-1">Deadline:</label>
                                 <input type="datetime-local" id="adminDeadline" required class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50 transition-colors duration-300">
                             </div>
                             <div>
                                 <label class="font-bold text-sm text-gray-700 block mb-1">Status Progres:</label>
-                                <!-- STATUS TELAH DIPERBARUI HANYA 3 LANGKAH (QC Dihapus) -->
                                 <select id="adminStatus" class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50 transition-colors duration-300">
                                     <option value="1">Langkah 1 - Pembayaran Diterima</option>
                                     <option value="2">Langkah 2 - Sedang Dikerjakan Tim</option>
@@ -527,25 +532,49 @@
 
                     <!-- Database List -->
                     <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200 xl:col-span-2 overflow-hidden flex flex-col">
-                        <h3 class="font-black text-lg mb-6 flex items-center gap-2 pb-3 border-b border-gray-100"><i class="fa-solid fa-server text-brand-pink"></i> Database Progres Klien</h3>
+                        
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 pb-4 border-b border-gray-100">
+                            <h3 class="font-black text-lg flex items-center gap-2"><i class="fa-solid fa-server text-brand-pink"></i> Database Progres Klien</h3>
+                            
+                            <!-- FITUR BARU: TOMBOL EXPORT EXCEL -->
+                            <button onclick="exportToCSV()" class="bg-black text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-brand-yellow hover:text-black transition-all active:scale-95 flex items-center gap-2 shadow-brutal-sm">
+                                <i class="fa-solid fa-download"></i> Export Excel
+                            </button>
+                        </div>
+
+                        <!-- FITUR BARU: PENCARIAN (SEARCH) & FILTER STATUS -->
+                        <div class="flex flex-col md:flex-row gap-3 mb-4 bg-gray-50 p-3 rounded-lg border border-gray-200">
+                            <div class="flex-1 relative">
+                                <i class="fa-solid fa-search absolute left-3 top-3 text-gray-400"></i>
+                                <input type="text" id="searchFilter" placeholder="Cari Nama atau Invoice..." class="w-full pl-10 pr-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-brand-blue transition-colors">
+                            </div>
+                            <div class="md:w-48">
+                                <select id="statusFilter" class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-brand-blue transition-colors">
+                                    <option value="ALL">Semua Status</option>
+                                    <option value="ACTIVE">Masih Proses (Aktif)</option>
+                                    <option value="DONE">Tugas Selesai</option>
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="overflow-x-auto flex-1 admin-table-wrapper">
-                            <table class="w-full text-left border-collapse min-w-[750px]">
+                            <table class="w-full text-left border-collapse min-w-[800px]">
                                 <thead>
                                     <tr class="bg-gray-100 text-gray-700 text-sm">
                                         <th class="p-4 font-black rounded-tl-lg whitespace-nowrap">INVOICE</th>
                                         <th class="p-4 font-black">NAMA & TUGAS</th>
-                                        <th class="p-4 font-black whitespace-nowrap">DEADLINE</th>
+                                        <th class="p-4 font-black whitespace-nowrap">HARGA & DEADLINE</th>
                                         <th class="p-4 font-black whitespace-nowrap">STATUS</th>
                                         <th class="p-4 font-black text-center rounded-tr-lg whitespace-nowrap">AKSI</th>
                                     </tr>
                                 </thead>
                                 <tbody id="adminTableBody" class="divide-y divide-gray-200 text-sm font-bold text-gray-800">
-                                    <!-- Data list dari Firebase Firestore -->
+                                    <!-- Data list dirender oleh JavaScript -->
                                 </tbody>
                             </table>
                             <div id="emptyDataState" class="hidden py-10 text-center text-gray-400">
                                 <i class="fa-solid fa-box-open text-4xl mb-3"></i>
-                                <p class="font-bold">Belum ada data tugas.</p>
+                                <p class="font-bold">Data tidak ditemukan.</p>
                             </div>
                         </div>
                     </div>
@@ -558,19 +587,13 @@
     <!-- Scripts Khusus UI (AOS) -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({ 
-            once: true, 
-            offset: 50, 
-            duration: 600, 
-            easing: 'ease-out-cubic' 
-        });
+        AOS.init({ once: true, offset: 50, duration: 600, easing: 'ease-out-cubic' });
     </script>
 
-    <!-- LOGIKA GOOGLE APPS SCRIPT & MODAL WA -->
+    <!-- LOGIKA MODAL WA & SPREADSHEET -->
     <script>
-        // URL Web App Google Apps Script Anda yang sudah di-deploy:
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby1FaPkk2V-NkJw2Qbx3GYYgaAgjFhOR-EHYPp_gAW-H1JQYhtxjkf-kSwZlflnLelC1w/exec"; 
-        const ADMIN_WA_NUMBER = "6283115784598"; // Nomor WA Admin Minpres
+        const ADMIN_WA_NUMBER = "6283115784598"; 
 
         const waModal = document.getElementById('waModal');
         const waModalContent = document.getElementById('waModalContent');
@@ -591,14 +614,11 @@
             waModal.classList.add('opacity-0');
             waModalContent.classList.remove('scale-100');
             waModalContent.classList.add('scale-95');
-            setTimeout(() => {
-                waModal.classList.add('hidden');
-            }, 300);
+            setTimeout(() => { waModal.classList.add('hidden'); }, 300);
         }
 
         document.getElementById('waForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
             const btnSubmit = document.getElementById('btnSubmitWa');
             const originalBtnText = btnSubmit.innerHTML;
             btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-2xl"></i> Membuka WA...';
@@ -611,32 +631,24 @@
             if(wa.startsWith('0')) { wa = '62' + wa.substring(1); }
             else if(wa.startsWith('+')) { wa = wa.substring(1); }
 
-            // Kirim data ke Google Spreadsheet secara asinkronus (no-cors)
             const fetchUrl = `${GOOGLE_SCRIPT_URL}?nama=${encodeURIComponent(name)}&wa=${encodeURIComponent(wa)}&layanan=${encodeURIComponent(service)}`;
             
-            fetch(fetchUrl, { mode: 'no-cors' })
-            .then(() => {
+            fetch(fetchUrl, { mode: 'no-cors' }).then(() => {
                 const waMessage = `Halo admin Joki Minpres!\n\nSaya *${name}*, nomor WA: ${wa}.\nSaya ingin konsultasi mengenai jasa *${service}*.\n\nMohon info harga dan prosesnya ya min. Terima kasih! 🙏`;
-                const waLink = `https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(waMessage)}`;
-                
-                window.open(waLink, '_blank');
-                
+                window.open(`https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(waMessage)}`, '_blank');
                 closeWaModal();
                 document.getElementById('waForm').reset();
-            })
-            .catch(err => {
-                console.error("Gagal simpan ke DB Spreadsheet", err);
+            }).catch(err => {
                 const waMessage = `Halo admin Joki Minpres, saya *${name}* mau tanya jasa *${service}*.`;
                 window.open(`https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(waMessage)}`, '_blank');
-            })
-            .finally(() => {
+            }).finally(() => {
                 btnSubmit.innerHTML = originalBtnText;
                 btnSubmit.disabled = false;
             });
         });
     </script>
 
-    <!-- FIREBASE & LOGIKA UTAMA TRACKER & ADMIN (TYPE MODULE) -->
+    <!-- FIREBASE & LOGIKA ADMIN DASHBOARD LENGKAP (TYPE MODULE) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
@@ -656,46 +668,32 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // ----------------------------------------------------
-        // SISTEM PELACAK PENGUNJUNG (ANALYTICS)
-        // ----------------------------------------------------
+        // 1. ANALYTICS
         function trackVisit() {
             if (!sessionStorage.getItem('minpres_visited')) {
                 sessionStorage.setItem('minpres_visited', 'true');
-                
                 const today = new Date();
                 const dateStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
-                
-                setDoc(doc(db, "analytics", dateStr), {
-                    visits: increment(1),
-                    date: dateStr
-                }, { merge: true }).catch(err => console.log("Gagal merekam analytics:", err));
+                setDoc(doc(db, "analytics", dateStr), { visits: increment(1), date: dateStr }, { merge: true }).catch(e=>{});
             }
         }
-        
-        if(window.location.hash !== '#admin') {
-            trackVisit();
-        }
+        if(window.location.hash !== '#admin') { trackVisit(); }
 
-        // STATUS DETAIL DIPERBARUI HANYA 3 LANGKAH (QC Dihapus)
+        // 2. STATUS DATA
         const statusDetail = [
             { id: 1, title: 'Pembayaran Diterima', desc: 'Admin telah mengkonfirmasi pembayaranmu.', color: 'bg-brand-yellow', icon: 'fa-money-bill-wave' },
             { id: 2, title: 'Sedang Dikerjakan', desc: 'Tim Minpres sedang menyusun tugas kamu dengan teliti.', color: 'bg-brand-pink', icon: 'fa-pen-nib' },
             { id: 3, title: 'Tugas Selesai!', desc: 'Hore! File tugas sudah siap dikirim ke WhatsApp kamu.', color: 'bg-brand-green', icon: 'fa-flag-checkered' }
         ];
 
+        // 3. TRACKER KLIEN
         let countdownInterval;
-
-        // ----------------------------------------------------
-        // LOGIKA KLIEN: LACAK PROGRES
-        // ----------------------------------------------------
         document.getElementById('trackForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const inputVal = document.getElementById('invoiceInput').value.trim().toUpperCase();
-            
             if (inputVal === 'ADMIN123') {
-                openAdminWorkspace();
-                document.getElementById('invoiceInput').value = '';
+                window.location.hash = 'admin';
+                window.scrollTo(0,0); location.reload();
                 return;
             }
 
@@ -703,42 +701,27 @@
             const result = document.getElementById('trackerResult');
             const errorMsg = document.getElementById('trackerError');
             
-            result.classList.add('hidden');
-            errorMsg.classList.add('hidden');
-            loading.classList.remove('hidden');
+            result.classList.add('hidden'); errorMsg.classList.add('hidden'); loading.classList.remove('hidden');
 
             try {
-                const docRef = doc(db, "orders", inputVal);
-                const docSnap = await getDoc(docRef);
-
+                const docSnap = await getDoc(doc(db, "orders", inputVal));
                 loading.classList.add('hidden');
-
                 if (docSnap.exists()) {
                     const orderData = docSnap.data();
                     renderTimeline(inputVal, orderData);
                     startCountdown(orderData.deadline);
                     result.classList.remove('hidden');
                     result.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                } else {
-                    errorMsg.classList.remove('hidden');
-                }
-            } catch (error) {
-                console.error("Error mengambil data:", error);
-                loading.classList.add('hidden');
-                errorMsg.innerHTML = "Terjadi gangguan jaringan, coba lagi!";
-                errorMsg.classList.remove('hidden');
-            }
+                } else { errorMsg.classList.remove('hidden'); }
+            } catch (error) { loading.classList.add('hidden'); errorMsg.classList.remove('hidden'); }
         });
 
         function renderTimeline(inv, order) {
             document.getElementById('resultTitle').innerText = inv;
             document.getElementById('resultCustomer').innerText = `Pelanggan: ${order.name} (${order.task})`;
             
-            // Backup jika ada data lama yang masih status 4
-            let fixedStatus = order.status;
-            if(fixedStatus > 3) fixedStatus = 3; 
-
-            const currentStatusObj = statusDetail.find(s => s.id == fixedStatus) || statusDetail[statusDetail.length - 1];
+            let fixedStatus = order.status > 3 ? 3 : order.status; 
+            const currentStatusObj = statusDetail.find(s => s.id == fixedStatus);
             const badge = document.getElementById('resultBadge');
             badge.innerText = currentStatusObj.title;
             badge.className = `${currentStatusObj.color} text-black font-bold px-3 py-1 border-2 border-black rounded-full text-sm animate-pulse-fast`;
@@ -749,13 +732,12 @@
             statusDetail.forEach((step) => {
                 const isActive = step.id <= fixedStatus;
                 const isCurrent = step.id == fixedStatus;
-                
                 const bgIconClass = isActive ? step.color : 'bg-gray-200';
                 const textIconClass = isActive ? 'text-black' : 'text-gray-400';
                 const boxClass = isActive ? 'bg-white opacity-100' : 'bg-gray-50 opacity-50';
                 const pulseClass = isCurrent ? 'animate-pulse' : '';
 
-                const html = `
+                timelineContainer.innerHTML += `
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
                         <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-black ${bgIconClass} ${textIconClass} shadow-brutal-sm shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 ${pulseClass} transition-colors duration-300 ease-out">
                             <i class="fa-solid ${step.icon}"></i>
@@ -766,186 +748,91 @@
                         </div>
                     </div>
                 `;
-                timelineContainer.innerHTML += html;
             });
         }
 
         function startCountdown(deadlineString) {
             clearInterval(countdownInterval);
             const timerContainer = document.getElementById('countdownTimer');
-            
-            if(!deadlineString) {
-                timerContainer.innerHTML = '<span class="text-black font-bold bg-white px-3 py-1 border-2 border-black rounded">Deadline belum diatur admin</span>';
-                return;
-            }
+            if(!deadlineString) { timerContainer.innerHTML = '<span class="text-black font-bold bg-white px-3 py-1 border-2 border-black rounded">Deadline belum diatur admin</span>'; return; }
 
             const countDownDate = new Date(deadlineString).getTime();
-
             countdownInterval = setInterval(() => {
-                const now = new Date().getTime();
-                const distance = countDownDate - now;
-
+                const distance = countDownDate - new Date().getTime();
                 if (distance < 0) {
                     clearInterval(countdownInterval);
-                    timerContainer.innerHTML = '<span class="bg-red-500 text-white font-black px-4 py-2 border-2 border-black rounded shadow-brutal-sm">WAKTU HABIS / TUGAS SELESAI</span>';
+                    timerContainer.innerHTML = '<span class="bg-red-500 text-white font-black px-4 py-2 border-2 border-black rounded shadow-brutal-sm">WAKTU HABIS / SELESAI</span>';
                     return;
                 }
-
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                timerContainer.innerHTML = `
-                    <div class="bg-black px-3 py-2 rounded border-2 border-white flex flex-col"><span class="font-black text-xl">${days}</span><span class="text-xs">Hari</span></div>
-                    <div class="bg-black px-3 py-2 rounded border-2 border-white flex flex-col"><span class="font-black text-xl">${hours}</span><span class="text-xs">Jam</span></div>
-                    <div class="bg-black px-3 py-2 rounded border-2 border-white flex flex-col"><span class="font-black text-xl">${minutes}</span><span class="text-xs">Mnt</span></div>
-                    <div class="bg-black px-3 py-2 rounded border-2 border-white flex flex-col"><span class="font-black text-xl">${seconds}</span><span class="text-xs">Dtk</span></div>
-                `;
+                const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((distance % (1000 * 60)) / 1000);
+                timerContainer.innerHTML = `<div class="bg-black px-3 py-2 rounded border-2 border-white flex flex-col"><span class="font-black text-xl">${d}</span><span class="text-xs">Hari</span></div><div class="bg-black px-3 py-2 rounded border-2 border-white flex flex-col"><span class="font-black text-xl">${h}</span><span class="text-xs">Jam</span></div><div class="bg-black px-3 py-2 rounded border-2 border-white flex flex-col"><span class="font-black text-xl">${m}</span><span class="text-xs">Mnt</span></div><div class="bg-black px-3 py-2 rounded border-2 border-white flex flex-col"><span class="font-black text-xl">${s}</span><span class="text-xs">Dtk</span></div>`;
             }, 1000);
         }
 
-        // ----------------------------------------------------
-        // MANAJEMEN UI RUANG ADMIN
-        // ----------------------------------------------------
-        function openAdminWorkspace() {
-            window.location.hash = 'admin';
-            window.scrollTo(0, 0);
+        // 4. ADMIN LOGIN
+        if(window.location.hash === '#admin'){
             document.getElementById('main-website').classList.add('hidden');
             document.getElementById('admin-workspace').classList.remove('hidden');
             document.getElementById('admin-workspace').classList.add('flex');
         }
 
-        document.getElementById('btnOpenAdmin').addEventListener('click', openAdminWorkspace);
+        document.getElementById('btnOpenAdmin').addEventListener('click', () => { window.location.hash='admin'; location.reload(); });
+        document.getElementById('btnCloseAdmin').addEventListener('click', () => { window.location.hash=''; location.reload(); });
 
-        document.getElementById('btnCloseAdmin').addEventListener('click', () => {
-            window.location.hash = '';
-            window.scrollTo(0, 0);
-            document.getElementById('admin-workspace').classList.add('hidden');
-            document.getElementById('admin-workspace').classList.remove('flex');
-            document.getElementById('main-website').classList.remove('hidden');
-        });
-
-        // ----------------------------------------------------
-        // FIREBASE AUTHENTICATION (LOGIN)
-        // ----------------------------------------------------
         document.getElementById('loginForm').addEventListener('submit', (e) => {
             e.preventDefault();
-            const email = document.getElementById('adminEmail').value;
-            const pass = document.getElementById('adminPass').value;
             const btn = e.target.querySelector('button');
             const errorMsg = document.getElementById('adminLoginError');
-            
-            btn.innerText = "MEMPROSES...";
-            errorMsg.classList.add('hidden');
-
-            signInWithEmailAndPassword(auth, email, pass)
-                .then(() => {
-                    btn.innerText = "MASUK DASHBOARD";
-                    document.getElementById('adminEmail').value = '';
-                    document.getElementById('adminPass').value = '';
-                })
-                .catch((error) => {
-                    btn.innerText = "MASUK DASHBOARD";
-                    errorMsg.classList.remove('hidden');
-                    console.error(error.message);
-                });
+            btn.innerText = "MEMPROSES..."; errorMsg.classList.add('hidden');
+            signInWithEmailAndPassword(auth, document.getElementById('adminEmail').value, document.getElementById('adminPass').value)
+                .then(() => { btn.innerText = "MASUK DASHBOARD"; })
+                .catch(() => { btn.innerText = "MASUK DASHBOARD"; errorMsg.classList.remove('hidden'); });
         });
-
-        document.getElementById('btnLogout').addEventListener('click', () => {
-            signOut(auth);
-        });
+        document.getElementById('btnLogout').addEventListener('click', () => signOut(auth));
 
         onAuthStateChanged(auth, (user) => {
-            if (user) {
+            if (user && window.location.hash === '#admin') {
                 document.getElementById('admin-login').classList.add('hidden');
                 document.getElementById('admin-dashboard').classList.remove('hidden');
                 document.getElementById('admin-dashboard').classList.add('flex');
                 fetchDataRealtime();
                 renderAnalyticsChart(); 
-            } else {
+            } else if (!user && window.location.hash === '#admin') {
                 document.getElementById('admin-dashboard').classList.add('hidden');
                 document.getElementById('admin-dashboard').classList.remove('flex');
                 document.getElementById('admin-login').classList.remove('hidden');
             }
         });
 
-        // ----------------------------------------------------
-        // RENDER GRAFIK ANALYTICS (CHART.JS) - VERSI NGEBUT 🚀
-        // ----------------------------------------------------
         let visitChartInstance = null;
         async function renderAnalyticsChart() {
-            const labels = [];
-            const promises = [];
-            
+            const labels = [], promises = [];
             for(let i = 6; i >= 0; i--) {
-                const d = new Date();
-                d.setDate(d.getDate() - i);
-                
+                const d = new Date(); d.setDate(d.getDate() - i);
                 const dateStr = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
-                const displayStr = String(d.getDate()).padStart(2, '0') + '/' + String(d.getMonth() + 1).padStart(2, '0');
-                
-                labels.push(displayStr);
+                labels.push(String(d.getDate()).padStart(2, '0') + '/' + String(d.getMonth() + 1).padStart(2, '0'));
                 promises.push(getDoc(doc(db, "analytics", dateStr)));
             }
-
             const dataPoints = [];
-            
             try {
                 const snaps = await Promise.all(promises);
-                
-                snaps.forEach(snap => {
-                    if(snap.exists()) {
-                        dataPoints.push(snap.data().visits || 0);
-                    } else {
-                        dataPoints.push(0);
-                    }
-                });
-            } catch(e) {
-                console.error("Gagal memuat grafik:", e);
-                labels.forEach(() => dataPoints.push(0));
-            }
+                snaps.forEach(snap => dataPoints.push(snap.exists() ? (snap.data().visits || 0) : 0));
+            } catch(e) { labels.forEach(() => dataPoints.push(0)); }
 
             const ctx = document.getElementById('visitChart');
-            if(visitChartInstance) { visitChartInstance.destroy(); }
-            
+            if(visitChartInstance) visitChartInstance.destroy();
             visitChartInstance = new Chart(ctx, {
                 type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Pengunjung Website',
-                        data: dataPoints,
-                        borderColor: '#00E676', 
-                        backgroundColor: 'rgba(0, 230, 118, 0.2)',
-                        borderWidth: 3,
-                        tension: 0.4,
-                        fill: true,
-                        pointBackgroundColor: '#000',
-                        pointBorderColor: '#00E676',
-                        pointBorderWidth: 2,
-                        pointRadius: 4,
-                        pointHoverRadius: 6
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        y: { beginAtZero: true, ticks: { stepSize: 1, precision: 0 } }
-                    }
-                }
+                data: { labels: labels, datasets: [{ label: 'Pengunjung', data: dataPoints, borderColor: '#00E676', backgroundColor: 'rgba(0, 230, 118, 0.2)', borderWidth: 3, tension: 0.4, fill: true, pointBackgroundColor: '#000', pointBorderColor: '#00E676', pointBorderWidth: 2, pointRadius: 4 }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1, precision: 0 } } } }
             });
         }
 
-        // ----------------------------------------------------
-        // FIREBASE FIRESTORE (DATABASE ADMIN)
-        // ----------------------------------------------------
-        document.getElementById('btnGenerateInv').addEventListener('click', () => {
-            const randomNum = Math.floor(1000 + Math.random() * 9000);
-            document.getElementById('adminInv').value = `MINPRES-${randomNum}`;
-        });
+        // 5. DATABASE & FILTER/SORTING ADMIN
+        document.getElementById('btnGenerateInv').addEventListener('click', () => { document.getElementById('adminInv').value = `MINPRES-${Math.floor(1000 + Math.random() * 9000)}`; });
 
         document.getElementById('adminForm').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -953,154 +840,213 @@
             btnSave.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan...';
             
             const inv = document.getElementById('adminInv').value.trim().toUpperCase();
-            const name = document.getElementById('adminName').value.trim();
             let wa = document.getElementById('adminWa').value.trim();
-            const task = document.getElementById('adminTask').value.trim();
-            const deadline = document.getElementById('adminDeadline').value;
-            const status = parseInt(document.getElementById('adminStatus').value);
-
             if(wa.startsWith('0')) { wa = '62' + wa.substring(1); }
             else if(wa.startsWith('+')) { wa = wa.substring(1); }
 
             try {
                 await setDoc(doc(db, "orders", inv), {
-                    name: name,
+                    name: document.getElementById('adminName').value.trim(),
                     wa: wa, 
-                    task: task,
-                    deadline: deadline,
-                    status: status,
+                    task: document.getElementById('adminTask').value.trim(),
+                    price: parseInt(document.getElementById('adminPrice').value || 0), // SIMPAN HARGA
+                    deadline: document.getElementById('adminDeadline').value,
+                    status: parseInt(document.getElementById('adminStatus').value),
                     updatedAt: new Date()
                 });
-                
                 const notif = document.getElementById('adminNotif');
-                notif.classList.remove('hidden');
-                setTimeout(() => notif.classList.add('hidden'), 3000);
+                notif.classList.remove('hidden'); setTimeout(() => notif.classList.add('hidden'), 3000);
                 document.getElementById('adminForm').reset();
-            } catch (error) {
-                console.error("Gagal simpan data: ", error);
-                alert("Gagal menyimpan data! Pastikan aturan Firestore Rules sudah benar.");
-            } finally {
-                btnSave.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Data Real-Time';
-            }
+            } catch (error) { alert("Gagal menyimpan data!"); } 
+            finally { btnSave.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Data Real-Time'; }
         });
+
+        // Variabel global untuk menyimpan data sementara agar bisa di filter
+        let allOrdersData = [];
+
+        function formatRupiah(angka) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
+        }
 
         function fetchDataRealtime() {
             onSnapshot(collection(db, "orders"), (querySnapshot) => {
-                const tbody = document.getElementById('adminTableBody');
-                const emptyState = document.getElementById('emptyDataState');
-                tbody.innerHTML = '';
-                
-                if (querySnapshot.empty) {
-                    emptyState.classList.remove('hidden');
-                } else {
-                    emptyState.classList.add('hidden');
-                    querySnapshot.forEach((docSnap) => {
-                        const inv = docSnap.id;
-                        const data = docSnap.data();
-                        
-                        let fixedStatus = data.status;
-                        if(fixedStatus > 3) fixedStatus = 3; 
-
-                        const statusObj = statusDetail.find(s => s.id == fixedStatus) || statusDetail[statusDetail.length - 1];
-                        const statusName = statusObj.title;
-                        
-                        let badgeColor = 'bg-gray-200 text-gray-800';
-                        if(fixedStatus == 1) badgeColor = 'bg-yellow-100 text-yellow-800 border-yellow-300';
-                        if(fixedStatus == 2) badgeColor = 'bg-pink-100 text-pink-800 border-pink-300';
-                        if(fixedStatus == 3) badgeColor = 'bg-green-100 text-green-800 border-green-300';
-
-                        let deadlineText = "Belum diatur";
-                        if(data.deadline) {
-                            const d = new Date(data.deadline);
-                            deadlineText = `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
-                        }
-
-                        tbody.innerHTML += `
-                            <tr class="hover:bg-gray-50 transition-colors group border-b">
-                                <td class="p-4 tracking-wider whitespace-nowrap">${inv}</td>
-                                <td class="p-4 min-w-[200px]">
-                                    <div class="text-base text-black">${data.name}</div>
-                                    <div class="text-xs text-gray-500 font-semibold mt-1">${data.task}</div>
-                                </td>
-                                <td class="p-4 font-mono text-xs whitespace-nowrap">
-                                    ${deadlineText}
-                                </td>
-                                <td class="p-4 whitespace-nowrap">
-                                    <span class="${badgeColor} border px-3 py-1 rounded-full text-xs">${statusName}</span>
-                                </td>
-                                <td class="p-4 text-center">
-                                    <div class="flex flex-wrap justify-center items-center gap-2 opacity-100 md:opacity-50 group-hover:opacity-100 transition-opacity min-w-[170px]">
-                                        <button class="btn-wa-inv bg-green-100 text-green-700 hover:bg-green-200 active:scale-95 px-3 py-2 rounded transition-all duration-300" data-id="${inv}" data-name="${data.name}" data-wa="${data.wa || ''}" title="Kirim WA Invoice"><i class="fa-solid fa-paper-plane"></i></button>
-                                        <button class="btn-wa-done bg-brand-green text-black hover:bg-green-500 active:scale-95 px-3 py-2 rounded transition-all duration-300" data-id="${inv}" data-name="${data.name}" data-task="${data.task}" data-wa="${data.wa || ''}" title="Kirim WA Selesai"><i class="fa-brands fa-whatsapp"></i></button>
-                                        <button class="btn-edit bg-gray-200 text-gray-700 hover:bg-gray-300 active:scale-95 px-3 py-2 rounded transition-all duration-300" data-id="${inv}" title="Edit"><i class="fa-solid fa-pen"></i></button>
-                                        <button class="btn-delete bg-red-100 text-red-600 hover:bg-red-200 active:scale-95 px-3 py-2 rounded transition-all duration-300" data-id="${inv}" title="Hapus"><i class="fa-solid fa-trash"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
-                        `;
-                    });
-
-                    // Tombol WA: Kirim Invoice 
-                    document.querySelectorAll('.btn-wa-inv').forEach(btn => {
-                        btn.addEventListener('click', (e) => {
-                            const id = e.currentTarget.getAttribute('data-id');
-                            const name = e.currentTarget.getAttribute('data-name');
-                            const wa = e.currentTarget.getAttribute('data-wa');
-                            
-                            if(!wa) { alert("Nomor WA kosong! Silakan klik tombol Edit dan isi Nomor WA klien terlebih dahulu."); return; }
-                            
-                            const websiteUrl = "https://jokiminpres.github.io/pricelist/";
-                            const text = `Halo *${name}*,\n\nTerima kasih sudah order di Joki Kilat Minpres! 🙏\n\nNomor Invoice kamu adalah: *${id}*\n\nKamu bisa cek progres tugasmu secara real-time di website kami:\n${websiteUrl}\n\nMasukkan nomor invoice di atas pada menu *Cek Progres*. Terima kasih! ✨`;
-                            window.open(`https://wa.me/${wa}?text=${encodeURIComponent(text)}`, '_blank');
-                        });
-                    });
-
-                    // Tombol WA: Tugas Selesai 
-                    document.querySelectorAll('.btn-wa-done').forEach(btn => {
-                        btn.addEventListener('click', (e) => {
-                            const id = e.currentTarget.getAttribute('data-id');
-                            const name = e.currentTarget.getAttribute('data-name');
-                            const task = e.currentTarget.getAttribute('data-task');
-                            const wa = e.currentTarget.getAttribute('data-wa');
-                            
-                            if(!wa) { alert("Nomor WA kosong! Silakan klik tombol Edit dan isi Nomor WA klien terlebih dahulu."); return; }
-                            
-                            const text = `Halo *${name}*,\n\nKabar gembira! Tugas *${task}* kamu (Invoice: ${id}) sudah *SELESAI* dikerjakan tim Minpres! 🎉\n\nSilakan cek file yang kami kirimkan ya. Jika ada yang ingin direvisi atau ditanyakan, langsung balas pesan ini.\n\nTerima kasih sudah mempercayakan tugasmu di Joki Kilat Minpres! ✨`;
-                            window.open(`https://wa.me/${wa}?text=${encodeURIComponent(text)}`, '_blank');
-                        });
-                    });
-
-                    // Tombol Edit
-                    document.querySelectorAll('.btn-edit').forEach(btn => {
-                        btn.addEventListener('click', async (e) => {
-                            const id = e.currentTarget.getAttribute('data-id');
-                            const docData = (await getDoc(doc(db, "orders", id))).data();
-                            
-                            let fixedStatus = docData.status;
-                            if(fixedStatus > 3) fixedStatus = 3; 
-
-                            document.getElementById('adminInv').value = id;
-                            document.getElementById('adminName').value = docData.name;
-                            document.getElementById('adminWa').value = docData.wa || "";
-                            document.getElementById('adminTask').value = docData.task;
-                            document.getElementById('adminDeadline').value = docData.deadline || "";
-                            document.getElementById('adminStatus').value = fixedStatus;
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                        });
-                    });
-
-                    // Tombol Hapus
-                    document.querySelectorAll('.btn-delete').forEach(btn => {
-                        btn.addEventListener('click', async (e) => {
-                            const id = e.currentTarget.getAttribute('data-id');
-                            if(confirm(`Yakin ingin menghapus data progres ${id}?`)) {
-                                await deleteDoc(doc(db, "orders", id));
-                            }
-                        });
-                    });
-                }
+                allOrdersData = [];
+                querySnapshot.forEach((docSnap) => {
+                    allOrdersData.push({ id: docSnap.id, ...docSnap.data() });
+                });
+                renderAdminTable(); // Render berdasarkan filter saat ini
             });
         }
+
+        // Event listener untuk Filter & Search
+        document.getElementById('searchFilter').addEventListener('input', renderAdminTable);
+        document.getElementById('statusFilter').addEventListener('change', renderAdminTable);
+
+        // FUNGSI UTAMA RENDER TABEL DENGAN FILTER, SORT, DAN HIGHLIGHT DEADLINE
+        function renderAdminTable() {
+            const tbody = document.getElementById('adminTableBody');
+            const emptyState = document.getElementById('emptyDataState');
+            tbody.innerHTML = '';
+            
+            const searchQuery = document.getElementById('searchFilter').value.toLowerCase();
+            const statusQuery = document.getElementById('statusFilter').value;
+
+            // 1. Hitung Rekap Keuangan dari data asli (Sebelum difilter, semua data)
+            let totalOmzet = 0;
+            let totalOrder = allOrdersData.length;
+            let activeOrder = 0;
+
+            allOrdersData.forEach(item => {
+                totalOmzet += (item.price || 0);
+                if(item.status < 3) activeOrder++;
+            });
+
+            document.getElementById('dashOmzet').innerText = formatRupiah(totalOmzet);
+            document.getElementById('dashTotalOrder').innerText = totalOrder;
+            document.getElementById('dashActiveOrder').innerText = activeOrder;
+
+            // 2. Filter Data
+            let filteredData = allOrdersData.filter(item => {
+                const matchSearch = item.id.toLowerCase().includes(searchQuery) || item.name.toLowerCase().includes(searchQuery);
+                const matchStatus = statusQuery === 'ALL' ? true : (statusQuery === 'ACTIVE' ? item.status < 3 : item.status == 3);
+                return matchSearch && matchStatus;
+            });
+
+            // 3. Urutkan berdasarkan Deadline terdekat (Hanya untuk yang masih proses)
+            filteredData.sort((a, b) => {
+                if (a.status == 3 && b.status < 3) return 1; // Selesai ditaruh di bawah
+                if (a.status < 3 && b.status == 3) return -1;
+                
+                if (!a.deadline) return 1;
+                if (!b.deadline) return -1;
+                return new Date(a.deadline) - new Date(b.deadline);
+            });
+
+            // 4. Render ke HTML
+            if (filteredData.length === 0) {
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+                filteredData.forEach(data => {
+                    const inv = data.id;
+                    let fixedStatus = data.status > 3 ? 3 : data.status; 
+                    const statusName = statusDetail.find(s => s.id == fixedStatus).title;
+                    
+                    let badgeColor = 'bg-gray-200 text-gray-800';
+                    if(fixedStatus == 1) badgeColor = 'bg-yellow-100 text-yellow-800 border-yellow-300';
+                    if(fixedStatus == 2) badgeColor = 'bg-pink-100 text-pink-800 border-pink-300';
+                    if(fixedStatus == 3) badgeColor = 'bg-green-100 text-green-800 border-green-300';
+
+                    let deadlineText = "Belum diatur";
+                    let rowHighlight = "hover:bg-gray-50"; 
+
+                    if(data.deadline) {
+                        const d = new Date(data.deadline);
+                        deadlineText = `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+                        
+                        // HIGHLIGHT DEADLINE MEРЕТ (< 24 Jam)
+                        const distance = d.getTime() - new Date().getTime();
+                        if (fixedStatus < 3 && distance > 0 && distance < (24 * 60 * 60 * 1000)) {
+                            rowHighlight = "bg-red-50 hover:bg-red-100 border-l-4 border-red-500 animate-pulse"; 
+                        }
+                    }
+
+                    const priceText = formatRupiah(data.price || 0);
+
+                    tbody.innerHTML += `
+                        <tr class="${rowHighlight} transition-colors group border-b">
+                            <td class="p-4 tracking-wider whitespace-nowrap">${inv}</td>
+                            <td class="p-4 min-w-[200px]">
+                                <div class="text-base text-black">${data.name}</div>
+                                <div class="text-xs text-gray-500 font-semibold mt-1">${data.task}</div>
+                            </td>
+                            <td class="p-4 whitespace-nowrap">
+                                <div class="text-brand-green font-black mb-1">${priceText}</div>
+                                <div class="font-mono text-xs text-gray-500"><i class="fa-regular fa-clock"></i> ${deadlineText}</div>
+                            </td>
+                            <td class="p-4 whitespace-nowrap">
+                                <span class="${badgeColor} border px-3 py-1 rounded-full text-xs">${statusName}</span>
+                            </td>
+                            <td class="p-4 text-center">
+                                <div class="flex flex-wrap justify-center items-center gap-2 opacity-100 md:opacity-50 group-hover:opacity-100 transition-opacity min-w-[170px]">
+                                    <button class="btn-wa-inv bg-green-100 text-green-700 hover:bg-green-200 active:scale-95 px-3 py-2 rounded transition-all duration-300" data-id="${inv}" data-name="${data.name}" data-wa="${data.wa || ''}" title="Kirim WA Invoice"><i class="fa-solid fa-paper-plane"></i></button>
+                                    <button class="btn-wa-done bg-brand-green text-black hover:bg-green-500 active:scale-95 px-3 py-2 rounded transition-all duration-300" data-id="${inv}" data-name="${data.name}" data-task="${data.task}" data-wa="${data.wa || ''}" title="Kirim WA Selesai"><i class="fa-brands fa-whatsapp"></i></button>
+                                    <button class="btn-edit bg-gray-200 text-gray-700 hover:bg-gray-300 active:scale-95 px-3 py-2 rounded transition-all duration-300" data-id="${inv}" title="Edit"><i class="fa-solid fa-pen"></i></button>
+                                    <button class="btn-delete bg-red-100 text-red-600 hover:bg-red-200 active:scale-95 px-3 py-2 rounded transition-all duration-300" data-id="${inv}" title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                // Re-bind Action Buttons
+                document.querySelectorAll('.btn-wa-inv').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = e.currentTarget.getAttribute('data-id'), name = e.currentTarget.getAttribute('data-name'), wa = e.currentTarget.getAttribute('data-wa');
+                        if(!wa) { alert("Nomor WA kosong!"); return; }
+                        const txt = `Halo *${name}*,\n\nTerima kasih sudah order di Joki Kilat Minpres! 🙏\n\nNomor Invoice kamu: *${id}*\nCek progres tugasmu di:\nhttps://jokiminpres.github.io/pricelist/\n\nTerima kasih! ✨`;
+                        window.open(`https://wa.me/${wa}?text=${encodeURIComponent(txt)}`, '_blank');
+                    });
+                });
+                document.querySelectorAll('.btn-wa-done').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = e.currentTarget.getAttribute('data-id'), name = e.currentTarget.getAttribute('data-name'), task = e.currentTarget.getAttribute('data-task'), wa = e.currentTarget.getAttribute('data-wa');
+                        if(!wa) { alert("Nomor WA kosong!"); return; }
+                        const txt = `Halo *${name}*,\n\nTugas *${task}* (Invoice: ${id}) sudah *SELESAI* dikerjakan tim Minpres! 🎉\n\nSilakan cek file yang kami kirimkan ya. Terima kasih! ✨`;
+                        window.open(`https://wa.me/${wa}?text=${encodeURIComponent(txt)}`, '_blank');
+                    });
+                });
+                document.querySelectorAll('.btn-edit').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = e.currentTarget.getAttribute('data-id');
+                        const docData = allOrdersData.find(d => d.id === id);
+                        document.getElementById('adminInv').value = id;
+                        document.getElementById('adminName').value = docData.name;
+                        document.getElementById('adminWa').value = docData.wa || "";
+                        document.getElementById('adminTask').value = docData.task;
+                        document.getElementById('adminPrice').value = docData.price || "";
+                        document.getElementById('adminDeadline').value = docData.deadline || "";
+                        document.getElementById('adminStatus').value = docData.status > 3 ? 3 : docData.status;
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    });
+                });
+                document.querySelectorAll('.btn-delete').forEach(btn => {
+                    btn.addEventListener('click', async (e) => {
+                        const id = e.currentTarget.getAttribute('data-id');
+                        if(confirm(`Yakin ingin menghapus data progres ${id}?`)) { await deleteDoc(doc(db, "orders", id)); }
+                    });
+                });
+            }
+        }
+
+        // FITUR BARU: EXPORT DATA KE CSV (EXCEL)
+        window.exportToCSV = function() {
+            if(allOrdersData.length === 0) { alert("Data masih kosong!"); return; }
+            
+            let csvContent = "data:text/csv;charset=utf-8,";
+            // Header
+            csvContent += "Invoice,Nama,No WA,Tugas,Harga,Deadline,Status\n";
+            
+            allOrdersData.forEach(row => {
+                let statusText = statusDetail.find(s => s.id == (row.status > 3 ? 3 : row.status)).title;
+                // Bersihkan koma pada teks agar tidak merusak format CSV
+                let safeName = row.name.replace(/,/g, " ");
+                let safeTask = row.task.replace(/,/g, " ");
+                let safeDate = row.deadline ? row.deadline.replace('T', ' ') : '-';
+                
+                let rowData = `${row.id},${safeName},${row.wa || '-'},${safeTask},${row.price || 0},${safeDate},${statusText}`;
+                csvContent += rowData + "\n";
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `Laporan_Order_Minpres_${new Date().toLocaleDateString('id-ID')}.csv`);
+            document.body.appendChild(link); 
+            link.click();
+            document.body.removeChild(link);
+        }
+
     </script>
 </body>
 </html>
