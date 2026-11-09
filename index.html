@@ -165,8 +165,16 @@
                         <span id="resultBadge" class="bg-brand-green text-black font-bold px-3 py-1 border-2 border-black rounded-full text-sm animate-pulse-fast">Sedang Dikerjakan</span>
                     </div>
 
+                    <!-- FITUR BARU: TOMBOL DOWNLOAD (Disembunyikan jika belum selesai) -->
+                    <div id="fileDownloadContainer" class="hidden mb-8">
+                        <h4 class="font-black uppercase text-center mb-3">Tugas Selesai! 🎉</h4>
+                        <a href="#" id="btnDownloadClient" target="_blank" class="block w-full bg-brand-green text-black text-center font-black text-xl py-4 border-4 border-black rounded-xl shadow-brutal hover:-translate-y-1 hover:shadow-brutal-hover active:scale-95 transition-all">
+                            <i class="fa-solid fa-cloud-arrow-down mr-2 animate-bounce"></i> DOWNLOAD FILE TUGAS
+                        </a>
+                    </div>
+
                     <!-- Countdown Kotak -->
-                    <div class="bg-brand-pink border-4 border-black p-4 rounded-xl shadow-brutal-sm mb-8 text-center rotate-[1deg]">
+                    <div id="countdownBox" class="bg-brand-pink border-4 border-black p-4 rounded-xl shadow-brutal-sm mb-8 text-center rotate-[1deg]">
                         <h4 class="font-black uppercase border-b-2 border-black inline-block mb-3">Sisa Waktu Deadline ⏳</h4>
                         <div id="countdownTimer" class="flex justify-center gap-2 md:gap-4 text-white">
                             <!-- Diisi oleh JS -->
@@ -274,7 +282,6 @@
             </button>
 
         </div>
-
     </section>
 
     <!-- How It Works -->
@@ -532,6 +539,13 @@
                                 </div>
                             </div>
 
+                            <!-- FITUR BARU: INPUT LINK GOOGLE DRIVE TUGAS -->
+                            <div>
+                                <label class="font-bold text-sm text-gray-700 block mb-1">Link File Tugas (Opsional):</label>
+                                <input type="url" id="adminFileUrl" placeholder="https://drive.google.com/..." class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50 transition-colors duration-300 text-xs">
+                                <p class="text-[10px] text-gray-500 mt-1">Isi link ini saat tugas selesai agar klien bisa download.</p>
+                            </div>
+
                             <div>
                                 <label class="font-bold text-sm text-gray-700 block mb-1">Deadline:</label>
                                 <input type="datetime-local" id="adminDeadline" required class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50 transition-colors duration-300">
@@ -618,7 +632,7 @@
         AOS.init({ once: true, offset: 50, duration: 600, easing: 'ease-out-cubic' });
     </script>
 
-    <!-- LOGIKA MODAL WA & SPREADSHEET -->
+    <!-- LOGIKA MODAL WA -->
     <script>
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby1FaPkk2V-NkJw2Qbx3GYYgaAgjFhOR-EHYPp_gAW-H1JQYhtxjkf-kSwZlflnLelC1w/exec"; 
         const ADMIN_WA_NUMBER = "6283115784598"; 
@@ -710,7 +724,7 @@
         const statusDetail = [
             { id: 1, title: 'Pembayaran Diterima', desc: 'Admin telah mengkonfirmasi pembayaranmu.', color: 'bg-brand-yellow', icon: 'fa-money-bill-wave' },
             { id: 2, title: 'Sedang Dikerjakan', desc: 'Tim Minpres sedang menyusun tugas kamu dengan teliti.', color: 'bg-brand-pink', icon: 'fa-pen-nib' },
-            { id: 3, title: 'Tugas Selesai!', desc: 'Hore! File tugas sudah siap dikirim ke WhatsApp kamu.', color: 'bg-brand-green', icon: 'fa-flag-checkered' }
+            { id: 3, title: 'Tugas Selesai!', desc: 'Hore! File tugas sudah siap. Silakan klik tombol download di atas.', color: 'bg-brand-green', icon: 'fa-flag-checkered' }
         ];
 
         // TRACKER KLIEN
@@ -736,7 +750,22 @@
                 if (docSnap.exists()) {
                     const orderData = docSnap.data();
                     renderTimeline(inputVal, orderData);
-                    startCountdown(orderData.deadline);
+                    
+                    // JIKA STATUS SELESAI DAN ADA LINK DOWNLOAD, TAMPILKAN TOMBOL DOWNLOAD
+                    const fixedStatus = orderData.status > 3 ? 3 : orderData.status;
+                    const dlContainer = document.getElementById('fileDownloadContainer');
+                    const countdownBox = document.getElementById('countdownBox');
+
+                    if (fixedStatus == 3 && orderData.fileUrl && orderData.fileUrl !== "") {
+                        document.getElementById('btnDownloadClient').href = orderData.fileUrl;
+                        dlContainer.classList.remove('hidden');
+                        countdownBox.classList.add('hidden'); // Sembunyikan countdown jika sudah selesai
+                    } else {
+                        dlContainer.classList.add('hidden');
+                        countdownBox.classList.remove('hidden');
+                        startCountdown(orderData.deadline);
+                    }
+
                     result.classList.remove('hidden');
                     result.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 } else { errorMsg.classList.remove('hidden'); }
@@ -883,6 +912,7 @@
                     price: price,
                     dp: dp,
                     sisa: sisa,
+                    fileUrl: document.getElementById('adminFileUrl').value.trim(), // MENYIMPAN LINK DOWNLOAD
                     deadline: document.getElementById('adminDeadline').value,
                     status: parseInt(document.getElementById('adminStatus').value),
                     updatedAt: new Date()
@@ -930,9 +960,9 @@
                 let p = item.price || 0;
                 let d = item.dp || 0;
                 let s = item.sisa !== undefined ? item.sisa : (p - d);
-                omzetKotor += p;       // Total seluruh harga tugas (meskipun belum DP)
-                omzetBersih += d;      // Total uang yang sudah masuk ke tangan (DP / Pelunasan)
-                totalSisa += s;        // Sisa tagihan
+                omzetKotor += p;       
+                omzetBersih += d;      
+                totalSisa += s;        
             });
 
             document.getElementById('dashOmzetKotor').innerText = formatRupiah(omzetKotor);
@@ -994,11 +1024,14 @@
                         dpBadge = '<span class="bg-yellow-100 text-yellow-800 text-[10px] px-2 py-0.5 rounded border border-yellow-300 font-bold">DP Sebagian</span>';
                     }
 
+                    // Tambahkan ikon Link jika sudah ada file URL
+                    let fileLinkIcon = data.fileUrl ? `<a href="${data.fileUrl}" target="_blank" class="text-blue-500 hover:text-blue-700 ml-1 inline-block" title="Link File Aktif"><i class="fa-solid fa-link"></i></a>` : '';
+
                     tbody.innerHTML += `
                         <tr class="${rowHighlight} transition-colors group border-b">
                             <td class="p-4 tracking-wider whitespace-nowrap">${inv}</td>
                             <td class="p-4 min-w-[180px]">
-                                <div class="text-base text-black">${data.name}</div>
+                                <div class="text-base text-black flex items-center">${data.name} ${fileLinkIcon}</div>
                                 <div class="text-xs text-gray-500 font-semibold mt-1">${data.task}</div>
                             </td>
                             <td class="p-4 whitespace-nowrap">
@@ -1062,7 +1095,7 @@
                     btn.addEventListener('click', (e) => {
                         const id = e.currentTarget.getAttribute('data-id'), name = e.currentTarget.getAttribute('data-name'), task = e.currentTarget.getAttribute('data-task'), wa = e.currentTarget.getAttribute('data-wa');
                         if(!wa) { alert("Nomor WA kosong!"); return; }
-                        const txt = `Halo *${name}*,\n\nTugas *${task}* (Invoice: ${id}) sudah *SELESAI* dikerjakan tim Minpres! 🎉\n\nSilakan cek file yang kami kirimkan ya. Terima kasih! ✨`;
+                        const txt = `Halo *${name}*,\n\nTugas *${task}* (Invoice: ${id}) sudah *SELESAI* dikerjakan tim Minpres! 🎉\n\nSilakan cek link download file yang kami sediakan di web atau file yang kami kirimkan ya. Terima kasih! ✨`;
                         window.open(`https://wa.me/${wa}?text=${encodeURIComponent(txt)}`, '_blank');
                     });
                 });
@@ -1076,6 +1109,7 @@
                         document.getElementById('adminTask').value = docData.task;
                         document.getElementById('adminPrice').value = docData.price || "";
                         document.getElementById('adminDp').value = docData.dp || "";
+                        document.getElementById('adminFileUrl').value = docData.fileUrl || ""; // ISI OTOMATIS SAAT EDIT
                         document.getElementById('adminDeadline').value = docData.deadline || "";
                         document.getElementById('adminStatus').value = docData.status > 3 ? 3 : docData.status;
                         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1109,6 +1143,7 @@
                     "Omzet Bersih (DP Masuk)": d,
                     "Sisa Pelunasan": s,
                     "Status Pembayaran": statusBayar,
+                    "Link File": item.fileUrl || "-",
                     "Deadline": item.deadline ? item.deadline.replace('T', ' ') : '-',
                     "Status Progres": st
                 };
