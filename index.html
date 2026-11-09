@@ -165,7 +165,7 @@
                         <span id="resultBadge" class="bg-brand-green text-black font-bold px-3 py-1 border-2 border-black rounded-full text-sm animate-pulse-fast">Sedang Dikerjakan</span>
                     </div>
 
-                    <!-- TOMBOL DOWNLOAD: Muncul jika ada link -->
+                    <!-- TOMBOL DOWNLOAD: Muncul jika ada link dan status selesai -->
                     <div id="fileDownloadContainer" class="hidden mb-8">
                         <h4 class="font-black uppercase text-center mb-3">Tugas Selesai! 🎉</h4>
                         <a href="#" id="btnDownloadClient" target="_blank" class="block w-full bg-brand-green text-black text-center font-black text-xl py-4 border-4 border-black rounded-xl shadow-brutal hover:-translate-y-1 hover:shadow-brutal-hover active:scale-95 transition-all">
@@ -545,7 +545,7 @@
                                 </div>
                             </div>
 
-                            <!-- PERBAIKAN: type="url" diganti "text" agar tidak memblokir simpan data -->
+                            <!-- INPUT LINK GOOGLE DRIVE -->
                             <div>
                                 <label class="font-bold text-sm text-gray-700 block mb-1">Link File Tugas (Opsional):</label>
                                 <input type="text" id="adminFileUrl" placeholder="Contoh: drive.google.com/..." class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50 transition-colors duration-300 text-xs">
@@ -757,7 +757,7 @@
                     const orderData = docSnap.data();
                     renderTimeline(inputVal, orderData);
                     
-                    // PERBAIKAN LOGIKA TOMBOL DOWNLOAD & FALLBACK
+                    // LOGIKA TOMBOL DOWNLOAD & FALLBACK
                     const fixedStatus = orderData.status > 3 ? 3 : orderData.status;
                     const dlContainer = document.getElementById('fileDownloadContainer');
                     const fallbackSelesai = document.getElementById('fallbackSelesai');
@@ -1121,22 +1121,38 @@
                         window.open(`https://wa.me/${wa}?text=${encodeURIComponent(txt)}`, '_blank');
                     });
                 });
+                
+                // PERBAIKAN BUG TOMBOL EDIT
                 document.querySelectorAll('.btn-edit').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         const id = e.currentTarget.getAttribute('data-id');
                         const docData = allOrdersData.find(d => d.id === id);
+                        
                         document.getElementById('adminInv').value = id;
                         document.getElementById('adminName').value = docData.name;
                         document.getElementById('adminWa').value = docData.wa || "";
                         document.getElementById('adminTask').value = docData.task;
                         document.getElementById('adminPrice').value = docData.price || "";
                         document.getElementById('adminDp').value = docData.dp || "";
-                        document.getElementById('adminFileUrl').value = docData.fileUrl || ""; // ISI OTOMATIS SAAT EDIT
-                        document.getElementById('adminDeadline').value = docData.deadline || "";
-                        document.getElementById('adminStatus').value = docData.status > 3 ? 3 : docData.status;
+                        document.getElementById('adminFileUrl').value = docData.fileUrl || ""; 
+                        
+                        // Perbaikan penanganan deadline kosong agar form tidak error
+                        if(docData.deadline) {
+                            document.getElementById('adminDeadline').value = docData.deadline;
+                        } else {
+                            document.getElementById('adminDeadline').value = "";
+                        }
+
+                        // Perbaikan status agar selalu sesuai dengan data asli saat ini
+                        let currentStatus = docData.status;
+                        if (!currentStatus || currentStatus < 1) currentStatus = 1;
+                        if (currentStatus > 3) currentStatus = 3;
+                        document.getElementById('adminStatus').value = currentStatus;
+                        
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                     });
                 });
+
                 document.querySelectorAll('.btn-delete').forEach(btn => {
                     btn.addEventListener('click', async (e) => {
                         const id = e.currentTarget.getAttribute('data-id');
