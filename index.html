@@ -593,7 +593,7 @@
                                         <th class="p-4 font-black">NAMA & TUGAS</th>
                                         <th class="p-4 font-black whitespace-nowrap">KEUANGAN (HARGA/DP)</th>
                                         <th class="p-4 font-black whitespace-nowrap">STATUS & DEADLINE</th>
-                                        <th class="p-4 font-black text-center rounded-tr-lg whitespace-nowrap">AKSI</th>
+                                        <th class="p-4 font-black text-center rounded-tr-lg whitespace-nowrap">AKSI & PELUNASAN</th>
                                     </tr>
                                 </thead>
                                 <tbody id="adminTableBody" class="divide-y divide-gray-200 text-sm font-bold text-gray-800">
@@ -662,7 +662,7 @@
             const fetchUrl = `${GOOGLE_SCRIPT_URL}?nama=${encodeURIComponent(name)}&wa=${encodeURIComponent(wa)}&layanan=${encodeURIComponent(service)}`;
             
             fetch(fetchUrl, { mode: 'no-cors' }).then(() => {
-                const waMessage = `Halo admin Joki Minpres!\n\nSaya *${name}*, nomor WA: ${wa}.\nSaya ingin konsultasi mengenai jasa *${service}*.\n\nMohon info harga dan prosesnya ya min. Terima kasih! 🙏`;
+                const waMessage = `Halo admin Joki Minpres!\n\nSaya *${name}*, nomor WA: ${wa}.\nIgin konsultasi mengenai jasa *${service}*.\n\nMohon info harga dan prosesnya ya min. Terima kasih! 🙏`;
                 window.open(`https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(waMessage)}`, '_blank');
                 closeWaModal();
                 document.getElementById('waForm').reset();
@@ -680,7 +680,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, collection, onSnapshot, deleteDoc, increment } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, updateDoc, getDoc, collection, onSnapshot, deleteDoc, increment } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCy5s2FMCYNed3kTDk6bt49fcTq05DgCp8",
@@ -983,9 +983,12 @@
                     const price = data.price || 0;
                     const dp = data.dp || 0;
                     const sisa = data.sisa !== undefined ? data.sisa : (price - dp);
+                    const isFullyPaid = (sisa <= 0 && price > 0);
                     
                     let dpBadge = '<span class="bg-green-100 text-green-800 text-[10px] px-2 py-0.5 rounded border border-green-300 font-bold">Lunas</span>';
-                    if(dp === 0) {
+                    if(price === 0) {
+                        dpBadge = '<span class="bg-gray-100 text-gray-600 text-[10px] px-2 py-0.5 rounded border border-gray-300 font-bold">Belum Diatur</span>';
+                    } else if(dp === 0) {
                         dpBadge = '<span class="bg-red-100 text-red-800 text-[10px] px-2 py-0.5 rounded border border-red-300 font-bold">Belum DP</span>';
                     } else if(sisa > 0) {
                         dpBadge = '<span class="bg-yellow-100 text-yellow-800 text-[10px] px-2 py-0.5 rounded border border-yellow-300 font-bold">DP Sebagian</span>';
@@ -1009,15 +1012,45 @@
                                 <div class="font-mono text-xs text-gray-500"><i class="fa-regular fa-clock"></i> ${deadlineText}</div>
                             </td>
                             <td class="p-4 text-center">
-                                <div class="flex flex-wrap justify-center items-center gap-2 opacity-100 md:opacity-50 group-hover:opacity-100 transition-opacity min-w-[170px]">
-                                    <button class="btn-wa-inv bg-green-100 text-green-700 hover:bg-green-200 active:scale-95 px-3 py-2 rounded transition-all duration-300" data-id="${inv}" data-name="${data.name}" data-wa="${data.wa || ''}" title="Kirim WA Invoice"><i class="fa-solid fa-paper-plane"></i></button>
-                                    <button class="btn-wa-done bg-brand-green text-black hover:bg-green-500 active:scale-95 px-3 py-2 rounded transition-all duration-300" data-id="${inv}" data-name="${data.name}" data-task="${data.task}" data-wa="${data.wa || ''}" title="Kirim WA Selesai"><i class="fa-brands fa-whatsapp"></i></button>
-                                    <button class="btn-edit bg-gray-200 text-gray-700 hover:bg-gray-300 active:scale-95 px-3 py-2 rounded transition-all duration-300" data-id="${inv}" title="Edit"><i class="fa-solid fa-pen"></i></button>
-                                    <button class="btn-delete bg-red-100 text-red-600 hover:bg-red-200 active:scale-95 px-3 py-2 rounded transition-all duration-300" data-id="${inv}" title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                <!-- FITUR BARU: CHECKBOX PELUNASAN DI BAGIAN AKSI -->
+                                <div class="flex flex-col items-center gap-2 bg-gray-50 p-2 rounded-lg border border-gray-200">
+                                    <label class="flex items-center gap-2 cursor-pointer font-bold text-xs select-none">
+                                        <input type="checkbox" class="checkbox-lunas w-4 h-4 accent-brand-green cursor-pointer" data-id="${inv}" data-price="${price}" ${isFullyPaid ? 'checked' : ''}>
+                                        <span class="${isFullyPaid ? 'text-green-600 font-black' : 'text-gray-700'}">Sudah Lunas?</span>
+                                    </label>
+                                    <div class="flex flex-wrap justify-center items-center gap-1">
+                                        <button class="btn-wa-inv bg-green-100 text-green-700 hover:bg-green-200 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" data-name="${data.name}" data-wa="${data.wa || ''}" title="Kirim WA Invoice"><i class="fa-solid fa-paper-plane"></i></button>
+                                        <button class="btn-wa-done bg-brand-green text-black hover:bg-green-500 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" data-name="${data.name}" data-task="${data.task}" data-wa="${data.wa || ''}" title="Kirim WA Selesai"><i class="fa-brands fa-whatsapp"></i></button>
+                                        <button class="btn-edit bg-gray-200 text-gray-700 hover:bg-gray-300 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" title="Edit"><i class="fa-solid fa-pen"></i></button>
+                                        <button class="btn-delete bg-red-100 text-red-600 hover:bg-red-200 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                    </div>
                                 </div>
                             </td>
                         </tr>
                     `;
+                });
+
+                // Bind Event Checkbox Lunas Otomatis
+                document.querySelectorAll('.checkbox-lunas').forEach(chk => {
+                    chk.addEventListener('change', async (e) => {
+                        const id = e.target.getAttribute('data-id');
+                        const price = parseInt(e.target.getAttribute('data-price') || 0);
+                        const isChecked = e.target.checked;
+
+                        // Jika dicentang, DP diset sama dengan harga (Sisa = 0). Jika di-uncheck, DP dikembalikan ke 0 atau dibiarkan.
+                        const newDp = isChecked ? price : 0;
+                        const newSisa = price - newDp;
+
+                        try {
+                            await updateDoc(doc(db, "orders", id), {
+                                dp: newDp,
+                                sisa: newSisa,
+                                updatedAt: new Date()
+                            });
+                        } catch(err) {
+                            alert("Gagal memperbarui status pelunasan!");
+                        }
+                    });
                 });
 
                 document.querySelectorAll('.btn-wa-inv').forEach(btn => {
@@ -1069,6 +1102,7 @@
                 let d = item.dp || 0;
                 let s = item.sisa !== undefined ? item.sisa : (p - d);
                 let st = item.status == 1 ? "Pembayaran Diterima" : (item.status == 2 ? "Sedang Dikerjakan" : "Selesai");
+                let statusBayar = s <= 0 ? "Lunas" : (d > 0 ? "DP Sebagian" : "Belum DP");
                 return {
                     "Invoice": item.id,
                     "Nama Klien": item.name,
@@ -1077,6 +1111,7 @@
                     "Total Harga": p,
                     "Sudah DP": d,
                     "Sisa Pelunasan": s,
+                    "Status Pembayaran": statusBayar,
                     "Deadline": item.deadline ? item.deadline.replace('T', ' ') : '-',
                     "Status Progres": st
                 };
@@ -1113,6 +1148,7 @@
                 totalOmzet += p; totalDp += d; totalSisa += s;
 
                 let st = item.status == 1 ? "Pembayaran Diterima" : (item.status == 2 ? "Proses" : "Selesai");
+                let statusBayar = s <= 0 ? "Lunas" : (d > 0 ? "DP Sebagian" : "Belum DP");
                 tableRows.push([
                     item.id,
                     item.name,
@@ -1120,13 +1156,13 @@
                     `Rp ${p.toLocaleString('id-ID')}`,
                     `Rp ${d.toLocaleString('id-ID')}`,
                     `Rp ${s.toLocaleString('id-ID')}`,
-                    st
+                    statusBayar
                 ]);
             });
 
             doc.autoTable({
                 startY: 35,
-                head: [['Invoice', 'Klien', 'Tugas', 'Harga', 'DP', 'Sisa', 'Status']],
+                head: [['Invoice', 'Klien', 'Tugas', 'Harga', 'DP', 'Sisa', 'Status Bayar']],
                 body: tableRows,
                 theme: 'grid',
                 headStyles: { fillColor: [17, 17, 17] },
