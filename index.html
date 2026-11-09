@@ -52,6 +52,11 @@
     <!-- Chart.js untuk Grafik Analytics -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    <!-- SheetJS (XLSX) & jsPDF untuk Export Laporan -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
     <style>
         body { background-color: #fdfbf7; background-image: radial-gradient(#000000 1px, transparent 1px); background-size: 24px 24px; }
         .marquee-container { overflow: hidden; white-space: nowrap; width: 100%; border-top: 3px solid black; border-bottom: 3px solid black; background-color: #FFD800; padding: 10px 0; }
@@ -188,7 +193,6 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             
-            <!-- Layanan 1: Tugas SMA, Makalah, KKN -->
             <button onclick="openWaModal('Tugas Sekolah & Kuliah')" class="bg-white border-4 border-black p-6 rounded-2xl shadow-brutal hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:scale-95 transition-all duration-300 ease-out group text-left relative overflow-hidden" data-aos="fade-up" data-aos-delay="100">
                 <div class="absolute -right-6 -bottom-6 bg-brand-yellow w-24 h-24 rounded-full border-4 border-black group-hover:scale-150 transition-transform duration-500 ease-out z-0"></div>
                 <div class="relative z-10">
@@ -203,7 +207,6 @@
                 </div>
             </button>
 
-            <!-- Layanan 2: Skripsi & Proposal -->
             <button onclick="openWaModal('Skripsi & Proposal')" class="bg-brand-pink border-4 border-black p-6 rounded-2xl shadow-brutal hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:scale-95 transition-all duration-300 ease-out group text-left relative overflow-hidden" data-aos="fade-up" data-aos-delay="200">
                 <div class="absolute -right-6 -bottom-6 bg-white w-24 h-24 rounded-full border-4 border-black group-hover:scale-150 transition-transform duration-500 ease-out z-0"></div>
                 <div class="relative z-10">
@@ -217,7 +220,6 @@
                 </div>
             </button>
 
-            <!-- Layanan 3: KTI, PKM, Artikel, Opini -->
             <button onclick="openWaModal('Karya Tulis & PKM')" class="bg-brand-blue border-4 border-black p-6 rounded-2xl shadow-brutal hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:scale-95 transition-all duration-300 ease-out group text-left relative overflow-hidden" data-aos="fade-up" data-aos-delay="300">
                 <div class="absolute -right-6 -bottom-6 bg-brand-yellow w-24 h-24 rounded-full border-4 border-black group-hover:scale-150 transition-transform duration-500 ease-out z-0"></div>
                 <div class="relative z-10">
@@ -232,7 +234,6 @@
                 </div>
             </button>
 
-            <!-- Layanan 4: SPSS & Turnitin -->
             <button onclick="openWaModal('Olah Data & Turnitin')" class="bg-brand-yellow border-4 border-black p-6 rounded-2xl shadow-brutal hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:scale-95 transition-all duration-300 ease-out group text-left relative overflow-hidden" data-aos="fade-up" data-aos-delay="400">
                 <div class="absolute -right-6 -bottom-6 bg-white w-24 h-24 rounded-full border-4 border-black group-hover:scale-150 transition-transform duration-500 ease-out z-0"></div>
                 <div class="relative z-10">
@@ -246,7 +247,6 @@
                 </div>
             </button>
 
-            <!-- Layanan 5: PPT & Mind Mapping -->
             <button onclick="openWaModal('PPT & Mind Mapping')" class="bg-brand-green border-4 border-black p-6 rounded-2xl shadow-brutal hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:scale-95 transition-all duration-300 ease-out group text-left relative overflow-hidden" data-aos="fade-up" data-aos-delay="500">
                 <div class="absolute -right-6 -bottom-6 bg-brand-yellow w-24 h-24 rounded-full border-4 border-black group-hover:scale-150 transition-transform duration-500 ease-out z-0"></div>
                 <div class="relative z-10">
@@ -260,7 +260,6 @@
                 </div>
             </button>
 
-            <!-- Layanan 6: Esai, Resume & Lainnya -->
             <button onclick="openWaModal('Tugas Lainnya / Esai / Resume')" class="bg-white border-4 border-black p-6 rounded-2xl shadow-brutal hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:scale-95 transition-all duration-300 ease-out group text-left border-dashed relative" data-aos="fade-up" data-aos-delay="600">
                 <div class="absolute -right-6 -bottom-6 bg-brand-purple w-24 h-24 rounded-full border-4 border-black group-hover:scale-150 transition-transform duration-500 ease-out z-0 opacity-20"></div>
                 <div class="relative z-10 flex flex-col justify-center h-full">
@@ -332,6 +331,28 @@
         </div>
     </section>
 
+    <!-- Testimoni / Reviews -->
+    <section class="py-12 px-4 max-w-6xl mx-auto">
+        <h2 class="text-3xl font-black text-center uppercase mb-10" data-aos="fade-up">Kata Mereka 🗣️</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white border-4 border-black p-6 shadow-brutal rounded-2xl rotate-[-1deg] hover:rotate-0 transition-transform duration-300 ease-out" data-aos="fade-up" data-aos-delay="100">
+                <div class="flex text-brand-yellow mb-3 text-xl"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                <p class="font-bold mb-4">"Gila sih cepet banget! Deadline besok pagi, diselamatin Minpres malamnya. Harganya juga masuk kantong mahasiswa."</p>
+                <div class="font-black border-t-2 border-black pt-3">- Budi, Mahasiswa Sem 5</div>
+            </div>
+            <div class="bg-brand-pink border-4 border-black p-6 shadow-brutal rounded-2xl rotate-[2deg] hover:rotate-0 transition-transform duration-300 ease-out" data-aos="fade-up" data-aos-delay="200">
+                <div class="flex text-brand-yellow mb-3 text-xl"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                <p class="font-bold mb-4">"Revisi makalah langsung acc dosen. Format rapi banget, turnitin juga rendah. Fix bakal order lagi kesini!"</p>
+                <div class="font-black border-t-2 border-black pt-3">- Siska, Siswi SMA</div>
+            </div>
+            <div class="bg-white border-4 border-black p-6 shadow-brutal rounded-2xl rotate-[-2deg] hover:rotate-0 transition-transform duration-300 ease-out" data-aos="fade-up" data-aos-delay="300">
+                <div class="flex text-brand-yellow mb-3 text-xl"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                <p class="font-bold mb-4">"PPT nya estetik parah woy! Temen-temen sekelas pada nanya bikin dimana hahaha. Makasih Minpres!"</p>
+                <div class="font-black border-t-2 border-black pt-3">- Reza, Mahasiswa Sem 2</div>
+            </div>
+        </div>
+    </section>
+
     <!-- Channel WhatsApp Banner -->
     <section class="py-16 px-4 mb-10">
         <div class="max-w-4xl mx-auto bg-brand-green border-4 border-black shadow-brutal p-8 md:p-14 text-center rounded-3xl relative overflow-hidden transition-all duration-300 ease-out" data-aos="flip-up">
@@ -355,18 +376,14 @@
             &copy; <script>document.write(new Date().getFullYear())</script> Joki Kilat Minpres.
         </p>
         
-        <!-- Link Rahasia Login Admin di Footer -->
         <div class="mt-4">
             <button id="btnOpenAdmin" class="text-xs text-slate-600 hover:text-brand-pink active:scale-95 transition-all duration-300 font-bold"><i class="fa-solid fa-lock"></i> Login Admin</button>
         </div>
     </footer>
 
-    </div> <!-- AKHIR DARI WEB UTAMA -->
+    </div>
 
-
-    <!-- ========================================== -->
     <!-- MODAL POPUP INPUT NOMOR WA PELANGGAN -->
-    <!-- ========================================== -->
     <div id="waModal" class="hidden fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 transition-all duration-300 ease-out">
         <div class="bg-white w-full max-w-md border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] rounded-2xl p-6 relative transform scale-95 transition-transform duration-300 ease-out" id="waModalContent">
             
@@ -439,7 +456,7 @@
 
             <div class="flex-1 p-4 lg:p-10 max-w-7xl mx-auto w-full flex flex-col gap-6 lg:gap-8">
                 
-                <!-- KOTAK REKAP KEUANGAN & STATISTIK (FITUR BARU) -->
+                <!-- KOTAK REKAP KEUANGAN & OMZET -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="bg-white p-5 rounded-xl shadow-md border-l-4 border-brand-green flex items-center justify-between">
                         <div>
@@ -450,17 +467,17 @@
                     </div>
                     <div class="bg-white p-5 rounded-xl shadow-md border-l-4 border-brand-blue flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-bold text-gray-500">Total Order Keseluruhan</p>
-                            <h4 class="text-2xl font-black text-black" id="dashTotalOrder">0</h4>
+                            <p class="text-sm font-bold text-gray-500">Total DP Masuk</p>
+                            <h4 class="text-2xl font-black text-black" id="dashTotalDp">Rp 0</h4>
                         </div>
-                        <div class="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center text-blue-600 text-xl"><i class="fa-solid fa-file-invoice"></i></div>
+                        <div class="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center text-blue-600 text-xl"><i class="fa-solid fa-money-bill-transfer"></i></div>
                     </div>
                     <div class="bg-white p-5 rounded-xl shadow-md border-l-4 border-brand-pink flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-bold text-gray-500">Tugas Sedang Aktif</p>
-                            <h4 class="text-2xl font-black text-black" id="dashActiveOrder">0</h4>
+                            <p class="text-sm font-bold text-gray-500">Sisa Piutang (Belum Lunas)</p>
+                            <h4 class="text-2xl font-black text-black" id="dashTotalSisa">Rp 0</h4>
                         </div>
-                        <div class="bg-pink-100 w-12 h-12 rounded-full flex items-center justify-center text-pink-600 text-xl"><i class="fa-solid fa-spinner fa-spin"></i></div>
+                        <div class="bg-pink-100 w-12 h-12 rounded-full flex items-center justify-center text-pink-600 text-xl"><i class="fa-solid fa-clock-rotate-left"></i></div>
                     </div>
                 </div>
 
@@ -503,10 +520,16 @@
                                 <input type="text" id="adminTask" required placeholder="Makalah Biologi Bab 2" class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50 transition-colors duration-300">
                             </div>
 
-                            <!-- FITUR BARU: INPUT HARGA -->
-                            <div>
-                                <label class="font-bold text-sm text-gray-700 block mb-1">Harga Tugas (Rp):</label>
-                                <input type="number" id="adminPrice" required placeholder="Contoh: 50000" class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50 transition-colors duration-300">
+                            <!-- INPUT KEUANGAN (HARGA & DP) -->
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="font-bold text-sm text-gray-700 block mb-1">Total Harga (Rp):</label>
+                                    <input type="number" id="adminPrice" required placeholder="50000" class="w-full px-3 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50 transition-colors">
+                                </div>
+                                <div>
+                                    <label class="font-bold text-sm text-gray-700 block mb-1">Sudah DP (Rp):</label>
+                                    <input type="number" id="adminDp" required placeholder="25000" class="w-full px-3 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50 transition-colors">
+                                </div>
                             </div>
 
                             <div>
@@ -536,13 +559,18 @@
                         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 pb-4 border-b border-gray-100">
                             <h3 class="font-black text-lg flex items-center gap-2"><i class="fa-solid fa-server text-brand-pink"></i> Database Progres Klien</h3>
                             
-                            <!-- FITUR BARU: TOMBOL EXPORT EXCEL -->
-                            <button onclick="exportToCSV()" class="bg-black text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-brand-yellow hover:text-black transition-all active:scale-95 flex items-center gap-2 shadow-brutal-sm">
-                                <i class="fa-solid fa-download"></i> Export Excel
-                            </button>
+                            <!-- TOMBOL EXPORT EXCEL & PDF -->
+                            <div class="flex gap-2">
+                                <button onclick="exportToExcel()" class="bg-brand-green text-black px-3 py-2 rounded-lg font-bold text-xs hover:bg-green-500 transition-all active:scale-95 flex items-center gap-1 border-2 border-black shadow-brutal-sm">
+                                    <i class="fa-solid fa-file-excel"></i> Excel
+                                </button>
+                                <button onclick="exportToPDF()" class="bg-brand-pink text-black px-3 py-2 rounded-lg font-bold text-xs hover:bg-pink-400 transition-all active:scale-95 flex items-center gap-1 border-2 border-black shadow-brutal-sm">
+                                    <i class="fa-solid fa-file-pdf"></i> PDF
+                                </button>
+                            </div>
                         </div>
 
-                        <!-- FITUR BARU: PENCARIAN (SEARCH) & FILTER STATUS -->
+                        <!-- PENCARIAN & FILTER -->
                         <div class="flex flex-col md:flex-row gap-3 mb-4 bg-gray-50 p-3 rounded-lg border border-gray-200">
                             <div class="flex-1 relative">
                                 <i class="fa-solid fa-search absolute left-3 top-3 text-gray-400"></i>
@@ -558,18 +586,18 @@
                         </div>
 
                         <div class="overflow-x-auto flex-1 admin-table-wrapper">
-                            <table class="w-full text-left border-collapse min-w-[800px]">
+                            <table class="w-full text-left border-collapse min-w-[850px]">
                                 <thead>
                                     <tr class="bg-gray-100 text-gray-700 text-sm">
                                         <th class="p-4 font-black rounded-tl-lg whitespace-nowrap">INVOICE</th>
                                         <th class="p-4 font-black">NAMA & TUGAS</th>
-                                        <th class="p-4 font-black whitespace-nowrap">HARGA & DEADLINE</th>
-                                        <th class="p-4 font-black whitespace-nowrap">STATUS</th>
+                                        <th class="p-4 font-black whitespace-nowrap">KEUANGAN (HARGA/DP)</th>
+                                        <th class="p-4 font-black whitespace-nowrap">STATUS & DEADLINE</th>
                                         <th class="p-4 font-black text-center rounded-tr-lg whitespace-nowrap">AKSI</th>
                                     </tr>
                                 </thead>
                                 <tbody id="adminTableBody" class="divide-y divide-gray-200 text-sm font-bold text-gray-800">
-                                    <!-- Data list dirender oleh JavaScript -->
+                                    <!-- Data dari JS -->
                                 </tbody>
                             </table>
                             <div id="emptyDataState" class="hidden py-10 text-center text-gray-400">
@@ -648,7 +676,7 @@
         });
     </script>
 
-    <!-- FIREBASE & LOGIKA ADMIN DASHBOARD LENGKAP (TYPE MODULE) -->
+    <!-- FIREBASE & LOGIKA ADMIN LENGKAP -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
@@ -668,7 +696,7 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // 1. ANALYTICS
+        // ANALYTICS
         function trackVisit() {
             if (!sessionStorage.getItem('minpres_visited')) {
                 sessionStorage.setItem('minpres_visited', 'true');
@@ -679,14 +707,13 @@
         }
         if(window.location.hash !== '#admin') { trackVisit(); }
 
-        // 2. STATUS DATA
         const statusDetail = [
             { id: 1, title: 'Pembayaran Diterima', desc: 'Admin telah mengkonfirmasi pembayaranmu.', color: 'bg-brand-yellow', icon: 'fa-money-bill-wave' },
             { id: 2, title: 'Sedang Dikerjakan', desc: 'Tim Minpres sedang menyusun tugas kamu dengan teliti.', color: 'bg-brand-pink', icon: 'fa-pen-nib' },
             { id: 3, title: 'Tugas Selesai!', desc: 'Hore! File tugas sudah siap dikirim ke WhatsApp kamu.', color: 'bg-brand-green', icon: 'fa-flag-checkered' }
         ];
 
-        // 3. TRACKER KLIEN
+        // TRACKER KLIEN
         let countdownInterval;
         document.getElementById('trackForm').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -772,7 +799,7 @@
             }, 1000);
         }
 
-        // 4. ADMIN LOGIN
+        // ADMIN LOGIN
         if(window.location.hash === '#admin'){
             document.getElementById('main-website').classList.add('hidden');
             document.getElementById('admin-workspace').classList.remove('hidden');
@@ -831,7 +858,7 @@
             });
         }
 
-        // 5. DATABASE & FILTER/SORTING ADMIN
+        // DATABASE & FORM ADMIN
         document.getElementById('btnGenerateInv').addEventListener('click', () => { document.getElementById('adminInv').value = `MINPRES-${Math.floor(1000 + Math.random() * 9000)}`; });
 
         document.getElementById('adminForm').addEventListener('submit', async (e) => {
@@ -844,12 +871,18 @@
             if(wa.startsWith('0')) { wa = '62' + wa.substring(1); }
             else if(wa.startsWith('+')) { wa = wa.substring(1); }
 
+            const price = parseInt(document.getElementById('adminPrice').value || 0);
+            const dp = parseInt(document.getElementById('adminDp').value || 0);
+            const sisa = price - dp;
+
             try {
                 await setDoc(doc(db, "orders", inv), {
                     name: document.getElementById('adminName').value.trim(),
                     wa: wa, 
                     task: document.getElementById('adminTask').value.trim(),
-                    price: parseInt(document.getElementById('adminPrice').value || 0), // SIMPAN HARGA
+                    price: price,
+                    dp: dp,
+                    sisa: sisa,
                     deadline: document.getElementById('adminDeadline').value,
                     status: parseInt(document.getElementById('adminStatus').value),
                     updatedAt: new Date()
@@ -861,7 +894,6 @@
             finally { btnSave.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Data Real-Time'; }
         });
 
-        // Variabel global untuk menyimpan data sementara agar bisa di filter
         let allOrdersData = [];
 
         function formatRupiah(angka) {
@@ -874,15 +906,13 @@
                 querySnapshot.forEach((docSnap) => {
                     allOrdersData.push({ id: docSnap.id, ...docSnap.data() });
                 });
-                renderAdminTable(); // Render berdasarkan filter saat ini
+                renderAdminTable();
             });
         }
 
-        // Event listener untuk Filter & Search
         document.getElementById('searchFilter').addEventListener('input', renderAdminTable);
         document.getElementById('statusFilter').addEventListener('change', renderAdminTable);
 
-        // FUNGSI UTAMA RENDER TABEL DENGAN FILTER, SORT, DAN HIGHLIGHT DEADLINE
         function renderAdminTable() {
             const tbody = document.getElementById('adminTableBody');
             const emptyState = document.getElementById('emptyDataState');
@@ -891,38 +921,38 @@
             const searchQuery = document.getElementById('searchFilter').value.toLowerCase();
             const statusQuery = document.getElementById('statusFilter').value;
 
-            // 1. Hitung Rekap Keuangan dari data asli (Sebelum difilter, semua data)
+            // KEUANGAN / OMZET REKAP
             let totalOmzet = 0;
-            let totalOrder = allOrdersData.length;
-            let activeOrder = 0;
+            let totalDp = 0;
+            let totalSisa = 0;
 
             allOrdersData.forEach(item => {
-                totalOmzet += (item.price || 0);
-                if(item.status < 3) activeOrder++;
+                let p = item.price || 0;
+                let d = item.dp || 0;
+                let s = item.sisa !== undefined ? item.sisa : (p - d);
+                totalOmzet += p;
+                totalDp += d;
+                totalSisa += s;
             });
 
             document.getElementById('dashOmzet').innerText = formatRupiah(totalOmzet);
-            document.getElementById('dashTotalOrder').innerText = totalOrder;
-            document.getElementById('dashActiveOrder').innerText = activeOrder;
+            document.getElementById('dashTotalDp').innerText = formatRupiah(totalDp);
+            document.getElementById('dashTotalSisa').innerText = formatRupiah(totalSisa);
 
-            // 2. Filter Data
             let filteredData = allOrdersData.filter(item => {
                 const matchSearch = item.id.toLowerCase().includes(searchQuery) || item.name.toLowerCase().includes(searchQuery);
                 const matchStatus = statusQuery === 'ALL' ? true : (statusQuery === 'ACTIVE' ? item.status < 3 : item.status == 3);
                 return matchSearch && matchStatus;
             });
 
-            // 3. Urutkan berdasarkan Deadline terdekat (Hanya untuk yang masih proses)
             filteredData.sort((a, b) => {
-                if (a.status == 3 && b.status < 3) return 1; // Selesai ditaruh di bawah
+                if (a.status == 3 && b.status < 3) return 1;
                 if (a.status < 3 && b.status == 3) return -1;
-                
                 if (!a.deadline) return 1;
                 if (!b.deadline) return -1;
                 return new Date(a.deadline) - new Date(b.deadline);
             });
 
-            // 4. Render ke HTML
             if (filteredData.length === 0) {
                 emptyState.classList.remove('hidden');
             } else {
@@ -944,28 +974,39 @@
                         const d = new Date(data.deadline);
                         deadlineText = `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
                         
-                        // HIGHLIGHT DEADLINE MEРЕТ (< 24 Jam)
                         const distance = d.getTime() - new Date().getTime();
                         if (fixedStatus < 3 && distance > 0 && distance < (24 * 60 * 60 * 1000)) {
                             rowHighlight = "bg-red-50 hover:bg-red-100 border-l-4 border-red-500 animate-pulse"; 
                         }
                     }
 
-                    const priceText = formatRupiah(data.price || 0);
+                    const price = data.price || 0;
+                    const dp = data.dp || 0;
+                    const sisa = data.sisa !== undefined ? data.sisa : (price - dp);
+                    
+                    let dpBadge = '<span class="bg-green-100 text-green-800 text-[10px] px-2 py-0.5 rounded border border-green-300 font-bold">Lunas</span>';
+                    if(dp === 0) {
+                        dpBadge = '<span class="bg-red-100 text-red-800 text-[10px] px-2 py-0.5 rounded border border-red-300 font-bold">Belum DP</span>';
+                    } else if(sisa > 0) {
+                        dpBadge = '<span class="bg-yellow-100 text-yellow-800 text-[10px] px-2 py-0.5 rounded border border-yellow-300 font-bold">DP Sebagian</span>';
+                    }
 
                     tbody.innerHTML += `
                         <tr class="${rowHighlight} transition-colors group border-b">
                             <td class="p-4 tracking-wider whitespace-nowrap">${inv}</td>
-                            <td class="p-4 min-w-[200px]">
+                            <td class="p-4 min-w-[180px]">
                                 <div class="text-base text-black">${data.name}</div>
                                 <div class="text-xs text-gray-500 font-semibold mt-1">${data.task}</div>
                             </td>
                             <td class="p-4 whitespace-nowrap">
-                                <div class="text-brand-green font-black mb-1">${priceText}</div>
-                                <div class="font-mono text-xs text-gray-500"><i class="fa-regular fa-clock"></i> ${deadlineText}</div>
+                                <div class="text-xs text-gray-600 font-bold">Total: ${formatRupiah(price)}</div>
+                                <div class="text-xs text-blue-600 font-bold">DP: ${formatRupiah(dp)}</div>
+                                <div class="text-xs text-red-600 font-bold">Sisa: ${formatRupiah(sisa)}</div>
+                                <div class="mt-1">${dpBadge}</div>
                             </td>
                             <td class="p-4 whitespace-nowrap">
-                                <span class="${badgeColor} border px-3 py-1 rounded-full text-xs">${statusName}</span>
+                                <div class="mb-1"><span class="${badgeColor} border px-3 py-1 rounded-full text-xs inline-block">${statusName}</span></div>
+                                <div class="font-mono text-xs text-gray-500"><i class="fa-regular fa-clock"></i> ${deadlineText}</div>
                             </td>
                             <td class="p-4 text-center">
                                 <div class="flex flex-wrap justify-center items-center gap-2 opacity-100 md:opacity-50 group-hover:opacity-100 transition-opacity min-w-[170px]">
@@ -979,7 +1020,6 @@
                     `;
                 });
 
-                // Re-bind Action Buttons
                 document.querySelectorAll('.btn-wa-inv').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         const id = e.currentTarget.getAttribute('data-id'), name = e.currentTarget.getAttribute('data-name'), wa = e.currentTarget.getAttribute('data-wa');
@@ -1005,6 +1045,7 @@
                         document.getElementById('adminWa').value = docData.wa || "";
                         document.getElementById('adminTask').value = docData.task;
                         document.getElementById('adminPrice').value = docData.price || "";
+                        document.getElementById('adminDp').value = docData.dp || "";
                         document.getElementById('adminDeadline').value = docData.deadline || "";
                         document.getElementById('adminStatus').value = docData.status > 3 ? 3 : docData.status;
                         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1019,34 +1060,87 @@
             }
         }
 
-        // FITUR BARU: EXPORT DATA KE CSV (EXCEL)
-        window.exportToCSV = function() {
-            if(allOrdersData.length === 0) { alert("Data masih kosong!"); return; }
-            
-            let csvContent = "data:text/csv;charset=utf-8,";
-            // Header
-            csvContent += "Invoice,Nama,No WA,Tugas,Harga,Deadline,Status\n";
-            
-            allOrdersData.forEach(row => {
-                let statusText = statusDetail.find(s => s.id == (row.status > 3 ? 3 : row.status)).title;
-                // Bersihkan koma pada teks agar tidak merusak format CSV
-                let safeName = row.name.replace(/,/g, " ");
-                let safeTask = row.task.replace(/,/g, " ");
-                let safeDate = row.deadline ? row.deadline.replace('T', ' ') : '-';
-                
-                let rowData = `${row.id},${safeName},${row.wa || '-'},${safeTask},${row.price || 0},${safeDate},${statusText}`;
-                csvContent += rowData + "\n";
+        // EXPORT KE EXCEL (.XLSX)
+        window.exportToExcel = function() {
+            if(allOrdersData.length === 0) { alert("Data kosong!"); return; }
+
+            let exportData = allOrdersData.map(item => {
+                let p = item.price || 0;
+                let d = item.dp || 0;
+                let s = item.sisa !== undefined ? item.sisa : (p - d);
+                let st = item.status == 1 ? "Pembayaran Diterima" : (item.status == 2 ? "Sedang Dikerjakan" : "Selesai");
+                return {
+                    "Invoice": item.id,
+                    "Nama Klien": item.name,
+                    "No WA": item.wa || "-",
+                    "Detail Tugas": item.task,
+                    "Total Harga": p,
+                    "Sudah DP": d,
+                    "Sisa Pelunasan": s,
+                    "Deadline": item.deadline ? item.deadline.replace('T', ' ') : '-',
+                    "Status Progres": st
+                };
             });
 
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", `Laporan_Order_Minpres_${new Date().toLocaleDateString('id-ID')}.csv`);
-            document.body.appendChild(link); 
-            link.click();
-            document.body.removeChild(link);
+            const worksheet = XLSX.utils.json_to_sheet(exportData);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Laporan Keuangan & Order");
+            XLSX.writeFile(workbook, `Laporan_Keuangan_Minpres_${new Date().toISOString().slice(0,10)}.xlsx`);
         }
 
+        // EXPORT KE PDF
+        window.exportToPDF = function() {
+            if(allOrdersData.length === 0) { alert("Data kosong!"); return; }
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(16);
+            doc.text("JOKI KILAT MINPRES - LAPORAN KEUANGAN & ORDER", 14, 20);
+
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(10);
+            doc.text(`Tanggal Cetak: ${new Date().toLocaleDateString('id-ID')}`, 14, 28);
+
+            let tableRows = [];
+            let totalOmzet = 0, totalDp = 0, totalSisa = 0;
+
+            allOrdersData.forEach(item => {
+                let p = item.price || 0;
+                let d = item.dp || 0;
+                let s = item.sisa !== undefined ? item.sisa : (p - d);
+                totalOmzet += p; totalDp += d; totalSisa += s;
+
+                let st = item.status == 1 ? "Pembayaran Diterima" : (item.status == 2 ? "Proses" : "Selesai");
+                tableRows.push([
+                    item.id,
+                    item.name,
+                    item.task,
+                    `Rp ${p.toLocaleString('id-ID')}`,
+                    `Rp ${d.toLocaleString('id-ID')}`,
+                    `Rp ${s.toLocaleString('id-ID')}`,
+                    st
+                ]);
+            });
+
+            doc.autoTable({
+                startY: 35,
+                head: [['Invoice', 'Klien', 'Tugas', 'Harga', 'DP', 'Sisa', 'Status']],
+                body: tableRows,
+                theme: 'grid',
+                headStyles: { fillColor: [17, 17, 17] },
+                styles: { fontSize: 8 }
+            });
+
+            let finalY = doc.lastAutoTable.finalY + 10;
+            doc.setFont("helvetica", "bold");
+            doc.text(`Total Omzet Keseluruhan: Rp ${totalOmzet.toLocaleString('id-ID')}`, 14, finalY);
+            doc.text(`Total DP Masuk: Rp ${totalDp.toLocaleString('id-ID')}`, 14, finalY + 6);
+            doc.text(`Total Sisa Piutang: Rp ${totalSisa.toLocaleString('id-ID')}`, 14, finalY + 12);
+
+            doc.save(`Laporan_Keuangan_Minpres_${new Date().toISOString().slice(0,10)}.pdf`);
+        }
     </script>
 </body>
 </html>
