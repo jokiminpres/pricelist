@@ -182,10 +182,10 @@
                         </div>
                     </div>
 
-                    <!-- TOMBOL BAYAR QRIS (Muncul jika ada sisa tagihan) -->
+                    <!-- TOMBOL BAYAR QRIS (TENTUKAN NOMINAL BEBAS) -->
                     <div id="payQrisContainer" class="hidden mb-6">
                         <button onclick="showQrisPayment()" class="w-full bg-brand-yellow text-black font-black text-lg py-3 px-4 border-4 border-black rounded-xl shadow-brutal hover:-translate-y-1 active:scale-95 transition-all flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-qrcode text-2xl"></i> BAYAR SEKARANG VIA QRIS (NOMINAL OTOMATIS)
+                            <i class="fa-solid fa-qrcode text-2xl"></i> BAYAR SEKARANG VIA QRIS (SET NOMINAL BEBAS)
                         </button>
                     </div>
 
@@ -537,7 +537,7 @@
         </div>
     </div>
 
-    <!-- MODAL POPUP QRIS DINAMIS -->
+    <!-- MODAL POPUP QRIS DINAMIS (DENGAN INPUT NOMINAL BEBAS) -->
     <div id="qrisModal" class="hidden fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 transition-all duration-300">
         <div class="bg-white w-full max-w-sm border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] rounded-2xl p-6 text-center relative">
             
@@ -548,21 +548,33 @@
             <div class="bg-brand-yellow border-2 border-black px-3 py-1 font-black text-xs inline-block rounded mb-2 rotate-[-1deg]" id="qrisInvLabel">
                 MINPRES-XXX
             </div>
-            <h3 class="text-xl font-black mb-1">Scan untuk Pembayaran</h3>
-            <p class="font-bold text-gray-600 text-xs mb-4">Mendukung GoPay, DANA, OVO, ShopeePay & Semua Bank</p>
+            <h3 class="text-xl font-black mb-1">Pembayaran QRIS</h3>
+            <p class="font-bold text-gray-600 text-xs mb-3">Mendukung GoPay, DANA, OVO, ShopeePay & Bank</p>
+
+            <!-- FORM SET NOMINAL TRANSFER BEBAS -->
+            <div class="bg-yellow-50 border-2 border-black p-3 rounded-xl mb-4 text-left font-bold text-xs">
+                <label class="block font-black text-gray-700 mb-1">Pilih Nominal Transfer:</label>
+                <div class="grid grid-cols-2 gap-2 mb-2">
+                    <button type="button" onclick="setQrisPreset('dp')" class="bg-white border-2 border-black py-1.5 px-2 rounded-lg font-black text-xs hover:bg-brand-yellow active:scale-95 transition-all">DP 50%</button>
+                    <button type="button" onclick="setQrisPreset('sisa')" class="bg-white border-2 border-black py-1.5 px-2 rounded-lg font-black text-xs hover:bg-brand-green active:scale-95 transition-all">Pelunasan Sisa</button>
+                </div>
+                <label class="block font-black text-gray-700 mb-1">Atau Ketik Nominal Sendiri (Rp):</label>
+                <input type="number" id="customQrisAmountInput" placeholder="Masukkan angka (cth: 25000)" class="w-full px-3 py-2 border-2 border-black font-black text-sm rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-brand-blue">
+                <button type="button" onclick="updateQrisCustom()" class="w-full bg-black text-white font-black py-1.5 rounded-lg mt-2 text-xs hover:bg-gray-800 active:scale-95">REGENERATE QRIS</button>
+            </div>
 
             <!-- Container Gambar QR Code Dinamis -->
-            <div class="bg-gray-100 p-4 border-4 border-black rounded-xl inline-block mb-4 shadow-brutal-sm relative">
-                <img id="qrisImage" src="" alt="QRIS Payment" class="w-56 h-56 mx-auto object-contain">
+            <div class="bg-gray-100 p-3 border-4 border-black rounded-xl inline-block mb-3 shadow-brutal-sm relative">
+                <img id="qrisImage" src="" alt="QRIS Payment" class="w-48 h-48 mx-auto object-contain">
             </div>
 
             <!-- Detail Nominal -->
-            <div class="bg-gray-50 border-2 border-black p-3 rounded-lg mb-4 text-left font-bold text-sm">
+            <div class="bg-gray-50 border-2 border-black p-2.5 rounded-lg mb-3 text-left font-bold text-xs">
                 <div class="flex justify-between border-b pb-1 mb-1">
-                    <span class="text-gray-500">Jenis Tagihan:</span>
-                    <span id="qrisType" class="text-black">Sisa Pelunasan</span>
+                    <span class="text-gray-500">Keterangan:</span>
+                    <span id="qrisType" class="text-black">Nominal Kustom</span>
                 </div>
-                <div class="flex justify-between text-base">
+                <div class="flex justify-between text-sm">
                     <span class="text-black">Total Transfer:</span>
                     <span id="qrisAmount" class="text-green-600 font-black">Rp 0</span>
                 </div>
@@ -910,8 +922,9 @@
             return qris + crc.toString(16).toUpperCase().padStart(4, '0');
         }
 
-        // HANDLER MODAL QRIS DINAMIS
+        // HANDLER MODAL QRIS DINAMIS DENGAN INPUT NOMINAL BEBAS
         let currentOrderForPay = null;
+        let activeQrisAmount = 0;
 
         window.showQrisPayment = function() {
             if (!currentOrderForPay) return;
@@ -920,29 +933,58 @@
             const dp = currentOrderForPay.dp || 0;
             const sisa = currentOrderForPay.sisa !== undefined ? currentOrderForPay.sisa : (price - dp);
             
-            const payAmount = (dp === 0 && price > 0) ? price / 2 : sisa;
-            const payType = (dp === 0 && price > 0) ? "Pembayaran DP (50%)" : "Sisa Pelunasan";
+            // Default awal: jika sisa > 0 bayar sisa, kalau tidak bayar DP/Full
+            const defaultAmt = (sisa > 0) ? sisa : ((dp === 0 && price > 0) ? price / 2 : price);
+            
+            document.getElementById('qrisInvLabel').innerText = currentOrderForPay.id;
+            document.getElementById('customQrisAmountInput').value = defaultAmt;
+            
+            updateQrisDisplay(defaultAmt, sisa > 0 ? "Sisa Pelunasan" : "Pembayaran DP/Tagihan");
+            document.getElementById('qrisModal').classList.remove('hidden');
+        };
 
-            if (payAmount <= 0) {
-                alert("Tagihan ini sudah Lunas!");
+        window.setQrisPreset = function(type) {
+            if (!currentOrderForPay) return;
+            const price = currentOrderForPay.price || 0;
+            const dp = currentOrderForPay.dp || 0;
+            const sisa = currentOrderForPay.sisa !== undefined ? currentOrderForPay.sisa : (price - dp);
+
+            let amt = price;
+            let labelText = "Nominal Kustom";
+            if(type === 'dp') {
+                amt = price / 2;
+                labelText = "Pembayaran DP (50%)";
+            } else if(type === 'sisa') {
+                amt = sisa > 0 ? sisa : price;
+                labelText = "Sisa Pelunasan";
+            }
+            document.getElementById('customQrisAmountInput').value = amt;
+            updateQrisDisplay(amt, labelText);
+        };
+
+        window.updateQrisCustom = function() {
+            const inputVal = parseInt(document.getElementById('customQrisAmountInput').value || 0);
+            if(inputVal <= 0) {
+                alert("Masukkan nominal transfer yang valid!");
                 return;
             }
+            updateQrisDisplay(inputVal, "Nominal Bebas (Kustom)");
+        };
 
-            const dynamicQrisStr = buildDynamicQris(STATIC_QRIS_PAYLOAD, payAmount);
+        function updateQrisDisplay(amount, labelText) {
+            activeQrisAmount = amount;
+            const dynamicQrisStr = buildDynamicQris(STATIC_QRIS_PAYLOAD, amount);
             const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(dynamicQrisStr)}`;
             
             document.getElementById('qrisImage').src = qrApiUrl;
-            document.getElementById('qrisInvLabel').innerText = currentOrderForPay.id;
-            document.getElementById('qrisType').innerText = payType;
-            document.getElementById('qrisAmount').innerText = formatRupiah(payAmount);
+            document.getElementById('qrisType').innerText = labelText;
+            document.getElementById('qrisAmount').innerText = formatRupiah(amount);
 
             document.getElementById('btnConfirmQrisWa').onclick = function() {
-                const txt = `Halo Admin Joki Minpres!\n\nSaya sudah melakukan transfer pembayaran QRIS sebesar *${formatRupiah(payAmount)}* untuk Invoice *${currentOrderForPay.id}* (${payType}).\n\nBerikut bukti transfernya:`;
+                const txt = `Halo Admin Joki Minpres!\n\nSaya sudah melakukan transfer pembayaran QRIS sebesar *${formatRupiah(amount)}* untuk Invoice *${currentOrderForPay.id}* (${labelText}).\n\nBerikut bukti transfernya:`;
                 window.open(`https://wa.me/6283115784598?text=${encodeURIComponent(txt)}`, '_blank');
             };
-
-            document.getElementById('qrisModal').classList.remove('hidden');
-        };
+        }
 
         window.closeQrisModal = function() {
             document.getElementById('qrisModal').classList.add('hidden');
@@ -999,7 +1041,7 @@
                     document.getElementById('clientDp').innerText = formatRupiah(dp);
 
                     const elSisa = document.getElementById('clientSisa');
-                    if (sisa <= 0) {
+                    if (sisa <= 0 && price > 0) {
                         elSisa.innerText = "LUNAS 🎉";
                         elSisa.classList.remove('text-red-600');
                         elSisa.classList.add('text-green-600');
@@ -1009,13 +1051,8 @@
                         elSisa.classList.add('text-red-600');
                     }
 
-                    // TAMPILKAN TOMBOL QRIS JIKA MASIH ADA SISA TAGIHAN
-                    const payContainer = document.getElementById('payQrisContainer');
-                    if (sisa > 0) {
-                        payContainer.classList.remove('hidden');
-                    } else {
-                        payContainer.classList.add('hidden');
-                    }
+                    // SELALU TAMPILKAN TOMBOL QRIS (KLIEN BISA BAYAR DP/KUSTOM/LUNAS)
+                    document.getElementById('payQrisContainer').classList.remove('hidden');
 
                     // LOGIKA TOMBOL DOWNLOAD & DEADLINE
                     let fixedStatus = orderData.status > 3 ? 3 : orderData.status;
@@ -1332,7 +1369,7 @@
                                         <span class="${isFullyPaid ? 'text-green-600 font-black' : 'text-gray-700'}">Sudah Lunas?</span>
                                     </label>
                                     <div class="flex flex-wrap justify-center items-center gap-1">
-                                        <button class="btn-wa-inv bg-green-100 text-green-700 hover:bg-green-200 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" data-name="${data.name}" data-wa="${data.wa || ''}" title="Kirim WA Invoice"><i class="fa-solid fa-paper-plane"></i></button>
+                                        <button class="btn-wa-inv bg-green-100 text-green-700 hover:bg-green-200 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" data-name="${data.name}" data-task="${data.task}" data-price="${price}" data-dp="${dp}" data-sisa="${sisa}" data-wa="${data.wa || ''}" title="Kirim WA Invoice"><i class="fa-solid fa-paper-plane"></i></button>
                                         <button class="btn-wa-done bg-brand-green text-black hover:bg-green-500 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" data-name="${data.name}" data-task="${data.task}" data-wa="${data.wa || ''}" title="Kirim WA Selesai"><i class="fa-brands fa-whatsapp"></i></button>
                                         <button class="btn-edit bg-gray-200 text-gray-700 hover:bg-gray-300 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" title="Edit"><i class="fa-solid fa-pen"></i></button>
                                         <button class="btn-delete bg-red-100 text-red-600 hover:bg-red-200 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" title="Hapus"><i class="fa-solid fa-trash"></i></button>
@@ -1364,14 +1401,27 @@
                     });
                 });
 
+                // TOMBOL WA INVOICE PERTAMA (TERMASUK DETAIL TAGIHAN & KETERANGAN TRANSFER BEBAS)
                 document.querySelectorAll('.btn-wa-inv').forEach(btn => {
                     btn.addEventListener('click', (e) => {
-                        const id = e.currentTarget.getAttribute('data-id'), name = e.currentTarget.getAttribute('data-name'), wa = e.currentTarget.getAttribute('data-wa');
+                        const id = e.currentTarget.getAttribute('data-id');
+                        const name = e.currentTarget.getAttribute('data-name');
+                        const task = e.currentTarget.getAttribute('data-task');
+                        const price = parseInt(e.currentTarget.getAttribute('data-price') || 0);
+                        const dp = parseInt(e.currentTarget.getAttribute('data-dp') || 0);
+                        const sisa = parseInt(e.currentTarget.getAttribute('data-sisa') || (price - dp));
+                        const wa = e.currentTarget.getAttribute('data-wa');
+
                         if(!wa) { alert("Nomor WA kosong!"); return; }
-                        const txt = `Halo *${name}*,\n\nTerima kasih sudah order di Joki Kilat Minpres! 🙏\n\nNomor Invoice kamu: *${id}*\nCek progres tugasmu di:\nhttps://jokiminpres.github.io/pricelist/\n\nTerima kasih! ✨`;
+
+                        let dpText = dp > 0 ? `*Rp ${dp.toLocaleString('id-ID')}*` : `*Rp ${(price/2).toLocaleString('id-ID')} (DP 50%)*`;
+                        let sisaText = sisa > 0 ? `\n- Sisa Pelunasan: *Rp ${sisa.toLocaleString('id-ID')}*` : '';
+
+                        const txt = `Halo *${name}*,\n\nTerima kasih sudah order di Joki Kilat Minpres! 🙏\n\nDetail Invoice & Pengerjaan:\n- No. Invoice: *${id}*\n- Tugas: *${task}*\n- Total Tagihan: *Rp ${price.toLocaleString('id-ID')}*\n- Minimum DP: ${dpText}${sisaText}\n\n📌 *Lacak Progres & Bayar QRIS Nominal Bebas:* \nhttps://jokiminpres.github.io/pricelist/\n\n*(Kamu bisa scan QRIS di web & set nominal transfer sesuai keinginanmu ya!)*\n\nTerima kasih! ✨`;
                         window.open(`https://wa.me/${wa}?text=${encodeURIComponent(txt)}`, '_blank');
                     });
                 });
+
                 document.querySelectorAll('.btn-wa-done').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         const id = e.currentTarget.getAttribute('data-id'), name = e.currentTarget.getAttribute('data-name'), task = e.currentTarget.getAttribute('data-task'), wa = e.currentTarget.getAttribute('data-wa');
