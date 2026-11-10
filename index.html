@@ -182,6 +182,13 @@
                         </div>
                     </div>
 
+                    <!-- TOMBOL BAYAR QRIS (Muncul jika ada sisa tagihan) -->
+                    <div id="payQrisContainer" class="hidden mb-6">
+                        <button onclick="showQrisPayment()" class="w-full bg-brand-yellow text-black font-black text-lg py-3 px-4 border-4 border-black rounded-xl shadow-brutal hover:-translate-y-1 active:scale-95 transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-qrcode text-2xl"></i> BAYAR SEKARANG VIA QRIS (NOMINAL OTOMATIS)
+                        </button>
+                    </div>
+
                     <!-- TOMBOL DOWNLOAD: Muncul jika ada link DAN status = selesai (3) -->
                     <div id="fileDownloadContainer" class="hidden mb-8">
                         <h4 class="font-black uppercase text-center mb-3">Tugas Selesai! 🎉</h4>
@@ -201,6 +208,13 @@
                         <h4 class="font-black uppercase border-b-2 border-black inline-block mb-3">Sisa Waktu Deadline ⏳</h4>
                         <div id="countdownTimer" class="flex justify-center gap-2 md:gap-4 text-white">
                             <!-- Diisi oleh JS -->
+                        </div>
+
+                        <!-- TOMBOL GOOGLE CALENDAR REMINDER -->
+                        <div class="mt-4 border-t-2 border-black pt-3">
+                            <a href="#" id="btnAddToCalendar" target="_blank" class="hidden bg-white text-black font-black text-xs md:text-sm py-2.5 px-4 border-2 border-black rounded-lg hover:-translate-y-1 active:scale-95 transition-all inline-flex items-center justify-center gap-2 shadow-brutal-sm">
+                                <i class="fa-regular fa-calendar-plus text-brand-blue text-lg"></i> Ingatkan Saya di Google Calendar
+                            </a>
                         </div>
                     </div>
 
@@ -409,13 +423,12 @@
                 </div>
             </div>
         </div>
+        <p class="text-center text-sm font-bold text-gray-500 mt-6">*Nama klien pada testimoni disengaja anonim demi menjaga privasi.</p>
     </section>
 
-   <!-- FAQ Section -->
+    <!-- FAQ Section -->
     <section class="py-16 px-4 bg-brand-yellow border-y-4 border-black mt-10 overflow-hidden">
         <div class="max-w-4xl mx-auto">
-            
-            <!-- PERBAIKAN: Menggunakan Flexbox agar tengah sempurna & tidak lewat layar HP -->
             <div class="flex justify-center mb-10 md:mb-12" data-aos="fade-up">
                 <h2 class="text-2xl md:text-5xl font-black text-center uppercase bg-white px-4 md:px-6 py-3 border-4 border-black rotate-[1deg] shadow-brutal">
                     FAQ (Tanya Jawab) 🤔
@@ -456,7 +469,6 @@
                     <p class="font-bold text-gray-700 text-xs md:text-sm mt-2 ml-8 md:ml-10">Bisa banget! Kami menyediakan layanan garansi revisi apabila ada bagian yang kurang sesuai dengan kesepakatan awal saat order (Syarat & Ketentuan berlaku).</p>
                 </div>
             </div>
-
         </div>
     </section>
 
@@ -522,6 +534,43 @@
                     <i class="fa-brands fa-whatsapp text-2xl"></i> Lanjut Chat Admin
                 </button>
             </form>
+        </div>
+    </div>
+
+    <!-- MODAL POPUP QRIS DINAMIS -->
+    <div id="qrisModal" class="hidden fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 transition-all duration-300">
+        <div class="bg-white w-full max-w-sm border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] rounded-2xl p-6 text-center relative">
+            
+            <button onclick="closeQrisModal()" class="absolute -top-4 -right-4 bg-brand-pink border-4 border-black text-black w-10 h-10 rounded-full font-black text-xl hover:bg-red-500 hover:text-white active:scale-95 transition-all flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="bg-brand-yellow border-2 border-black px-3 py-1 font-black text-xs inline-block rounded mb-2 rotate-[-1deg]" id="qrisInvLabel">
+                MINPRES-XXX
+            </div>
+            <h3 class="text-xl font-black mb-1">Scan untuk Pembayaran</h3>
+            <p class="font-bold text-gray-600 text-xs mb-4">Mendukung GoPay, DANA, OVO, ShopeePay & Semua Bank</p>
+
+            <!-- Container Gambar QR Code Dinamis -->
+            <div class="bg-gray-100 p-4 border-4 border-black rounded-xl inline-block mb-4 shadow-brutal-sm relative">
+                <img id="qrisImage" src="" alt="QRIS Payment" class="w-56 h-56 mx-auto object-contain">
+            </div>
+
+            <!-- Detail Nominal -->
+            <div class="bg-gray-50 border-2 border-black p-3 rounded-lg mb-4 text-left font-bold text-sm">
+                <div class="flex justify-between border-b pb-1 mb-1">
+                    <span class="text-gray-500">Jenis Tagihan:</span>
+                    <span id="qrisType" class="text-black">Sisa Pelunasan</span>
+                </div>
+                <div class="flex justify-between text-base">
+                    <span class="text-black">Total Transfer:</span>
+                    <span id="qrisAmount" class="text-green-600 font-black">Rp 0</span>
+                </div>
+            </div>
+
+            <button id="btnConfirmQrisWa" class="w-full bg-brand-green text-black font-black py-3 rounded-xl border-4 border-black hover:bg-green-500 active:scale-95 transition-all flex items-center justify-center gap-2 text-sm shadow-brutal-sm">
+                <i class="fa-brands fa-whatsapp text-xl"></i> Konfirmasi Pembayaran via WA
+            </button>
         </div>
     </div>
 
@@ -790,7 +839,7 @@
         });
     </script>
 
-    <!-- FIREBASE & LOGIKA ADMIN LENGKAP -->
+    <!-- FIREBASE & LOGIKA APLIKASI LENGKAP -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
@@ -810,12 +859,96 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // HELPER FORMAT UANG (DIGUNAKAN ADMIN & KLIEN)
+        // PAYLOAD QRIS GOPAY STATIS (Hasil scan QRIS Anda)
+        const STATIC_QRIS_PAYLOAD = "00020101021126580016ID.GOPAY.WWW01189360091400000000005204599953033605802ID5911JOKI MINPRES6007DENPASAR6304";
+
+        // HELPER FORMAT UANG (IDR)
         function formatRupiah(angka) {
             return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
         }
 
-        // ANALYTICS
+        // HELPER GOOGLE CALENDAR URL
+        function getGoogleCalendarUrl(inv, task, deadlineStr) {
+            const d = new Date(deadlineStr);
+            const endFormat = d.toISOString().replace(/-|:|\.\d\d\d/g, '');
+            const startFormat = new Date(d.getTime() - 30 * 60000).toISOString().replace(/-|:|\.\d\d\d/g, '');
+            const title = encodeURIComponent(`🚨 Deadline Joki Minpres: ${inv}`);
+            const details = encodeURIComponent(`Tugas: ${task}\n\nJangan lupa cek file tugasmu di website Joki Kilat Minpres!`);
+            return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startFormat}/${endFormat}&details=${details}`;
+        }
+
+        // CONVERTER QRIS STATIS KE QRIS DINAMIS (CRC16 CCITT)
+        function buildDynamicQris(staticPayload, amount) {
+            let qris = staticPayload.trim().replace('010211', '010212');
+            const crcIndex = qris.indexOf('6304');
+            if (crcIndex !== -1) qris = qris.substring(0, crcIndex);
+            
+            qris = qris.replace(/54\d{2}\d+/, '');
+            
+            const amtStr = Math.round(amount).toString();
+            const tag54 = '54' + String(amtStr.length).padStart(2, '0') + amtStr;
+            const tag58 = qris.indexOf('5802ID');
+            if (tag58 !== -1) {
+                qris = qris.substring(0, tag58) + tag54 + qris.substring(tag58);
+            } else {
+                qris += tag54;
+            }
+            
+            qris += '6304';
+            
+            let crc = 0xFFFF;
+            for (let i = 0; i < qris.length; i++) {
+                crc ^= (qris.charCodeAt(i) << 8);
+                for (let j = 0; j < 8; j++) {
+                    if ((crc & 0x8000) !== 0) {
+                        crc = ((crc << 1) ^ 0x1021) & 0xFFFF;
+                    } else {
+                        crc = (crc << 1) & 0xFFFF;
+                    }
+                }
+            }
+            return qris + crc.toString(16).toUpperCase().padStart(4, '0');
+        }
+
+        // HANDLER MODAL QRIS DINAMIS
+        let currentOrderForPay = null;
+
+        window.showQrisPayment = function() {
+            if (!currentOrderForPay) return;
+            
+            const price = currentOrderForPay.price || 0;
+            const dp = currentOrderForPay.dp || 0;
+            const sisa = currentOrderForPay.sisa !== undefined ? currentOrderForPay.sisa : (price - dp);
+            
+            const payAmount = (dp === 0 && price > 0) ? price / 2 : sisa;
+            const payType = (dp === 0 && price > 0) ? "Pembayaran DP (50%)" : "Sisa Pelunasan";
+
+            if (payAmount <= 0) {
+                alert("Tagihan ini sudah Lunas!");
+                return;
+            }
+
+            const dynamicQrisStr = buildDynamicQris(STATIC_QRIS_PAYLOAD, payAmount);
+            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(dynamicQrisStr)}`;
+            
+            document.getElementById('qrisImage').src = qrApiUrl;
+            document.getElementById('qrisInvLabel').innerText = currentOrderForPay.id;
+            document.getElementById('qrisType').innerText = payType;
+            document.getElementById('qrisAmount').innerText = formatRupiah(payAmount);
+
+            document.getElementById('btnConfirmQrisWa').onclick = function() {
+                const txt = `Halo Admin Joki Minpres!\n\nSaya sudah melakukan transfer pembayaran QRIS sebesar *${formatRupiah(payAmount)}* untuk Invoice *${currentOrderForPay.id}* (${payType}).\n\nBerikut bukti transfernya:`;
+                window.open(`https://wa.me/6283115784598?text=${encodeURIComponent(txt)}`, '_blank');
+            };
+
+            document.getElementById('qrisModal').classList.remove('hidden');
+        };
+
+        window.closeQrisModal = function() {
+            document.getElementById('qrisModal').classList.add('hidden');
+        };
+
+        // ANALYTICS KUNJUNGAN
         function trackVisit() {
             if (!sessionStorage.getItem('minpres_visited')) {
                 sessionStorage.setItem('minpres_visited', 'true');
@@ -832,7 +965,7 @@
             { id: 3, title: 'Tugas Selesai!', desc: 'Hore! File tugas sudah siap. Silakan klik tombol download di atas.', color: 'bg-brand-green', icon: 'fa-flag-checkered' }
         ];
 
-        // TRACKER KLIEN: LOGIKA KETAT UNTUK TOMBOL DOWNLOAD & MENAMPILKAN KEUANGAN
+        // TRACKER KLIEN
         let countdownInterval;
         document.getElementById('trackForm').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -854,9 +987,10 @@
                 loading.classList.add('hidden');
                 if (docSnap.exists()) {
                     const orderData = docSnap.data();
+                    currentOrderForPay = { id: inputVal, ...orderData };
                     renderTimeline(inputVal, orderData);
                     
-                    // -- [BARU] UPDATE INFO KEUANGAN KLIEN --
+                    // UPDATE INFO KEUANGAN KLIEN
                     const price = orderData.price || 0;
                     const dp = orderData.dp || 0;
                     const sisa = orderData.sisa !== undefined ? orderData.sisa : (price - dp);
@@ -875,18 +1009,24 @@
                         elSisa.classList.add('text-red-600');
                     }
 
-                    // -- LOGIKA TOMBOL DOWNLOAD YG KETAT --
+                    // TAMPILKAN TOMBOL QRIS JIKA MASIH ADA SISA TAGIHAN
+                    const payContainer = document.getElementById('payQrisContainer');
+                    if (sisa > 0) {
+                        payContainer.classList.remove('hidden');
+                    } else {
+                        payContainer.classList.add('hidden');
+                    }
+
+                    // LOGIKA TOMBOL DOWNLOAD & DEADLINE
                     let fixedStatus = orderData.status > 3 ? 3 : orderData.status;
                     const dlContainer = document.getElementById('fileDownloadContainer');
                     const fallbackSelesai = document.getElementById('fallbackSelesai');
                     const countdownBox = document.getElementById('countdownBox');
 
-                    // Jika status sudah "Langkah 3 - Tugas Selesai"
                     if (fixedStatus == 3) {
                         countdownBox.classList.add('hidden');
 
                         if (orderData.fileUrl && orderData.fileUrl.trim() !== "") {
-                            // Munculkan tombol jika link tidak kosong
                             let finalUrl = orderData.fileUrl.trim();
                             if(!finalUrl.startsWith('http')) { finalUrl = 'https://' + finalUrl; } 
                             
@@ -894,16 +1034,23 @@
                             dlContainer.classList.remove('hidden');
                             fallbackSelesai.classList.add('hidden');
                         } else {
-                            // Tampilkan pesan fallback jika selesai tapi tidak ada link
                             dlContainer.classList.add('hidden');
                             fallbackSelesai.classList.remove('hidden');
                         }
                     } else {
-                        // Jika status masih Langkah 1 atau 2, tombol DILARANG muncul
                         dlContainer.classList.add('hidden');
                         fallbackSelesai.classList.add('hidden');
                         countdownBox.classList.remove('hidden');
                         startCountdown(orderData.deadline);
+
+                        // GOOGLE CALENDAR BUTTON
+                        const btnCal = document.getElementById('btnAddToCalendar');
+                        if(orderData.deadline) {
+                            btnCal.href = getGoogleCalendarUrl(inputVal, orderData.task, orderData.deadline);
+                            btnCal.classList.remove('hidden');
+                        } else {
+                            btnCal.classList.add('hidden');
+                        }
                     }
 
                     result.classList.remove('hidden');
@@ -968,7 +1115,7 @@
             }, 1000);
         }
 
-        // ADMIN LOGIN
+        // ADMIN LOGIN & AUTH
         if(window.location.hash === '#admin'){
             document.getElementById('main-website').classList.add('hidden');
             document.getElementById('admin-workspace').classList.remove('hidden');
@@ -1087,7 +1234,6 @@
             const searchQuery = document.getElementById('searchFilter').value.toLowerCase();
             const statusQuery = document.getElementById('statusFilter').value;
 
-            // KEUANGAN: OMZET KOTOR, OMZET BERSIH, & SISA PIUTANG
             let omzetKotor = 0;
             let omzetBersih = 0;
             let totalSisa = 0;
@@ -1235,7 +1381,6 @@
                     });
                 });
                 
-                // TOMBOL EDIT DENGAN PENGUNCIAN STATUS
                 document.querySelectorAll('.btn-edit').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         const id = e.currentTarget.getAttribute('data-id');
