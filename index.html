@@ -986,6 +986,17 @@
                                 <input type="text" id="adminTask" required placeholder="Makalah Biologi Bab 2" class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50 transition-colors duration-300">
                             </div>
 
+                            <!-- TAMBAHAN ASSIGNEE TIM -->
+                            <div>
+                                <label class="font-bold text-sm text-gray-700 block mb-1">Dikerjakan Oleh (Internal):</label>
+                                <select id="adminAssignee" class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50 transition-colors duration-300">
+                                    <option value="">-- Pilih Tim --</option>
+                                    <option value="Adit">Adit</option>
+                                    <option value="Putri">Putri</option>
+                                    <option value="Yanti">Yanti</option>
+                                </select>
+                            </div>
+
                             <div class="grid grid-cols-2 gap-3">
                                 <div>
                                     <label class="font-bold text-sm text-gray-700 block mb-1">Total Harga (Rp):</label>
@@ -1668,6 +1679,7 @@
                     name: document.getElementById('adminName').value.trim(),
                     wa: wa, 
                     task: document.getElementById('adminTask').value.trim(),
+                    assignee: document.getElementById('adminAssignee').value,
                     price: price,
                     dp: dp,
                     sisa: sisa,
@@ -1780,6 +1792,11 @@
                     }
 
                     let fileLinkIcon = (data.fileUrl && data.fileUrl.trim() !== "") ? `<a href="${data.fileUrl.startsWith('http') ? data.fileUrl : 'https://'+data.fileUrl}" target="_blank" class="text-blue-500 hover:text-blue-700 ml-1 inline-block" title="Link File Aktif"><i class="fa-solid fa-link"></i></a>` : '';
+                    
+                    let assigneeBadge = data.assignee ? `<div class="mt-2 inline-block bg-purple-100 text-purple-800 text-[10px] px-2 py-0.5 rounded border border-purple-300 font-bold"><i class="fa-solid fa-user-pen"></i> ${data.assignee}</div>` : '';
+
+                    let btnWaFile = (data.fileUrl && data.fileUrl.trim() !== "") ? 
+                        `<button class="btn-wa-file bg-brand-blue text-white hover:bg-blue-600 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" data-name="${data.name}" data-task="${data.task}" data-file="${data.fileUrl}" data-wa="${data.wa || ''}" title="Kirim File via WA"><i class="fa-solid fa-cloud-arrow-down"></i> Kirim File</button>` : '';
 
                     tbody.innerHTML += `
                         <tr class="${rowHighlight} transition-colors group border-b">
@@ -1787,6 +1804,7 @@
                             <td class="p-4 min-w-[180px]">
                                 <div class="text-base text-black flex items-center">${data.name} ${fileLinkIcon}</div>
                                 <div class="text-xs text-gray-500 font-semibold mt-1">${data.task}</div>
+                                ${assigneeBadge}
                             </td>
                             <td class="p-4 whitespace-nowrap">
                                 <div class="text-xs text-gray-600 font-bold">Harga: ${formatRupiah(price)}</div>
@@ -1807,6 +1825,7 @@
                                     <div class="flex flex-wrap justify-center items-center gap-1">
                                         <button class="btn-wa-inv bg-green-100 text-green-700 hover:bg-green-200 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" data-name="${data.name}" data-task="${data.task}" data-price="${price}" data-dp="${dp}" data-sisa="${sisa}" data-wa="${data.wa || ''}" title="Kirim WA Link Direct Invoice"><i class="fa-solid fa-paper-plane"></i> Link WA</button>
                                         <button class="btn-wa-done bg-brand-green text-black hover:bg-green-500 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" data-name="${data.name}" data-task="${data.task}" data-sisa="${sisa}" data-wa="${data.wa || ''}" title="Kirim WA Selesai (Pelunasan)"><i class="fa-brands fa-whatsapp"></i> WA Selesai</button>
+                                        ${btnWaFile}
                                         <button class="btn-edit bg-gray-200 text-gray-700 hover:bg-gray-300 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" title="Edit"><i class="fa-solid fa-pen"></i></button>
                                         <button class="btn-delete bg-red-100 text-red-600 hover:bg-red-200 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" title="Hapus"><i class="fa-solid fa-trash"></i></button>
                                     </div>
@@ -1886,7 +1905,23 @@
                         window.open(`https://wa.me/${wa}?text=${encodeURIComponent(txt)}`, '_blank');
                     });
                 });
-                
+
+                document.querySelectorAll('.btn-wa-file').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = e.currentTarget.getAttribute('data-id');
+                        const name = e.currentTarget.getAttribute('data-name');
+                        const task = e.currentTarget.getAttribute('data-task');
+                        let fileUrl = e.currentTarget.getAttribute('data-file');
+                        const wa = e.currentTarget.getAttribute('data-wa');
+
+                        if(!wa) { alert("Nomor WA pelanggan kosong!"); return; }
+                        if(!fileUrl.startsWith('http')) { fileUrl = 'https://' + fileUrl; }
+
+                        const txt = `Halo *${name}*,\n\nTugas *${task}* (Invoice: ${id}) sudah kami selesaikan dan siap untuk diunduh! 🎉\n\nBerikut adalah link file tugas kamu:\n${fileUrl}\n\nPastikan untuk segera mendownload dan mengecek file tersebut ya. Terima kasih sudah mempercayakan tugasmu pada Joki Kilat Minpres! ✨`;
+                        window.open(`https://wa.me/${wa}?text=${encodeURIComponent(txt)}`, '_blank');
+                    });
+                });
+
                 document.querySelectorAll('.btn-edit').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         const id = e.currentTarget.getAttribute('data-id');
@@ -1896,6 +1931,7 @@
                         document.getElementById('adminName').value = docData.name;
                         document.getElementById('adminWa').value = docData.wa || "";
                         document.getElementById('adminTask').value = docData.task;
+                        document.getElementById('adminAssignee').value = docData.assignee || ""; 
                         document.getElementById('adminPrice').value = docData.price || "";
                         document.getElementById('adminDp').value = docData.dp || "";
                         document.getElementById('adminFileUrl').value = docData.fileUrl || ""; 
@@ -1938,6 +1974,7 @@
                     "Nama Klien": item.name,
                     "No WA": item.wa || "-",
                     "Detail Tugas": item.task,
+                    "Assignee (Tim)": item.assignee || "-",
                     "Total Harga": p,
                     "DP Masuk": d,
                     "Sisa Pelunasan": s,
@@ -1983,20 +2020,20 @@
                     item.id,
                     item.name,
                     item.task,
+                    item.assignee || "-",
                     `Rp ${p.toLocaleString('id-ID')}`,
                     `Rp ${d.toLocaleString('id-ID')}`,
-                    `Rp ${s.toLocaleString('id-ID')}`,
                     statusBayar
                 ]);
             });
 
             doc.autoTable({
                 startY: 35,
-                head: [['Invoice', 'Klien', 'Tugas', 'Total Harga', 'DP Masuk', 'Sisa Pelunasan', 'Status Bayar']],
-                body: tableRows,
+                head: [['Invoice', 'Klien', 'Tugas', 'Tim', 'Total Harga', 'DP Masuk', 'Status Bayar']],
                 theme: 'grid',
                 headStyles: { fillColor: [17, 17, 17] },
-                styles: { fontSize: 8 }
+                styles: { fontSize: 8 },
+                body: tableRows
             });
 
             let finalY = doc.lastAutoTable.finalY + 10;
