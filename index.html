@@ -169,23 +169,23 @@
                     <!-- KOTAK INFO KEUANGAN KLIEN -->
                     <div id="financeBox" class="bg-white border-4 border-black p-4 rounded-xl shadow-brutal-sm mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
                         <div class="text-center md:text-left w-full">
-                            <p class="text-[10px] font-black text-gray-500 uppercase tracking-wider mb-1">Total Tagihan</p>
+                            <p class="text-[10px] font-black text-gray-500 uppercase tracking-wider mb-1">Total Harga</p>
                             <p class="text-lg md:text-xl font-black" id="clientTotal">Rp 0</p>
                         </div>
                         <div class="text-center md:text-left w-full border-t-2 md:border-t-0 md:border-l-2 border-dashed border-gray-300 pt-2 md:pt-0 md:pl-4">
-                            <p class="text-[10px] font-black text-green-600 uppercase tracking-wider mb-1">Sudah Dibayar/DP</p>
+                            <p class="text-[10px] font-black text-green-600 uppercase tracking-wider mb-1">Sudah Dibayar / DP</p>
                             <p class="text-lg md:text-xl font-black text-green-600" id="clientDp">Rp 0</p>
                         </div>
                         <div class="text-center md:text-left w-full border-t-2 md:border-t-0 md:border-l-2 border-dashed border-gray-300 pt-2 md:pt-0 md:pl-4 relative">
-                            <p class="text-[10px] font-black text-red-600 uppercase tracking-wider mb-1">Langsung Lunas</p>
+                            <p class="text-[10px] font-black text-red-600 uppercase tracking-wider mb-1">Sisa Pelunasan</p>
                             <p class="text-lg md:text-xl font-black text-red-600" id="clientSisa">Rp 0</p>
                         </div>
                     </div>
 
-                    <!-- TOMBOL BAYAR QRIS (TENTUKAN NOMINAL BEBAS) -->
+                    <!-- TOMBOL BAYAR QRIS (OTOMATIS MENYESUAIKAN DP ATAU SISA PELUNASAN) -->
                     <div id="payQrisContainer" class="hidden mb-6">
-                        <button onclick="showQrisPayment()" class="w-full bg-brand-yellow text-black font-black text-lg py-3 px-4 border-4 border-black rounded-xl shadow-brutal hover:-translate-y-1 active:scale-95 transition-all flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-qrcode text-2xl"></i> BAYAR SEKARANG VIA QRIS (SET NOMINAL BEBAS)
+                        <button onclick="showQrisPayment()" id="btnQrisMain" class="w-full bg-brand-yellow text-black font-black text-lg py-4 px-4 border-4 border-black rounded-xl shadow-brutal hover:-translate-y-1 active:scale-95 transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-qrcode text-2xl"></i> <span id="lblQrisMainBtn">BAYAR DP SEKARANG VIA QRIS</span>
                         </button>
                     </div>
 
@@ -537,7 +537,7 @@
         </div>
     </div>
 
-    <!-- MODAL POPUP QRIS DINAMIS (DENGAN INPUT NOMINAL BEBAS) -->
+    <!-- MODAL POPUP QRIS DINAMIS -->
     <div id="qrisModal" class="hidden fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 transition-all duration-300">
         <div class="bg-white w-full max-w-sm border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] rounded-2xl p-6 text-center relative">
             
@@ -548,33 +548,21 @@
             <div class="bg-brand-yellow border-2 border-black px-3 py-1 font-black text-xs inline-block rounded mb-2 rotate-[-1deg]" id="qrisInvLabel">
                 MINPRES-XXX
             </div>
-            <h3 class="text-xl font-black mb-1">Pembayaran QRIS</h3>
-            <p class="font-bold text-gray-600 text-xs mb-3">Mendukung GoPay, DANA, OVO, ShopeePay & Bank</p>
-
-            <!-- FORM SET NOMINAL TRANSFER BEBAS -->
-            <div class="bg-yellow-50 border-2 border-black p-3 rounded-xl mb-4 text-left font-bold text-xs">
-                <label class="block font-black text-gray-700 mb-1">Pilih Nominal Transfer:</label>
-                <div class="grid grid-cols-2 gap-2 mb-2">
-                    <button type="button" onclick="setQrisPreset('dp')" class="bg-white border-2 border-black py-1.5 px-2 rounded-lg font-black text-xs hover:bg-brand-yellow active:scale-95 transition-all">DP 50%</button>
-                    <button type="button" onclick="setQrisPreset('sisa')" class="bg-white border-2 border-black py-1.5 px-2 rounded-lg font-black text-xs hover:bg-brand-green active:scale-95 transition-all">Pelunasan Sisa</button>
-                </div>
-                <label class="block font-black text-gray-700 mb-1">Atau Ketik Nominal Sendiri (Rp):</label>
-                <input type="number" id="customQrisAmountInput" placeholder="Masukkan angka (cth: 25000)" class="w-full px-3 py-2 border-2 border-black font-black text-sm rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-brand-blue">
-                <button type="button" onclick="updateQrisCustom()" class="w-full bg-black text-white font-black py-1.5 rounded-lg mt-2 text-xs hover:bg-gray-800 active:scale-95">REGENERATE QRIS</button>
-            </div>
+            <h3 class="text-xl font-black mb-1">Scan untuk Pembayaran</h3>
+            <p class="font-bold text-gray-600 text-xs mb-4">Mendukung GoPay, DANA, OVO, ShopeePay & Semua Bank</p>
 
             <!-- Container Gambar QR Code Dinamis -->
-            <div class="bg-gray-100 p-3 border-4 border-black rounded-xl inline-block mb-3 shadow-brutal-sm relative">
-                <img id="qrisImage" src="" alt="QRIS Payment" class="w-48 h-48 mx-auto object-contain">
+            <div class="bg-gray-100 p-4 border-4 border-black rounded-xl inline-block mb-4 shadow-brutal-sm relative">
+                <img id="qrisImage" src="" alt="QRIS Payment" class="w-56 h-56 mx-auto object-contain">
             </div>
 
             <!-- Detail Nominal -->
-            <div class="bg-gray-50 border-2 border-black p-2.5 rounded-lg mb-3 text-left font-bold text-xs">
+            <div class="bg-gray-50 border-2 border-black p-3 rounded-lg mb-4 text-left font-bold text-sm">
                 <div class="flex justify-between border-b pb-1 mb-1">
-                    <span class="text-gray-500">Keterangan:</span>
-                    <span id="qrisType" class="text-black">Nominal Kustom</span>
+                    <span class="text-gray-500">Jenis Tagihan:</span>
+                    <span id="qrisType" class="text-black font-black">DP Pengerjaan</span>
                 </div>
-                <div class="flex justify-between text-sm">
+                <div class="flex justify-between text-base">
                     <span class="text-black">Total Transfer:</span>
                     <span id="qrisAmount" class="text-green-600 font-black">Rp 0</span>
                 </div>
@@ -628,21 +616,21 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="bg-white p-5 rounded-xl shadow-md border-l-4 border-brand-yellow flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-bold text-gray-500">Omzet Kotor (Potensi Order)</p>
+                            <p class="text-sm font-bold text-gray-500">Omzet Kotor (Total Harga)</p>
                             <h4 class="text-2xl font-black text-black" id="dashOmzetKotor">Rp 0</h4>
                         </div>
                         <div class="bg-yellow-100 w-12 h-12 rounded-full flex items-center justify-center text-yellow-700 text-xl"><i class="fa-solid fa-chart-pie"></i></div>
                     </div>
                     <div class="bg-white p-5 rounded-xl shadow-md border-l-4 border-brand-green flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-bold text-gray-500">Omzet Bersih (Uang Masuk / DP)</p>
+                            <p class="text-sm font-bold text-gray-500">Omzet Bersih (DP Masuk)</p>
                             <h4 class="text-2xl font-black text-black" id="dashOmzetBersih">Rp 0</h4>
                         </div>
                         <div class="bg-green-100 w-12 h-12 rounded-full flex items-center justify-center text-green-600 text-xl"><i class="fa-solid fa-wallet"></i></div>
                     </div>
                     <div class="bg-white p-5 rounded-xl shadow-md border-l-4 border-brand-pink flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-bold text-gray-500">Sisa Piutang Belum Lunas</p>
+                            <p class="text-sm font-bold text-gray-500">Sisa Piutang Pelunasan</p>
                             <h4 class="text-2xl font-black text-black" id="dashTotalSisa">Rp 0</h4>
                         </div>
                         <div class="bg-pink-100 w-12 h-12 rounded-full flex items-center justify-center text-pink-600 text-xl"><i class="fa-solid fa-clock-rotate-left"></i></div>
@@ -688,15 +676,15 @@
                                 <input type="text" id="adminTask" required placeholder="Makalah Biologi Bab 2" class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50 transition-colors duration-300">
                             </div>
 
-                            <!-- INPUT KEUANGAN (HARGA & DP) -->
+                            <!-- INPUT KEUANGAN (TOTAL HARGA & DP) -->
                             <div class="grid grid-cols-2 gap-3">
                                 <div>
-                                    <label class="font-bold text-sm text-gray-700 block mb-1">Total Tagihan (Rp):</label>
-                                    <input type="number" id="adminPrice" required placeholder="50000" class="w-full px-3 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50 transition-colors">
+                                    <label class="font-bold text-sm text-gray-700 block mb-1">Total Harga (Rp):</label>
+                                    <input type="number" id="adminPrice" required placeholder="150000" class="w-full px-3 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50 transition-colors">
                                 </div>
                                 <div>
-                                    <label class="font-bold text-sm text-gray-700 block mb-1">Sudah DP (Rp):</label>
-                                    <input type="number" id="adminDp" required placeholder="25000" class="w-full px-3 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50 transition-colors">
+                                    <label class="font-bold text-sm text-gray-700 block mb-1">Jumlah DP (Rp):</label>
+                                    <input type="number" id="adminDp" required placeholder="50000" class="w-full px-3 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50 transition-colors">
                                 </div>
                             </div>
 
@@ -714,9 +702,9 @@
                             <div>
                                 <label class="font-bold text-sm text-gray-700 block mb-1">Status Progres:</label>
                                 <select id="adminStatus" class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50 transition-colors duration-300">
-                                    <option value="1">Langkah 1 - Pembayaran Diterima</option>
+                                    <option value="1">Langkah 1 - DP Diterima (Progres Dimulai)</option>
                                     <option value="2">Langkah 2 - Sedang Dikerjakan Tim</option>
-                                    <option value="3">Langkah 3 - Tugas Selesai / Dikirim</option>
+                                    <option value="3">Langkah 3 - Tugas Selesai (Siap Pelunasan)</option>
                                 </select>
                             </div>
                             <button type="submit" id="btnSaveData" class="w-full bg-brand-green text-black font-black py-3 rounded-lg hover:bg-green-500 active:scale-95 transition-all duration-300 shadow flex items-center justify-center gap-2 border-2 border-black shadow-brutal-sm">
@@ -768,7 +756,7 @@
                                         <th class="p-4 font-black">NAMA & TUGAS</th>
                                         <th class="p-4 font-black whitespace-nowrap">KEUANGAN (HARGA/DP)</th>
                                         <th class="p-4 font-black whitespace-nowrap">STATUS & DEADLINE</th>
-                                        <th class="p-4 font-black text-center rounded-tr-lg whitespace-nowrap">AKSI & PELUNASAN</th>
+                                        <th class="p-4 font-black text-center rounded-tr-lg whitespace-nowrap">AKSI & WA LINK</th>
                                     </tr>
                                 </thead>
                                 <tbody id="adminTableBody" class="divide-y divide-gray-200 text-sm font-bold text-gray-800">
@@ -922,9 +910,8 @@
             return qris + crc.toString(16).toUpperCase().padStart(4, '0');
         }
 
-        // HANDLER MODAL QRIS DINAMIS DENGAN INPUT NOMINAL BEBAS
+        // HANDLER MODAL QRIS DINAMIS
         let currentOrderForPay = null;
-        let activeQrisAmount = 0;
 
         window.showQrisPayment = function() {
             if (!currentOrderForPay) return;
@@ -932,59 +919,39 @@
             const price = currentOrderForPay.price || 0;
             const dp = currentOrderForPay.dp || 0;
             const sisa = currentOrderForPay.sisa !== undefined ? currentOrderForPay.sisa : (price - dp);
-            
-            // Default awal: jika sisa > 0 bayar sisa, kalau tidak bayar DP/Full
-            const defaultAmt = (sisa > 0) ? sisa : ((dp === 0 && price > 0) ? price / 2 : price);
-            
-            document.getElementById('qrisInvLabel').innerText = currentOrderForPay.id;
-            document.getElementById('customQrisAmountInput').value = defaultAmt;
-            
-            updateQrisDisplay(defaultAmt, sisa > 0 ? "Sisa Pelunasan" : "Pembayaran DP/Tagihan");
-            document.getElementById('qrisModal').classList.remove('hidden');
-        };
+            const status = currentOrderForPay.status || 1;
 
-        window.setQrisPreset = function(type) {
-            if (!currentOrderForPay) return;
-            const price = currentOrderForPay.price || 0;
-            const dp = currentOrderForPay.dp || 0;
-            const sisa = currentOrderForPay.sisa !== undefined ? currentOrderForPay.sisa : (price - dp);
+            let payAmount = dp;
+            let payType = "Pembayaran DP";
 
-            let amt = price;
-            let labelText = "Nominal Kustom";
-            if(type === 'dp') {
-                amt = price / 2;
-                labelText = "Pembayaran DP (50%)";
-            } else if(type === 'sisa') {
-                amt = sisa > 0 ? sisa : price;
-                labelText = "Sisa Pelunasan";
+            if (status == 3 || sisa > 0) {
+                payAmount = sisa > 0 ? sisa : price;
+                payType = "Sisa Pelunasan Tugas";
+            } else if (dp <= 0) {
+                payAmount = price;
+                payType = "Pembayaran Full";
             }
-            document.getElementById('customQrisAmountInput').value = amt;
-            updateQrisDisplay(amt, labelText);
-        };
 
-        window.updateQrisCustom = function() {
-            const inputVal = parseInt(document.getElementById('customQrisAmountInput').value || 0);
-            if(inputVal <= 0) {
-                alert("Masukkan nominal transfer yang valid!");
+            if (payAmount <= 0) {
+                alert("Tagihan ini sudah Lunas!");
                 return;
             }
-            updateQrisDisplay(inputVal, "Nominal Bebas (Kustom)");
-        };
 
-        function updateQrisDisplay(amount, labelText) {
-            activeQrisAmount = amount;
-            const dynamicQrisStr = buildDynamicQris(STATIC_QRIS_PAYLOAD, amount);
+            const dynamicQrisStr = buildDynamicQris(STATIC_QRIS_PAYLOAD, payAmount);
             const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(dynamicQrisStr)}`;
             
             document.getElementById('qrisImage').src = qrApiUrl;
-            document.getElementById('qrisType').innerText = labelText;
-            document.getElementById('qrisAmount').innerText = formatRupiah(amount);
+            document.getElementById('qrisInvLabel').innerText = currentOrderForPay.id;
+            document.getElementById('qrisType').innerText = payType;
+            document.getElementById('qrisAmount').innerText = formatRupiah(payAmount);
 
             document.getElementById('btnConfirmQrisWa').onclick = function() {
-                const txt = `Halo Admin Joki Minpres!\n\nSaya sudah melakukan transfer pembayaran QRIS sebesar *${formatRupiah(amount)}* untuk Invoice *${currentOrderForPay.id}* (${labelText}).\n\nBerikut bukti transfernya:`;
+                const txt = `Halo Admin Joki Minpres!\n\nSaya sudah transfer QRIS sebesar *${formatRupiah(payAmount)}* untuk Invoice *${currentOrderForPay.id}* (${payType}).\n\nBerikut bukti bayarnya:`;
                 window.open(`https://wa.me/6283115784598?text=${encodeURIComponent(txt)}`, '_blank');
             };
-        }
+
+            document.getElementById('qrisModal').classList.remove('hidden');
+        };
 
         window.closeQrisModal = function() {
             document.getElementById('qrisModal').classList.add('hidden');
@@ -1006,6 +973,18 @@
             { id: 2, title: 'Sedang Dikerjakan', desc: 'Tim Minpres sedang menyusun tugas kamu dengan teliti.', color: 'bg-brand-pink', icon: 'fa-pen-nib' },
             { id: 3, title: 'Tugas Selesai!', desc: 'Hore! File tugas sudah siap. Silakan klik tombol download di atas.', color: 'bg-brand-green', icon: 'fa-flag-checkered' }
         ];
+
+        // AUTO SEARCH JIKA PELANGGAN MEMBUKA LINK DIRECT (?inv=MINPRES-XXXX)
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const invQuery = urlParams.get('inv');
+            if (invQuery) {
+                document.getElementById('invoiceInput').value = invQuery.trim().toUpperCase();
+                setTimeout(() => {
+                    document.getElementById('trackForm').dispatchEvent(new Event('submit'));
+                }, 300);
+            }
+        });
 
         // TRACKER KLIEN
         let countdownInterval;
@@ -1036,26 +1015,36 @@
                     const price = orderData.price || 0;
                     const dp = orderData.dp || 0;
                     const sisa = orderData.sisa !== undefined ? orderData.sisa : (price - dp);
+                    let fixedStatus = orderData.status > 3 ? 3 : orderData.status;
 
                     document.getElementById('clientTotal').innerText = formatRupiah(price);
                     document.getElementById('clientDp').innerText = formatRupiah(dp);
 
                     const elSisa = document.getElementById('clientSisa');
+                    const btnQrisMain = document.getElementById('btnQrisMain');
+                    const lblQrisMainBtn = document.getElementById('lblQrisMainBtn');
+
                     if (sisa <= 0 && price > 0) {
                         elSisa.innerText = "LUNAS 🎉";
                         elSisa.classList.remove('text-red-600');
                         elSisa.classList.add('text-green-600');
+                        document.getElementById('payQrisContainer').classList.add('hidden');
                     } else {
                         elSisa.innerText = formatRupiah(sisa);
                         elSisa.classList.remove('text-green-600');
                         elSisa.classList.add('text-red-600');
+                        document.getElementById('payQrisContainer').classList.remove('hidden');
+
+                        if (fixedStatus == 3) {
+                            lblQrisMainBtn.innerText = `BAYAR SISA PELUNASAN (${formatRupiah(sisa)}) VIA QRIS`;
+                            btnQrisMain.className = "w-full bg-brand-green text-black font-black text-lg py-4 px-4 border-4 border-black rounded-xl shadow-brutal hover:-translate-y-1 active:scale-95 transition-all flex items-center justify-center gap-2 animate-bounce";
+                        } else {
+                            lblQrisMainBtn.innerText = `BAYAR DP (${formatRupiah(dp)}) VIA QRIS`;
+                            btnQrisMain.className = "w-full bg-brand-yellow text-black font-black text-lg py-4 px-4 border-4 border-black rounded-xl shadow-brutal hover:-translate-y-1 active:scale-95 transition-all flex items-center justify-center gap-2";
+                        }
                     }
 
-                    // SELALU TAMPILKAN TOMBOL QRIS (KLIEN BISA BAYAR DP/KUSTOM/LUNAS)
-                    document.getElementById('payQrisContainer').classList.remove('hidden');
-
                     // LOGIKA TOMBOL DOWNLOAD & DEADLINE
-                    let fixedStatus = orderData.status > 3 ? 3 : orderData.status;
                     const dlContainer = document.getElementById('fileDownloadContainer');
                     const fallbackSelesai = document.getElementById('fallbackSelesai');
                     const countdownBox = document.getElementById('countdownBox');
@@ -1340,7 +1329,7 @@
                     } else if(dp === 0) {
                         dpBadge = '<span class="bg-red-100 text-red-800 text-[10px] px-2 py-0.5 rounded border border-red-300 font-bold">Belum DP</span>';
                     } else if(sisa > 0) {
-                        dpBadge = '<span class="bg-yellow-100 text-yellow-800 text-[10px] px-2 py-0.5 rounded border border-yellow-300 font-bold">DP Sebagian</span>';
+                        dpBadge = '<span class="bg-yellow-100 text-yellow-800 text-[10px] px-2 py-0.5 rounded border border-yellow-300 font-bold">Belum Lunas</span>';
                     }
 
                     let fileLinkIcon = (data.fileUrl && data.fileUrl.trim() !== "") ? `<a href="${data.fileUrl.startsWith('http') ? data.fileUrl : 'https://'+data.fileUrl}" target="_blank" class="text-blue-500 hover:text-blue-700 ml-1 inline-block" title="Link File Aktif"><i class="fa-solid fa-link"></i></a>` : '';
@@ -1353,7 +1342,7 @@
                                 <div class="text-xs text-gray-500 font-semibold mt-1">${data.task}</div>
                             </td>
                             <td class="p-4 whitespace-nowrap">
-                                <div class="text-xs text-gray-600 font-bold">Total: ${formatRupiah(price)}</div>
+                                <div class="text-xs text-gray-600 font-bold">Harga: ${formatRupiah(price)}</div>
                                 <div class="text-xs text-blue-600 font-bold">DP: ${formatRupiah(dp)}</div>
                                 <div class="text-xs text-red-600 font-bold">Sisa: ${formatRupiah(sisa)}</div>
                                 <div class="mt-1">${dpBadge}</div>
@@ -1369,8 +1358,8 @@
                                         <span class="${isFullyPaid ? 'text-green-600 font-black' : 'text-gray-700'}">Sudah Lunas?</span>
                                     </label>
                                     <div class="flex flex-wrap justify-center items-center gap-1">
-                                        <button class="btn-wa-inv bg-green-100 text-green-700 hover:bg-green-200 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" data-name="${data.name}" data-task="${data.task}" data-price="${price}" data-dp="${dp}" data-sisa="${sisa}" data-wa="${data.wa || ''}" title="Kirim WA Invoice"><i class="fa-solid fa-paper-plane"></i></button>
-                                        <button class="btn-wa-done bg-brand-green text-black hover:bg-green-500 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" data-name="${data.name}" data-task="${data.task}" data-wa="${data.wa || ''}" title="Kirim WA Selesai"><i class="fa-brands fa-whatsapp"></i></button>
+                                        <button class="btn-wa-inv bg-green-100 text-green-700 hover:bg-green-200 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" data-name="${data.name}" data-task="${data.task}" data-price="${price}" data-dp="${dp}" data-sisa="${sisa}" data-wa="${data.wa || ''}" title="Kirim WA Link Direct Invoice"><i class="fa-solid fa-paper-plane"></i> Link WA</button>
+                                        <button class="btn-wa-done bg-brand-green text-black hover:bg-green-500 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" data-name="${data.name}" data-task="${data.task}" data-sisa="${sisa}" data-wa="${data.wa || ''}" title="Kirim WA Selesai (Pelunasan)"><i class="fa-brands fa-whatsapp"></i> WA Selesai</button>
                                         <button class="btn-edit bg-gray-200 text-gray-700 hover:bg-gray-300 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" title="Edit"><i class="fa-solid fa-pen"></i></button>
                                         <button class="btn-delete bg-red-100 text-red-600 hover:bg-red-200 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" title="Hapus"><i class="fa-solid fa-trash"></i></button>
                                     </div>
@@ -1401,7 +1390,7 @@
                     });
                 });
 
-                // TOMBOL WA INVOICE PERTAMA (TERMASUK DETAIL TAGIHAN & KETERANGAN TRANSFER BEBAS)
+                // TOMBOL WA INVOICE DENGAN LINK DIRECT URL PARAMS (?inv=MINPRES-XXXX)
                 document.querySelectorAll('.btn-wa-inv').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         const id = e.currentTarget.getAttribute('data-id');
@@ -1414,19 +1403,32 @@
 
                         if(!wa) { alert("Nomor WA kosong!"); return; }
 
-                        let dpText = dp > 0 ? `*Rp ${dp.toLocaleString('id-ID')}*` : `*Rp ${(price/2).toLocaleString('id-ID')} (DP 50%)*`;
-                        let sisaText = sisa > 0 ? `\n- Sisa Pelunasan: *Rp ${sisa.toLocaleString('id-ID')}*` : '';
-
-                        const txt = `Halo *${name}*,\n\nTerima kasih sudah order di Joki Kilat Minpres! 🙏\n\nDetail Invoice & Pengerjaan:\n- No. Invoice: *${id}*\n- Tugas: *${task}*\n- Total Tagihan: *Rp ${price.toLocaleString('id-ID')}*\n- Minimum DP: ${dpText}${sisaText}\n\n📌 *Lacak Progres & Bayar QRIS Nominal Bebas:* \nhttps://jokiminpres.github.io/pricelist/\n\n*(Kamu bisa scan QRIS di web & set nominal transfer sesuai keinginanmu ya!)*\n\nTerima kasih! ✨`;
+                        const directLink = `https://jokiminpres.github.io/pricelist/?inv=${id}`;
+                        const txt = `Halo *${name}*,\n\nTerima kasih sudah order di Joki Kilat Minpres! 🙏\n\nDetail Pengerjaan Tugas:\n- No. Invoice: *${id}*\n- Tugas: *${task}*\n- Total Harga: *Rp ${price.toLocaleString('id-ID')}*\n- Minimum DP: *Rp ${dp.toLocaleString('id-ID')}*\n- Sisa Pelunasan: *Rp ${sisa.toLocaleString('id-ID')}*\n\n📌 *Klik link ini untuk langsung cek invoice & bayar DP via QRIS:* \n${directLink}\n\nTerima kasih! ✨`;
                         window.open(`https://wa.me/${wa}?text=${encodeURIComponent(txt)}`, '_blank');
                     });
                 });
 
+                // TOMBOL WA TUGAS SELESAI + NOTIF PELUNASAN QRIS
                 document.querySelectorAll('.btn-wa-done').forEach(btn => {
                     btn.addEventListener('click', (e) => {
-                        const id = e.currentTarget.getAttribute('data-id'), name = e.currentTarget.getAttribute('data-name'), task = e.currentTarget.getAttribute('data-task'), wa = e.currentTarget.getAttribute('data-wa');
+                        const id = e.currentTarget.getAttribute('data-id');
+                        const name = e.currentTarget.getAttribute('data-name');
+                        const task = e.currentTarget.getAttribute('data-task');
+                        const sisa = parseInt(e.currentTarget.getAttribute('data-sisa') || 0);
+                        const wa = e.currentTarget.getAttribute('data-wa');
+
                         if(!wa) { alert("Nomor WA kosong!"); return; }
-                        const txt = `Halo *${name}*,\n\nTugas *${task}* (Invoice: ${id}) sudah *SELESAI* dikerjakan tim Minpres! 🎉\n\nSilakan cek link download file yang kami sediakan di web ya. Terima kasih! ✨`;
+
+                        const directLink = `https://jokiminpres.github.io/pricelist/?inv=${id}`;
+                        let txt = "";
+
+                        if (sisa > 0) {
+                            txt = `Halo *${name}*,\n\nTugas *${task}* (Invoice: ${id}) sudah *SELESAI* dikerjakan tim Minpres! 🎉\n\nSilakan lakukan pelunasan sisa tagihan sebesar *Rp ${sisa.toLocaleString('id-ID')}* melalui QRIS di link berikut:\n${directLink}\n\nSetelah pelunasan dikonfirmasi, tombol download file tugas kamu akan otomatis terbuka di web. Terima kasih! ✨`;
+                        } else {
+                            txt = `Halo *${name}*,\n\nTugas *${task}* (Invoice: ${id}) sudah *SELESAI* dikerjakan tim Minpres! 🎉\n\nStatus tagihan kamu sudah *LUNAS*. Silakan klik link berikut untuk mendownload file tugasmu:\n${directLink}\n\nTerima kasih! ✨`;
+                        }
+
                         window.open(`https://wa.me/${wa}?text=${encodeURIComponent(txt)}`, '_blank');
                     });
                 });
@@ -1483,8 +1485,8 @@
                     "Nama Klien": item.name,
                     "No WA": item.wa || "-",
                     "Detail Tugas": item.task,
-                    "Omzet Kotor (Harga)": p,
-                    "Omzet Bersih (DP Masuk)": d,
+                    "Total Harga": p,
+                    "DP Masuk": d,
                     "Sisa Pelunasan": s,
                     "Status Pembayaran": statusBayar,
                     "Link File": item.fileUrl || "-",
@@ -1538,7 +1540,7 @@
 
             doc.autoTable({
                 startY: 35,
-                head: [['Invoice', 'Klien', 'Tugas', 'Omzet Kotor', 'Omzet Bersih', 'Sisa', 'Status Bayar']],
+                head: [['Invoice', 'Klien', 'Tugas', 'Total Harga', 'DP Masuk', 'Sisa Pelunasan', 'Status Bayar']],
                 body: tableRows,
                 theme: 'grid',
                 headStyles: { fillColor: [17, 17, 17] },
@@ -1547,8 +1549,8 @@
 
             let finalY = doc.lastAutoTable.finalY + 10;
             doc.setFont("helvetica", "bold");
-            doc.text(`Total Omzet Kotor (Potensi): Rp ${totalKotor.toLocaleString('id-ID')}`, 14, finalY);
-            doc.text(`Total Omzet Bersih (Uang Masuk/DP): Rp ${totalBersih.toLocaleString('id-ID')}`, 14, finalY + 6);
+            doc.text(`Total Harga (Potensi): Rp ${totalKotor.toLocaleString('id-ID')}`, 14, finalY);
+            doc.text(`Total DP Masuk: Rp ${totalBersih.toLocaleString('id-ID')}`, 14, finalY + 6);
             doc.text(`Total Sisa Piutang: Rp ${totalSisa.toLocaleString('id-ID')}`, 14, finalY + 12);
 
             doc.save(`Laporan_Keuangan_Minpres_${new Date().toISOString().slice(0,10)}.pdf`);
