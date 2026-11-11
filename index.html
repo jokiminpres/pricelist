@@ -234,94 +234,346 @@
         </div>
     </section>
 
-    <!-- Services Section -->
-    <section class="py-16 px-4 max-w-6xl mx-auto" id="layanan">
+    <!-- Services Section (EXPANDED TO 30 ITEMS) -->
+    <section class="py-16 px-4 max-w-7xl mx-auto" id="layanan">
         <div class="flex items-center justify-center gap-4 mb-12" data-aos="fade-up">
             <h2 class="text-3xl md:text-5xl font-black uppercase bg-black text-white px-6 py-3 shadow-brutal text-center">
                 Pilih Jasa Kami
             </h2>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <button onclick="openWaModal('Tugas Sekolah & Kuliah')" class="bg-white border-4 border-black p-6 rounded-2xl shadow-brutal hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:scale-95 transition-all duration-300 ease-out group text-left relative overflow-hidden" data-aos="fade-up" data-aos-delay="100">
-                <div class="absolute -right-6 -bottom-6 bg-brand-yellow w-24 h-24 rounded-full border-4 border-black group-hover:scale-150 transition-transform duration-500 ease-out z-0"></div>
-                <div class="relative z-10">
-                    <i class="fa-solid fa-book-open text-4xl mb-4 text-black bg-white p-3 rounded-xl border-2 border-black inline-block"></i>
-                    <h3 class="text-2xl font-black mb-3">Tugas & Makalah</h3>
-                    <p class="font-bold text-gray-700 text-sm mb-4 leading-relaxed">
-                        • Tugas SMA & Mahasiswa<br>
-                        • Makalah dan Paper<br>
-                        • Laporan KKN & Magang
-                    </p>
-                    <span class="inline-block bg-black text-white font-black text-xs px-3 py-1 rounded border-2 border-black group-hover:bg-brand-yellow group-hover:text-black transition-colors duration-300">Tanya & Order <i class="fa-solid fa-arrow-right"></i></span>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            
+            <!-- Item 1 -->
+            <div class="bg-white border-4 border-black p-5 rounded-2xl shadow-brutal-sm hover:-translate-y-2 hover:shadow-brutal active:scale-95 transition-all duration-300 flex flex-col h-full group" data-aos="fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="bg-gray-100 border-2 border-black px-2 py-1 rounded font-black text-[9px] text-gray-500 uppercase tracking-widest flex items-center gap-1"><i class="fa-solid fa-graduation-cap"></i> Akademik</div>
+                    <div class="bg-brand-green border-2 border-black px-2 py-1 rounded-md font-black text-[10px] uppercase group-hover:rotate-3 transition-transform">Paling Sering</div>
                 </div>
-            </button>
+                <h3 class="text-lg font-black mb-2 leading-tight">Tugas Harian SMA & Mahasiswa</h3>
+                <p class="font-bold text-gray-600 text-xs mb-6 flex-1 leading-relaxed">Penyelesaian soal, tugas harian, studi kasus, dan latihan tugas berbagai mata pelajaran/kuliah.</p>
+                <button onclick="openWaModal('Tugas Harian SMA & Mahasiswa')" class="w-full bg-brand-yellow text-black font-black text-sm py-2.5 rounded-xl border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-brand-yellow active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2">Konsultasi Sekarang <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></button>
+            </div>
 
-            <button onclick="openWaModal('Skripsi & Proposal')" class="bg-brand-pink border-4 border-black p-6 rounded-2xl shadow-brutal hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:scale-95 transition-all duration-300 ease-out group text-left relative overflow-hidden" data-aos="fade-up" data-aos-delay="200">
-                <div class="absolute -right-6 -bottom-6 bg-white w-24 h-24 rounded-full border-4 border-black group-hover:scale-150 transition-transform duration-500 ease-out z-0"></div>
-                <div class="relative z-10">
-                    <i class="fa-solid fa-graduation-cap text-4xl mb-4 text-black bg-white p-3 rounded-xl border-2 border-black inline-block"></i>
-                    <h3 class="text-2xl font-black mb-3">Skripsi & Proposal</h3>
-                    <p class="font-bold text-gray-900 text-sm mb-4 leading-relaxed">
-                        • Proposal Skripsi & Draf Proposal<br>
-                        • Merapikan dokumen skripsi
-                    </p>
-                    <span class="inline-block bg-black text-white font-black text-xs px-3 py-1 rounded border-2 border-black group-hover:bg-brand-blue transition-colors duration-300">Tanya & Order <i class="fa-solid fa-arrow-right"></i></span>
+            <!-- Item 2 -->
+            <div class="bg-white border-4 border-black p-5 rounded-2xl shadow-brutal-sm hover:-translate-y-2 hover:shadow-brutal active:scale-95 transition-all duration-300 flex flex-col h-full group" data-aos="fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="bg-gray-100 border-2 border-black px-2 py-1 rounded font-black text-[9px] text-gray-500 uppercase tracking-widest flex items-center gap-1"><i class="fa-solid fa-graduation-cap"></i> Akademik</div>
+                    <div class="bg-brand-blue text-white border-2 border-black px-2 py-1 rounded-md font-black text-[10px] uppercase group-hover:rotate-3 transition-transform">Favorit</div>
                 </div>
-            </button>
+                <h3 class="text-lg font-black mb-2 leading-tight">Makalah dan Paper</h3>
+                <p class="font-bold text-gray-600 text-xs mb-6 flex-1 leading-relaxed">Penyusunan makalah ilmiah terstruktur lengkap dengan bab pendahuluan, pembahasan, hingga daftar pustaka.</p>
+                <button onclick="openWaModal('Makalah dan Paper')" class="w-full bg-brand-green text-black font-black text-sm py-2.5 rounded-xl border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-brand-green active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2">Konsultasi Sekarang <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></button>
+            </div>
 
-            <button onclick="openWaModal('Karya Tulis & PKM')" class="bg-brand-blue border-4 border-black p-6 rounded-2xl shadow-brutal hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:scale-95 transition-all duration-300 ease-out group text-left relative overflow-hidden" data-aos="fade-up" data-aos-delay="300">
-                <div class="absolute -right-6 -bottom-6 bg-brand-yellow w-24 h-24 rounded-full border-4 border-black group-hover:scale-150 transition-transform duration-500 ease-out z-0"></div>
-                <div class="relative z-10">
-                    <i class="fa-solid fa-pen-nib text-4xl mb-4 text-black bg-white p-3 rounded-xl border-2 border-black inline-block"></i>
-                    <h3 class="text-2xl font-black mb-3">Karya Tulis & PKM</h3>
-                    <p class="font-bold text-gray-900 text-sm mb-4 leading-relaxed">
-                        • Karya Tulis Ilmiah<br>
-                        • PKM Semua Bidang<br>
-                        • Artikel & Opini
-                    </p>
-                    <span class="inline-block bg-black text-white font-black text-xs px-3 py-1 rounded border-2 border-black group-hover:bg-brand-pink transition-colors duration-300">Tanya & Order <i class="fa-solid fa-arrow-right"></i></span>
+            <!-- Item 3 -->
+            <div class="bg-white border-4 border-black p-5 rounded-2xl shadow-brutal-sm hover:-translate-y-2 hover:shadow-brutal active:scale-95 transition-all duration-300 flex flex-col h-full group" data-aos="fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="bg-gray-100 border-2 border-black px-2 py-1 rounded font-black text-[9px] text-gray-500 uppercase tracking-widest flex items-center gap-1"><i class="fa-solid fa-graduation-cap"></i> Akademik</div>
+                    <div class="bg-brand-pink text-black border-2 border-black px-2 py-1 rounded-md font-black text-[10px] uppercase group-hover:rotate-3 transition-transform">Best Seller</div>
                 </div>
-            </button>
+                <h3 class="text-lg font-black mb-2 leading-tight">Draft Proposal</h3>
+                <p class="font-bold text-gray-600 text-xs mb-6 flex-1 leading-relaxed">Bantuan penyusunan draft rancangan proposal kegiatan, riset awal, maupun proposal program studi.</p>
+                <button onclick="openWaModal('Draft Proposal')" class="w-full bg-brand-blue text-white font-black text-sm py-2.5 rounded-xl border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-brand-blue active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2">Konsultasi Sekarang <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></button>
+            </div>
 
-            <button onclick="openWaModal('Olah Data & Turnitin')" class="bg-brand-yellow border-4 border-black p-6 rounded-2xl shadow-brutal hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:scale-95 transition-all duration-300 ease-out group text-left relative overflow-hidden" data-aos="fade-up" data-aos-delay="400">
-                <div class="absolute -right-6 -bottom-6 bg-white w-24 h-24 rounded-full border-4 border-black group-hover:scale-150 transition-transform duration-500 ease-out z-0"></div>
-                <div class="relative z-10">
-                    <i class="fa-solid fa-chart-pie text-4xl mb-4 text-black bg-white p-3 rounded-xl border-2 border-black inline-block"></i>
-                    <h3 class="text-2xl font-black mb-3">Data & Turnitin</h3>
-                    <p class="font-bold text-gray-800 text-sm mb-4 leading-relaxed">
-                        • Olah data SPSS<br>
-                        • Cek Turnitin termurah
-                    </p>
-                    <span class="inline-block bg-black text-white font-black text-xs px-3 py-1 rounded border-2 border-black group-hover:bg-brand-green transition-colors duration-300">Tanya & Order <i class="fa-solid fa-arrow-right"></i></span>
+            <!-- Item 4 -->
+            <div class="bg-white border-4 border-black p-5 rounded-2xl shadow-brutal-sm hover:-translate-y-2 hover:shadow-brutal active:scale-95 transition-all duration-300 flex flex-col h-full group" data-aos="fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="bg-gray-100 border-2 border-black px-2 py-1 rounded font-black text-[9px] text-gray-500 uppercase tracking-widest flex items-center gap-1"><i class="fa-solid fa-graduation-cap"></i> Akademik</div>
+                    <div class="bg-brand-yellow border-2 border-black px-2 py-1 rounded-md font-black text-[10px] uppercase group-hover:rotate-3 transition-transform">Rapi & Lengkap</div>
                 </div>
-            </button>
+                <h3 class="text-lg font-black mb-2 leading-tight">Laporan KKN & Magang</h3>
+                <p class="font-bold text-gray-600 text-xs mb-6 flex-1 leading-relaxed">Penyusunan laporan akhir kegiatan KKN, magang mandiri, MSIB, atau praktik kerja lapangan sesuai template instansi.</p>
+                <button onclick="openWaModal('Laporan KKN & Magang')" class="w-full bg-brand-purple text-white font-black text-sm py-2.5 rounded-xl border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-brand-purple active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2">Konsultasi Sekarang <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></button>
+            </div>
 
-            <button onclick="openWaModal('PPT & Mind Mapping')" class="bg-brand-green border-4 border-black p-6 rounded-2xl shadow-brutal hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:scale-95 transition-all duration-300 ease-out group text-left relative overflow-hidden" data-aos="fade-up" data-aos-delay="500">
-                <div class="absolute -right-6 -bottom-6 bg-brand-yellow w-24 h-24 rounded-full border-4 border-black group-hover:scale-150 transition-transform duration-500 ease-out z-0"></div>
-                <div class="relative z-10">
-                    <i class="fa-solid fa-desktop text-4xl mb-4 text-black bg-white p-3 rounded-xl border-2 border-black inline-block"></i>
-                    <h3 class="text-2xl font-black mb-3">Desain & Presentasi</h3>
-                    <p class="font-bold text-gray-800 text-sm mb-4 leading-relaxed">
-                        • Membuat PPT<br>
-                        • Mind Mapping
-                    </p>
-                    <span class="inline-block bg-black text-white font-black text-xs px-3 py-1 rounded border-2 border-black group-hover:bg-brand-yellow transition-colors duration-300">Tanya & Order <i class="fa-solid fa-arrow-right"></i></span>
+            <!-- Item 5 -->
+            <div class="bg-white border-4 border-black p-5 rounded-2xl shadow-brutal-sm hover:-translate-y-2 hover:shadow-brutal active:scale-95 transition-all duration-300 flex flex-col h-full group" data-aos="fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="bg-gray-100 border-2 border-black px-2 py-1 rounded font-black text-[9px] text-gray-500 uppercase tracking-widest flex items-center gap-1"><i class="fa-solid fa-graduation-cap"></i> Akademik</div>
+                    <div class="bg-brand-green border-2 border-black px-2 py-1 rounded-md font-black text-[10px] uppercase group-hover:rotate-3 transition-transform">Unggulan</div>
                 </div>
-            </button>
+                <h3 class="text-lg font-black mb-2 leading-tight">Proposal Skripsi Full</h3>
+                <p class="font-bold text-gray-600 text-xs mb-6 flex-1 leading-relaxed">Pendampingan dan penyusunan draft Bab 1 sampai Bab 3 dengan rumusan masalah yang tajam dan referensi jurnal terkini.</p>
+                <button onclick="openWaModal('Proposal Skripsi Full')" class="w-full bg-brand-pink text-black font-black text-sm py-2.5 rounded-xl border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-brand-pink active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2">Konsultasi Sekarang <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></button>
+            </div>
 
-            <button onclick="openWaModal('Tugas Lainnya / Esai / Resume')" class="bg-white border-4 border-black p-6 rounded-2xl shadow-brutal hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:scale-95 transition-all duration-300 ease-out group text-left border-dashed relative" data-aos="fade-up" data-aos-delay="600">
-                <div class="absolute -right-6 -bottom-6 bg-brand-purple w-24 h-24 rounded-full border-4 border-black group-hover:scale-150 transition-transform duration-500 ease-out z-0 opacity-20"></div>
-                <div class="relative z-10 flex flex-col justify-center h-full">
-                    <i class="fa-solid fa-circle-question text-4xl mb-4 text-black bg-white p-3 rounded-xl border-2 border-black inline-block w-max"></i>
-                    <h3 class="text-2xl font-black mb-3">Esai, Resume DLL</h3>
-                    <p class="font-bold text-gray-600 text-sm mb-4 leading-relaxed">
-                        • Esai & Resume<br>
-                        • Tugas lain bisa tanya dulu!
-                    </p>
-                    <span class="inline-block bg-black text-white font-black text-xs px-3 py-1 rounded border-2 border-black group-hover:bg-brand-purple transition-colors duration-300 w-max">Tanya & Order <i class="fa-solid fa-arrow-right"></i></span>
+            <!-- Item 6 -->
+            <div class="bg-white border-4 border-black p-5 rounded-2xl shadow-brutal-sm hover:-translate-y-2 hover:shadow-brutal active:scale-95 transition-all duration-300 flex flex-col h-full group" data-aos="fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="bg-gray-100 border-2 border-black px-2 py-1 rounded font-black text-[9px] text-gray-500 uppercase tracking-widest flex items-center gap-1"><i class="fa-solid fa-graduation-cap"></i> Akademik</div>
+                    <div class="bg-brand-purple text-white border-2 border-black px-2 py-1 rounded-md font-black text-[10px] uppercase group-hover:rotate-3 transition-transform">Spesialis</div>
                 </div>
-            </button>
+                <h3 class="text-lg font-black mb-2 leading-tight">Bimbingan & Revisi Skripsi</h3>
+                <p class="font-bold text-gray-600 text-xs mb-6 flex-1 leading-relaxed">Membantu mengeksekusi revisi dari dosen pembimbing dengan cepat dan memberikan arahan perbaikan skripsi.</p>
+                <button onclick="openWaModal('Bimbingan & Revisi Skripsi')" class="w-full bg-brand-yellow text-black font-black text-sm py-2.5 rounded-xl border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-brand-yellow active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2">Konsultasi Sekarang <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></button>
+            </div>
+
+            <!-- Item 7 -->
+            <div class="bg-white border-4 border-black p-5 rounded-2xl shadow-brutal-sm hover:-translate-y-2 hover:shadow-brutal active:scale-95 transition-all duration-300 flex flex-col h-full group" data-aos="fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="bg-gray-100 border-2 border-black px-2 py-1 rounded font-black text-[9px] text-gray-500 uppercase tracking-widest flex items-center gap-1"><i class="fa-solid fa-graduation-cap"></i> Akademik</div>
+                    <div class="bg-brand-blue text-white border-2 border-black px-2 py-1 rounded-md font-black text-[10px] uppercase group-hover:rotate-3 transition-transform">Kritis</div>
+                </div>
+                <h3 class="text-lg font-black mb-2 leading-tight">Review Jurnal Nasional</h3>
+                <p class="font-bold text-gray-600 text-xs mb-6 flex-1 leading-relaxed">Analisis dan rangkuman kritis terhadap jurnal berbahasa Indonesia untuk tugas review atau resume perkuliahan.</p>
+                <button onclick="openWaModal('Review Jurnal Nasional')" class="w-full bg-brand-green text-black font-black text-sm py-2.5 rounded-xl border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-brand-green active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2">Konsultasi Sekarang <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></button>
+            </div>
+
+            <!-- Item 8 -->
+            <div class="bg-white border-4 border-black p-5 rounded-2xl shadow-brutal-sm hover:-translate-y-2 hover:shadow-brutal active:scale-95 transition-all duration-300 flex flex-col h-full group" data-aos="fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="bg-gray-100 border-2 border-black px-2 py-1 rounded font-black text-[9px] text-gray-500 uppercase tracking-widest flex items-center gap-1"><i class="fa-solid fa-graduation-cap"></i> Akademik</div>
+                    <div class="bg-brand-pink text-black border-2 border-black px-2 py-1 rounded-md font-black text-[10px] uppercase group-hover:rotate-3 transition-transform">Tepat Sasaran</div>
+                </div>
+                <h3 class="text-lg font-black mb-2 leading-tight">Review Jurnal Internasional</h3>
+                <p class="font-bold text-gray-600 text-xs mb-6 flex-1 leading-relaxed">Review mendalam jurnal berbahasa asing (Inggris) beserta terjemahan poin-poin penting sesuai kaidah akademik.</p>
+                <button onclick="openWaModal('Review Jurnal Internasional')" class="w-full bg-brand-blue text-white font-black text-sm py-2.5 rounded-xl border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-brand-blue active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2">Konsultasi Sekarang <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></button>
+            </div>
+
+            <!-- Item 9 -->
+            <div class="bg-white border-4 border-black p-5 rounded-2xl shadow-brutal-sm hover:-translate-y-2 hover:shadow-brutal active:scale-95 transition-all duration-300 flex flex-col h-full group" data-aos="fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="bg-gray-100 border-2 border-black px-2 py-1 rounded font-black text-[9px] text-gray-500 uppercase tracking-widest flex items-center gap-1"><i class="fa-solid fa-graduation-cap"></i> Akademik</div>
+                    <div class="bg-brand-yellow border-2 border-black px-2 py-1 rounded-md font-black text-[10px] uppercase group-hover:rotate-3 transition-transform">Cepat</div>
+                </div>
+                <h3 class="text-lg font-black mb-2 leading-tight">Resume & Ringkasan Buku</h3>
+                <p class="font-bold text-gray-600 text-xs mb-6 flex-1 leading-relaxed">Meringkas materi buku, modul, atau e-book tebal menjadi rangkuman poin padat yang mudah dipahami.</p>
+                <button onclick="openWaModal('Resume & Ringkasan Buku')" class="w-full bg-brand-purple text-white font-black text-sm py-2.5 rounded-xl border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-brand-purple active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2">Konsultasi Sekarang <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></button>
+            </div>
+
+            <!-- Item 10 -->
+            <div class="bg-white border-4 border-black p-5 rounded-2xl shadow-brutal-sm hover:-translate-y-2 hover:shadow-brutal active:scale-95 transition-all duration-300 flex flex-col h-full group" data-aos="fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="bg-gray-100 border-2 border-black px-2 py-1 rounded font-black text-[9px] text-gray-500 uppercase tracking-widest flex items-center gap-1"><i class="fa-solid fa-magnifying-glass-chart"></i> Penelitian</div>
+                    <div class="bg-brand-green border-2 border-black px-2 py-1 rounded-md font-black text-[10px] uppercase group-hover:rotate-3 transition-transform">Kilat 15 Menit</div>
+                </div>
+                <h3 class="text-lg font-black mb-2 leading-tight">Cek Turnitin (No-Repo)</h3>
+                <p class="font-bold text-gray-600 text-xs mb-6 flex-1 leading-relaxed">Pengecekan skor plagiarisme no-repository (data aman, tidak tersimpan di database) lengkap dengan file PDF hasil.</p>
+                <button onclick="openWaModal('Cek Turnitin')" class="w-full bg-brand-pink text-black font-black text-sm py-2.5 rounded-xl border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-brand-pink active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2">Konsultasi Sekarang <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></button>
+            </div>
+
+            <!-- Item 11 -->
+            <div class="bg-white border-4 border-black p-5 rounded-2xl shadow-brutal-sm hover:-translate-y-2 hover:shadow-brutal active:scale-95 transition-all duration-300 flex flex-col h-full group" data-aos="fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="bg-gray-100 border-2 border-black px-2 py-1 rounded font-black text-[9px] text-gray-500 uppercase tracking-widest flex items-center gap-1"><i class="fa-solid fa-magnifying-glass-chart"></i> Penelitian</div>
+                    <div class="bg-brand-blue text-white border-2 border-black px-2 py-1 rounded-md font-black text-[10px] uppercase group-hover:rotate-3 transition-transform">Dijamin Turun</div>
+                </div>
+                <h3 class="text-lg font-black mb-2 leading-tight">Parafrase Plagiasi Turnitin</h3>
+                <p class="font-bold text-gray-600 text-xs mb-6 flex-1 leading-relaxed">Menurunkan skor plagiasi Turnitin dokumen skripsi/makalah dengan teknik parafrase manual tanpa merusak makna.</p>
+                <button onclick="openWaModal('Parafrase Plagiasi Turnitin')" class="w-full bg-brand-yellow text-black font-black text-sm py-2.5 rounded-xl border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-brand-yellow active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2">Konsultasi Sekarang <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></button>
+            </div>
+
+            <!-- Item 12 -->
+            <div class="bg-white border-4 border-black p-5 rounded-2xl shadow-brutal-sm hover:-translate-y-2 hover:shadow-brutal active:scale-95 transition-all duration-300 flex flex-col h-full group" data-aos="fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="bg-gray-100 border-2 border-black px-2 py-1 rounded font-black text-[9px] text-gray-500 uppercase tracking-widest flex items-center gap-1"><i class="fa-solid fa-magnifying-glass-chart"></i> Penelitian</div>
+                    <div class="bg-brand-purple text-white border-2 border-black px-2 py-1 rounded-md font-black text-[10px] uppercase group-hover:rotate-3 transition-transform">Spesialis</div>
+                </div>
+                <h3 class="text-lg font-black mb-2 leading-tight">Olah Data SPSS</h3>
+                <p class="font-bold text-gray-600 text-xs mb-6 flex-1 leading-relaxed">Analisis data statistik menggunakan SPSS (uji validitas, reliabilitas, regresi, t-test) lengkap dengan interpretasi output.</p>
+                <button onclick="openWaModal('Olah Data SPSS')" class="w-full bg-brand-green text-black font-black text-sm py-2.5 rounded-xl border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-brand-green active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2">Konsultasi Sekarang <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></button>
+            </div>
+
+            <!-- Item 13 -->
+            <div class="bg-white border-4 border-black p-5 rounded-2xl shadow-brutal-sm hover:-translate-y-2 hover:shadow-brutal active:scale-95 transition-all duration-300 flex flex-col h-full group" data-aos="fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="bg-gray-100 border-2 border-black px-2 py-1 rounded font-black text-[9px] text-gray-500 uppercase tracking-widest flex items-center gap-1"><i class="fa-solid fa-magnifying-glass-chart"></i> Penelitian</div>
+                    <div class="bg-brand-pink text-black border-2 border-black px-2 py-1 rounded-md font-black text-[10px] uppercase group-hover:rotate-3 transition-transform">Output Akurat</div>
+                </div>
+                <h3 class="text-lg font-black mb-2 leading-tight">Olah Data SmartPLS</h3>
+                <p class="font-bold text-gray-600 text-xs mb-6 flex-1 leading-relaxed">Pengolahan data SEM (Structural Equation Modeling) menggunakan software SmartPLS beserta penjelasan hasil modelnya.</p>
+                <button onclick="openWaModal('Olah Data SmartPLS')" class="w-full bg-brand-blue text-white font-black text-sm py-2.5 rounded-xl border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-brand-blue active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2">Konsultasi Sekarang <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></button>
+            </div>
+
+            <!-- Item 14 -->
+            <div class="bg-white border-4 border-black p-5 rounded-2xl shadow-brutal-sm hover:-translate-y-2 hover:shadow-brutal active:scale-95 transition-all duration-300 flex flex-col h-full group" data-aos="fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="bg-gray-100 border-2 border-black px-2 py-1 rounded font-black text-[9px] text-gray-500 uppercase tracking-widest flex items-center gap-1"><i class="fa-solid fa-magnifying-glass-chart"></i> Penelitian</div>
+                    <div class="bg-brand-yellow border-2 border-black px-2 py-1 rounded-md font-black text-[10px] uppercase group-hover:rotate-3 transition-transform">Valid & Reliabel</div>
+                </div>
+                <h3 class="text-lg font-black mb-2 leading-tight">Pembuatan Kuesioner</h3>
+                <p class="font-bold text-gray-600 text-xs mb-6 flex-1 leading-relaxed">Menyusun instrumen atau kuesioner penelitian skripsi berdasarkan variabel dan indikator teori yang digunakan.</p>
+                <button onclick="openWaModal('Pembuatan Kuesioner')" class="w-full bg-brand-purple text-white font-black text-sm py-2.5 rounded-xl border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-brand-purple active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2">Konsultasi Sekarang <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></button>
+            </div>
+
+            <!-- Item 15 -->
+            <div class="bg-white border-4 border-black p-5 rounded-2xl shadow-brutal-sm hover:-translate-y-2 hover:shadow-brutal active:scale-95 transition-all duration-300 flex flex-col h-full group" data-aos="fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="bg-gray-100 border-2 border-black px-2 py-1 rounded font-black text-[9px] text-gray-500 uppercase tracking-widest flex items-center gap-1"><i class="fa-solid fa-magnifying-glass-chart"></i> Penelitian</div>
+                    <div class="bg-brand-green border-2 border-black px-2 py-1 rounded-md font-black text-[10px] uppercase group-hover:rotate-3 transition-transform">Rapi</div>
+                </div>
+                <h3 class="text-lg font-black mb-2 leading-tight">Olah Data Excel</h3>
+                <p class="font-bold text-gray-600 text-xs mb-6 flex-1 leading-relaxed">Input data, rekap kuesioner, perhitungan rumus kompleks, hingga pembuatan chart/grafik menarik di Microsoft Excel.</p>
+                <button onclick="openWaModal('Olah Data Excel')" class="w-full bg-brand-pink text-black font-black text-sm py-2.5 rounded-xl border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-brand-pink active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2">Konsultasi Sekarang <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></button>
+            </div>
+
+            <!-- Item 16 -->
+            <div class="bg-white border-4 border-black p-5 rounded-2xl shadow-brutal-sm hover:-translate-y-2 hover:shadow-brutal active:scale-95 transition-all duration-300 flex flex-col h-full group" data-aos="fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="bg-gray-100 border-2 border-black px-2 py-1 rounded font-black text-[9px] text-gray-500 uppercase tracking-widest flex items-center gap-1"><i class="fa-solid fa-palette"></i> Desain & Kreatif</div>
+                    <div class="bg-brand-blue text-white border-2 border-black px-2 py-1 rounded-md font-black text-[10px] uppercase group-hover:rotate-3 transition-transform">Paling Sering</div>
+                </div>
+                <h3 class="text-lg font-black mb-2 leading-tight">Pembuatan PPT Estetik</h3>
+                <p class="font-bold text-gray-600 text-xs mb-6 flex-1 leading-relaxed">Merancang slide presentasi tugas kuliah yang kreatif, tidak membosankan, dilengkapi animasi transisi estetik.</p>
+                <button onclick="openWaModal('Pembuatan PPT Estetik')" class="w-full bg-brand-yellow text-black font-black text-sm py-2.5 rounded-xl border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-brand-yellow active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2">Konsultasi Sekarang <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></button>
+            </div>
+
+            <!-- Item 17 -->
+            <div class="bg-white border-4 border-black p-5 rounded-2xl shadow-brutal-sm hover:-translate-y-2 hover:shadow-brutal active:scale-95 transition-all duration-300 flex flex-col h-full group" data-aos="fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="bg-gray-100 border-2 border-black px-2 py-1 rounded font-black text-[9px] text-gray-500 uppercase tracking-widest flex items-center gap-1"><i class="fa-solid fa-palette"></i> Desain & Kreatif</div>
+                    <div class="bg-brand-purple text-white border-2 border-black px-2 py-1 rounded-md font-black text-[10px] uppercase group-hover:rotate-3 transition-transform">Profesional</div>
+                </div>
+                <h3 class="text-lg font-black mb-2 leading-tight">PPT Sidang / Sempro</h3>
+                <p class="font-bold text-gray-600 text-xs mb-6 flex-1 leading-relaxed">Pembuatan bahan presentasi sidang skripsi atau seminar proposal yang elegan, padat, dan terlihat profesional.</p>
+                <button onclick="openWaModal('PPT Sidang / Sempro')" class="w-full bg-brand-green text-black font-black text-sm py-2.5 rounded-xl border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-brand-green active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2">Konsultasi Sekarang <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></button>
+            </div>
+
+            <!-- Item 18 -->
+            <div class="bg-white border-4 border-black p-5 rounded-2xl shadow-brutal-sm hover:-translate-y-2 hover:shadow-brutal active:scale-95 transition-all duration-300 flex flex-col h-full group" data-aos="fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="bg-gray-100 border-2 border-black px-2 py-1 rounded font-black text-[9px] text-gray-500 uppercase tracking-widest flex items-center gap-1"><i class="fa-solid fa-palette"></i> Desain & Kreatif</div>
+                    <div class="bg-brand-pink text-black border-2 border-black px-2 py-1 rounded-md font-black text-[10px] uppercase group-hover:rotate-3 transition-transform">Visual Menarik</div>
+                </div>
+                <h3 class="text-lg font-black mb-2 leading-tight">Mind Mapping</h3>
+                <p class="font-bold text-gray-600 text-xs mb-6 flex-1 leading-relaxed">Mengubah materi panjang menjadi peta konsep (mind mapping) visual yang mudah dihapal dan enak dipandang.</p>
+                <button onclick="openWaModal('Mind Mapping')" class="w-full bg-brand-blue text-white font-black text-sm py-2.5 rounded-xl border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-brand-blue active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2">Konsultasi Sekarang <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></button>
+            </div>
+
+            <!-- Item 19 -->
+            <div class="bg-white border-4 border-black p-5 rounded-2xl shadow-brutal-sm hover:-translate-y-2 hover:shadow-brutal active:scale-95 transition-all duration-300 flex flex-col h-full group" data-aos="fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="bg-gray-100 border-2 border-black px-2 py-1 rounded font-black text-[9px] text-gray-500 uppercase tracking-widest flex items-center gap-1"><i class="fa-solid fa-palette"></i> Desain & Kreatif</div>
+                    <div class="bg-brand-yellow border-2 border-black px-2 py-1 rounded-md font-black text-[10px] uppercase group-hover:rotate-3 transition-transform">Estetik</div>
+                </div>
+                <h3 class="text-lg font-black mb-2 leading-tight">Desain Poster Ilmiah</h3>
+                <p class="font-bold text-gray-600 text-xs mb-6 flex-1 leading-relaxed">Pembuatan poster publikasi untuk KKN, lomba karya ilmiah, atau presentasi penelitian dengan desain memukau.</p>
+                <button onclick="openWaModal('Desain Poster Ilmiah')" class="w-full bg-brand-purple text-white font-black text-sm py-2.5 rounded-xl border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-brand-purple active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2">Konsultasi Sekarang <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></button>
+            </div>
+
+            <!-- Item 20 -->
+            <div class="bg-white border-4 border-black p-5 rounded-2xl shadow-brutal-sm hover:-translate-y-2 hover:shadow-brutal active:scale-95 transition-all duration-300 flex flex-col h-full group" data-aos="fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="bg-gray-100 border-2 border-black px-2 py-1 rounded font-black text-[9px] text-gray-500 uppercase tracking-widest flex items-center gap-1"><i class="fa-solid fa-palette"></i> Desain & Kreatif</div>
+                    <div class="bg-brand-green border-2 border-black px-2 py-1 rounded-md font-black text-[10px] uppercase group-hover:rotate-3 transition-transform">HD Quality</div>
+                </div>
+                <h3 class="text-lg font-black mb-2 leading-tight">Edit Video Tugas</h3>
+                <p class="font-bold text-gray-600 text-xs mb-6 flex-1 leading-relaxed">Jasa editing video untuk tugas sekolah, vlog KKN, atau video presentasi kelompok dengan transisi dan subtitle.</p>
+                <button onclick="openWaModal('Edit Video Tugas')" class="w-full bg-brand-pink text-black font-black text-sm py-2.5 rounded-xl border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-brand-pink active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2">Konsultasi Sekarang <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></button>
+            </div>
+
+            <!-- Item 21 -->
+            <div class="bg-white border-4 border-black p-5 rounded-2xl shadow-brutal-sm hover:-translate-y-2 hover:shadow-brutal active:scale-95 transition-all duration-300 flex flex-col h-full group" data-aos="fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="bg-gray-100 border-2 border-black px-2 py-1 rounded font-black text-[9px] text-gray-500 uppercase tracking-widest flex items-center gap-1"><i class="fa-solid fa-palette"></i> Desain & Kreatif</div>
+                    <div class="bg-brand-blue text-white border-2 border-black px-2 py-1 rounded-md font-black text-[10px] uppercase group-hover:rotate-3 transition-transform">Elegan</div>
+                </div>
+                <h3 class="text-lg font-black mb-2 leading-tight">Desain Infografis</h3>
+                <p class="font-bold text-gray-600 text-xs mb-6 flex-1 leading-relaxed">Menyajikan data statistik atau informasi tugas ke dalam bentuk infografis gambar vertikal yang mudah dibaca.</p>
+                <button onclick="openWaModal('Desain Infografis')" class="w-full bg-brand-yellow text-black font-black text-sm py-2.5 rounded-xl border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-brand-yellow active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2">Konsultasi Sekarang <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></button>
+            </div>
+
+            <!-- Item 22 -->
+            <div class="bg-white border-4 border-black p-5 rounded-2xl shadow-brutal-sm hover:-translate-y-2 hover:shadow-brutal active:scale-95 transition-all duration-300 flex flex-col h-full group" data-aos="fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="bg-gray-100 border-2 border-black px-2 py-1 rounded font-black text-[9px] text-gray-500 uppercase tracking-widest flex items-center gap-1"><i class="fa-solid fa-pen-nib"></i> Karya Tulis</div>
+                    <div class="bg-brand-pink text-black border-2 border-black px-2 py-1 rounded-md font-black text-[10px] uppercase group-hover:rotate-3 transition-transform">Berbobot</div>
+                </div>
+                <h3 class="text-lg font-black mb-2 leading-tight">Karya Tulis Ilmiah (KTI)</h3>
+                <p class="font-bold text-gray-600 text-xs mb-6 flex-1 leading-relaxed">Penyusunan KTI utuh untuk tugas akhir jenjang SMA atau lomba ilmiah mahasiswa lengkap dengan studi literatur.</p>
+                <button onclick="openWaModal('Karya Tulis Ilmiah (KTI)')" class="w-full bg-brand-green text-black font-black text-sm py-2.5 rounded-xl border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-brand-green active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2">Konsultasi Sekarang <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></button>
+            </div>
+
+            <!-- Item 23 -->
+            <div class="bg-white border-4 border-black p-5 rounded-2xl shadow-brutal-sm hover:-translate-y-2 hover:shadow-brutal active:scale-95 transition-all duration-300 flex flex-col h-full group" data-aos="fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="bg-gray-100 border-2 border-black px-2 py-1 rounded font-black text-[9px] text-gray-500 uppercase tracking-widest flex items-center gap-1"><i class="fa-solid fa-pen-nib"></i> Karya Tulis</div>
+                    <div class="bg-brand-yellow border-2 border-black px-2 py-1 rounded-md font-black text-[10px] uppercase group-hover:rotate-3 transition-transform">Lolos Seleksi</div>
+                </div>
+                <h3 class="text-lg font-black mb-2 leading-tight">Proposal PKM</h3>
+                <p class="font-bold text-gray-600 text-xs mb-6 flex-1 leading-relaxed">Bantuan merancang dan menyusun draf Program Kreativitas Mahasiswa (PKM) dari berbagai bidang dan skema.</p>
+                <button onclick="openWaModal('Proposal PKM')" class="w-full bg-brand-purple text-white font-black text-sm py-2.5 rounded-xl border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-brand-purple active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2">Konsultasi Sekarang <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></button>
+            </div>
+
+            <!-- Item 24 -->
+            <div class="bg-white border-4 border-black p-5 rounded-2xl shadow-brutal-sm hover:-translate-y-2 hover:shadow-brutal active:scale-95 transition-all duration-300 flex flex-col h-full group" data-aos="fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="bg-gray-100 border-2 border-black px-2 py-1 rounded font-black text-[9px] text-gray-500 uppercase tracking-widest flex items-center gap-1"><i class="fa-solid fa-pen-nib"></i> Karya Tulis</div>
+                    <div class="bg-brand-green border-2 border-black px-2 py-1 rounded-md font-black text-[10px] uppercase group-hover:rotate-3 transition-transform">Persuasif</div>
+                </div>
+                <h3 class="text-lg font-black mb-2 leading-tight">Esai Lomba & Beasiswa</h3>
+                <p class="font-bold text-gray-600 text-xs mb-6 flex-1 leading-relaxed">Penulisan esai motivasi (motivation letter) untuk beasiswa atau esai opini untuk keperluan lomba mahasiswa.</p>
+                <button onclick="openWaModal('Esai Lomba & Beasiswa')" class="w-full bg-brand-pink text-black font-black text-sm py-2.5 rounded-xl border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-brand-pink active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2">Konsultasi Sekarang <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></button>
+            </div>
+
+            <!-- Item 25 -->
+            <div class="bg-white border-4 border-black p-5 rounded-2xl shadow-brutal-sm hover:-translate-y-2 hover:shadow-brutal active:scale-95 transition-all duration-300 flex flex-col h-full group" data-aos="fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="bg-gray-100 border-2 border-black px-2 py-1 rounded font-black text-[9px] text-gray-500 uppercase tracking-widest flex items-center gap-1"><i class="fa-solid fa-pen-nib"></i> Karya Tulis</div>
+                    <div class="bg-brand-blue text-white border-2 border-black px-2 py-1 rounded-md font-black text-[10px] uppercase group-hover:rotate-3 transition-transform">Lugas</div>
+                </div>
+                <h3 class="text-lg font-black mb-2 leading-tight">Artikel / Opini Populer</h3>
+                <p class="font-bold text-gray-600 text-xs mb-6 flex-1 leading-relaxed">Penulisan artikel populer, edukatif, maupun opini ilmiah dengan gaya bahasa yang lugas dan berbobot.</p>
+                <button onclick="openWaModal('Artikel / Opini Populer')" class="w-full bg-brand-yellow text-black font-black text-sm py-2.5 rounded-xl border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-brand-yellow active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2">Konsultasi Sekarang <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></button>
+            </div>
+
+            <!-- Item 26 -->
+            <div class="bg-white border-4 border-black p-5 rounded-2xl shadow-brutal-sm hover:-translate-y-2 hover:shadow-brutal active:scale-95 transition-all duration-300 flex flex-col h-full group" data-aos="fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="bg-gray-100 border-2 border-black px-2 py-1 rounded font-black text-[9px] text-gray-500 uppercase tracking-widest flex items-center gap-1"><i class="fa-solid fa-graduation-cap"></i> Akademik</div>
+                    <div class="bg-brand-purple text-white border-2 border-black px-2 py-1 rounded-md font-black text-[10px] uppercase group-hover:rotate-3 transition-transform">Detail & Akurat</div>
+                </div>
+                <h3 class="text-lg font-black mb-2 leading-tight">Laporan Praktikum</h3>
+                <p class="font-bold text-gray-600 text-xs mb-6 flex-1 leading-relaxed">Menyusun laporan praktikum biologi, kimia, fisika, atau lab lainnya lengkap dengan pembahasan landasan teori.</p>
+                <button onclick="openWaModal('Laporan Praktikum')" class="w-full bg-brand-green text-black font-black text-sm py-2.5 rounded-xl border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-brand-green active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2">Konsultasi Sekarang <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></button>
+            </div>
+
+            <!-- Item 27 -->
+            <div class="bg-white border-4 border-black p-5 rounded-2xl shadow-brutal-sm hover:-translate-y-2 hover:shadow-brutal active:scale-95 transition-all duration-300 flex flex-col h-full group" data-aos="fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="bg-gray-100 border-2 border-black px-2 py-1 rounded font-black text-[9px] text-gray-500 uppercase tracking-widest flex items-center gap-1"><i class="fa-solid fa-graduation-cap"></i> Akademik</div>
+                    <div class="bg-brand-pink text-black border-2 border-black px-2 py-1 rounded-md font-black text-[10px] uppercase group-hover:rotate-3 transition-transform">Grammar Tepat</div>
+                </div>
+                <h3 class="text-lg font-black mb-2 leading-tight">Terjemahan Abstrak Jurnal</h3>
+                <p class="font-bold text-gray-600 text-xs mb-6 flex-1 leading-relaxed">Menerjemahkan abstrak skripsi/jurnal (Indonesia - Inggris) dengan grammar yang tepat sesuai kaidah akademis.</p>
+                <button onclick="openWaModal('Terjemahan Abstrak Jurnal')" class="w-full bg-brand-blue text-white font-black text-sm py-2.5 rounded-xl border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-brand-blue active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2">Konsultasi Sekarang <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></button>
+            </div>
+
+            <!-- Item 28 -->
+            <div class="bg-white border-4 border-black p-5 rounded-2xl shadow-brutal-sm hover:-translate-y-2 hover:shadow-brutal active:scale-95 transition-all duration-300 flex flex-col h-full group" data-aos="fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="bg-gray-100 border-2 border-black px-2 py-1 rounded font-black text-[9px] text-gray-500 uppercase tracking-widest flex items-center gap-1"><i class="fa-solid fa-graduation-cap"></i> Akademik</div>
+                    <div class="bg-brand-yellow border-2 border-black px-2 py-1 rounded-md font-black text-[10px] uppercase group-hover:rotate-3 transition-transform">Sesuai Pedoman</div>
+                </div>
+                <h3 class="text-lg font-black mb-2 leading-tight">Merapikan Format Skripsi</h3>
+                <p class="font-bold text-gray-600 text-xs mb-6 flex-1 leading-relaxed">Jasa layouting margin, spasi, daftar isi otomatis, dan daftar pustaka sesuai dengan pedoman buku kampusmu.</p>
+                <button onclick="openWaModal('Merapikan Format Skripsi')" class="w-full bg-brand-purple text-white font-black text-sm py-2.5 rounded-xl border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-brand-purple active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2">Konsultasi Sekarang <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></button>
+            </div>
+
+            <!-- Item 29 -->
+            <div class="bg-white border-4 border-black p-5 rounded-2xl shadow-brutal-sm hover:-translate-y-2 hover:shadow-brutal active:scale-95 transition-all duration-300 flex flex-col h-full group" data-aos="fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="bg-gray-100 border-2 border-black px-2 py-1 rounded font-black text-[9px] text-gray-500 uppercase tracking-widest flex items-center gap-1"><i class="fa-solid fa-circle-question"></i> Umum</div>
+                    <div class="bg-brand-green border-2 border-black px-2 py-1 rounded-md font-black text-[10px] uppercase group-hover:rotate-3 transition-transform">Spesial</div>
+                </div>
+                <h3 class="text-lg font-black mb-2 leading-tight">Pembuatan Website Tugas</h3>
+                <p class="font-bold text-gray-600 text-xs mb-6 flex-1 leading-relaxed">Joki coding tugas pembuatan web ringan HTML, CSS (Tailwind), dan hosting langsung ke GitHub Pages.</p>
+                <button onclick="openWaModal('Pembuatan Website Tugas')" class="w-full bg-brand-pink text-black font-black text-sm py-2.5 rounded-xl border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-brand-pink active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2">Konsultasi Sekarang <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></button>
+            </div>
+
+            <!-- Item 30 -->
+            <div class="bg-white border-4 border-black p-5 rounded-2xl shadow-brutal-sm hover:-translate-y-2 hover:shadow-brutal active:scale-95 transition-all duration-300 flex flex-col h-full group" data-aos="fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="bg-gray-100 border-2 border-black px-2 py-1 rounded font-black text-[9px] text-gray-500 uppercase tracking-widest flex items-center gap-1"><i class="fa-solid fa-circle-question"></i> Umum</div>
+                    <div class="bg-black text-white border-2 border-black px-2 py-1 rounded-md font-black text-[10px] uppercase group-hover:rotate-3 transition-transform">Tanya Admin</div>
+                </div>
+                <h3 class="text-lg font-black mb-2 leading-tight">Layanan Custom / Lainnya</h3>
+                <p class="font-bold text-gray-600 text-xs mb-6 flex-1 leading-relaxed">Tugas yang kamu butuhkan tidak ada di daftar ini? Jangan khawatir, tanyakan saja langsung pada admin kami!</p>
+                <button onclick="openWaModal('Layanan Custom / Lainnya')" class="w-full bg-brand-yellow text-black font-black text-sm py-2.5 rounded-xl border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-brand-yellow active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2">Konsultasi Sekarang <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></button>
+            </div>
+
         </div>
     </section>
 
@@ -936,9 +1188,6 @@
             let payAmount = 0;
             let payType = "";
 
-            // LOGIKA 4-STEP REVISI:
-            // Status >= 3 berarti tugas sudah selesai, maka ditagihkan sisa pelunasan.
-            // Status < 3 berarti tugas masih diproses, maka ditagihkan nominal DP di awal.
             if (status >= 3) {
                 payAmount = sisa > 0 ? sisa : price;
                 payType = "Sisa Pelunasan Tugas";
