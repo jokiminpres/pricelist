@@ -234,12 +234,18 @@
         </div>
     </section>
 
-    <!-- Services Section (30 ITEMS) -->
+    <!-- Services Section (30 ITEMS + SEARCH) -->
     <section class="py-16 px-4 max-w-7xl mx-auto" id="layanan">
-        <div class="flex items-center justify-center gap-4 mb-12" data-aos="fade-up">
+        
+        <div class="flex flex-col items-center justify-center gap-4 mb-12" data-aos="fade-up">
             <h2 class="text-3xl md:text-5xl font-black uppercase bg-black text-white px-6 py-3 shadow-brutal text-center">
                 Pilih Jasa Kami
             </h2>
+            <!-- KOLOM PENCARIAN JASA -->
+            <div class="w-full max-w-xl relative mt-2 px-4 md:px-0">
+                <i class="fa-solid fa-magnifying-glass absolute left-9 md:left-5 top-1/2 -translate-y-1/2 text-gray-500 text-xl"></i>
+                <input type="text" id="searchLayanan" placeholder="Ketik jasa yang dicari (cth: Makalah, PPT...)" class="w-full pl-14 pr-4 py-4 border-4 border-black font-black text-lg rounded-2xl focus:outline-none focus:ring-4 focus:ring-brand-yellow shadow-brutal-sm transition-all bg-white placeholder-gray-400">
+            </div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -702,7 +708,6 @@
             </div>
             
             <div class="space-y-4" data-aos="fade-up">
-                <!-- FAQ Item 1 -->
                 <div class="bg-white border-4 border-black p-4 md:p-5 rounded-xl shadow-brutal-sm hover:-translate-y-1 transition-transform">
                     <h3 class="font-black text-base md:text-lg flex gap-3 items-start">
                         <i class="fa-solid fa-circle-question text-brand-blue mt-1 text-xl md:text-2xl shrink-0"></i> 
@@ -710,7 +715,6 @@
                     </h3>
                     <p class="font-bold text-gray-700 text-xs md:text-sm mt-2 ml-8 md:ml-10">Tenang! Sistem kami 100% rahasia dan aman. Kami tidak pernah mempublikasikan tugas atau identitas kamu di mana pun. File yang kami kerjakan murni milik kamu seutuhnya.</p>
                 </div>
-                <!-- FAQ Item 2 -->
                 <div class="bg-white border-4 border-black p-4 md:p-5 rounded-xl shadow-brutal-sm hover:-translate-y-1 transition-transform">
                     <h3 class="font-black text-base md:text-lg flex gap-3 items-start">
                         <i class="fa-solid fa-circle-question text-brand-pink mt-1 text-xl md:text-2xl shrink-0"></i> 
@@ -718,7 +722,6 @@
                     </h3>
                     <p class="font-bold text-gray-700 text-xs md:text-sm mt-2 ml-8 md:ml-10">Tentu tidak! Kamu bisa melakukan DP (Down Payment) terlebih dahulu. Sisanya baru kamu lunasi ketika tugas sudah selesai kami kerjakan dan siap untuk dikirim.</p>
                 </div>
-                <!-- FAQ Item 3 -->
                 <div class="bg-white border-4 border-black p-4 md:p-5 rounded-xl shadow-brutal-sm hover:-translate-y-1 transition-transform">
                     <h3 class="font-black text-base md:text-lg flex gap-3 items-start">
                         <i class="fa-solid fa-circle-question text-brand-green mt-1 text-xl md:text-2xl shrink-0"></i> 
@@ -726,7 +729,6 @@
                     </h3>
                     <p class="font-bold text-gray-700 text-xs md:text-sm mt-2 ml-8 md:ml-10">Kami punya fitur <b>Lacak Progres</b> di halaman web ini! Kamu tinggal masukin Nomor Invoice kamu, nanti akan kelihatan total tagihan, deadline, dan status pengerjaannya secara real-time.</p>
                 </div>
-                <!-- FAQ Item 4 -->
                 <div class="bg-white border-4 border-black p-4 md:p-5 rounded-xl shadow-brutal-sm hover:-translate-y-1 transition-transform">
                     <h3 class="font-black text-base md:text-lg flex gap-3 items-start">
                         <i class="fa-solid fa-circle-question text-brand-purple mt-1 text-xl md:text-2xl shrink-0"></i> 
@@ -766,7 +768,7 @@
         </div>
     </footer>
 
-    </div>
+    </div> <!-- END MAIN WEBSITE -->
 
     <!-- MODAL POPUP INPUT NOMOR WA PELANGGAN -->
     <div id="waModal" class="hidden fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 transition-all duration-300 ease-out">
@@ -817,17 +819,14 @@
             <h3 class="text-xl font-black mb-1">Scan untuk Pembayaran</h3>
             <p class="font-bold text-gray-600 text-xs mb-4">Mendukung GoPay, DANA, OVO, ShopeePay & Semua Bank</p>
 
-            <!-- Container Gambar QR Code Dinamis -->
             <div class="bg-gray-100 p-4 border-4 border-black rounded-xl inline-block mb-3 shadow-brutal-sm relative w-full">
                 <img id="qrisImage" src="" alt="QRIS Payment" class="w-52 h-52 mx-auto object-contain">
             </div>
 
-            <!-- TOMBOL DOWNLOAD GAMBAR QRIS (BISA UNTUK 1 HP) -->
             <button id="btnDownloadQrisImg" class="w-full bg-brand-blue text-white font-black py-2.5 px-4 rounded-xl border-2 border-black hover:bg-blue-600 active:scale-95 transition-all flex items-center justify-center gap-2 text-xs mb-4 shadow-brutal-sm">
                 <i class="fa-solid fa-download text-sm"></i> Download Gambar QRIS (Simpan ke HP)
             </button>
 
-            <!-- Detail Nominal -->
             <div class="bg-gray-50 border-2 border-black p-3 rounded-lg mb-4 text-left font-bold text-sm">
                 <div class="flex justify-between border-b pb-1 mb-1">
                     <span class="text-gray-500">Jenis Tagihan:</span>
@@ -858,7 +857,6 @@
                 <p class="font-bold text-gray-500 text-sm">Masukan kamu sangat berarti untuk Joki Minpres.</p>
             </div>
 
-            <!-- Bintang Rating -->
             <div class="flex justify-center gap-2 mb-6 text-3xl" id="starContainer">
                 <i class="fa-solid fa-star text-brand-yellow cursor-pointer star-btn" data-val="1"></i>
                 <i class="fa-solid fa-star text-brand-yellow cursor-pointer star-btn" data-val="2"></i>
@@ -924,7 +922,7 @@
 
             <div class="flex-1 p-4 lg:p-10 max-w-7xl mx-auto w-full flex flex-col gap-6 lg:gap-8">
                 
-                <!-- KOTAK REKAP OMZET KOTOR, OMZET BERSIH, & SISA PIUTANG -->
+                <!-- KOTAK REKAP KEUANGAN -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="bg-white p-5 rounded-xl shadow-md border-l-4 border-brand-yellow flex items-center justify-between">
                         <div>
@@ -988,7 +986,6 @@
                                 <input type="text" id="adminTask" required placeholder="Makalah Biologi Bab 2" class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50 transition-colors duration-300">
                             </div>
 
-                            <!-- INPUT KEUANGAN -->
                             <div class="grid grid-cols-2 gap-3">
                                 <div>
                                     <label class="font-bold text-sm text-gray-700 block mb-1">Total Harga (Rp):</label>
@@ -1000,7 +997,6 @@
                                 </div>
                             </div>
 
-                            <!-- INPUT LINK GOOGLE DRIVE -->
                             <div>
                                 <label class="font-bold text-sm text-gray-700 block mb-1">Link File Tugas (Opsional):</label>
                                 <input type="text" id="adminFileUrl" placeholder="Contoh: drive.google.com/..." class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50 transition-colors duration-300 text-xs">
@@ -1094,10 +1090,51 @@
         AOS.init({ once: true, offset: 50, duration: 600, easing: 'ease-out-cubic' });
     </script>
 
-    <!-- LOGIKA MODAL WA & MODAL ULASAN (TANPA FIREBASE) -->
+    <!-- LOGIKA UI (SEARCH, WA, ULASAN) -->
     <script>
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby1FaPkk2V-NkJw2Qbx3GYYgaAgjFhOR-EHYPp_gAW-H1JQYhtxjkf-kSwZlflnLelC1w/exec"; 
         const ADMIN_WA_NUMBER = "6283115784598"; 
+
+        // -- LOGIKA SEARCH LAYANAN --
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('searchLayanan');
+            const layananContainer = document.querySelector('#layanan .grid');
+            const layananCards = document.querySelectorAll('#layanan .grid > div');
+            
+            const noResultDiv = document.createElement('div');
+            noResultDiv.className = 'col-span-full text-center py-12 hidden';
+            noResultDiv.innerHTML = `
+                <i class="fa-solid fa-face-frown-open text-6xl text-gray-300 mb-4"></i>
+                <h3 class="text-2xl font-black mb-2">Yahh, jasanya nggak ketemu!</h3>
+                <p class="font-bold text-gray-500 mb-6">Coba cari dengan kata kunci lain atau langsung tanya aja ke admin.</p>
+                <button onclick="openWaModal('Layanan Custom / Tanya Admin')" class="bg-brand-green text-black font-black text-lg py-3 px-8 rounded-xl border-4 border-black shadow-brutal-sm hover:-translate-y-1 active:scale-95 transition-all inline-block">
+                    Tanya Admin Sekarang
+                </button>
+            `;
+            layananContainer.appendChild(noResultDiv);
+
+            searchInput.addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                let hasResult = false;
+
+                layananCards.forEach(card => {
+                    if (card === noResultDiv) return;
+                    const textContent = card.innerText.toLowerCase();
+                    if (textContent.includes(searchTerm)) {
+                        card.style.display = 'flex';
+                        hasResult = true;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                if (!hasResult) {
+                    noResultDiv.classList.remove('hidden');
+                } else {
+                    noResultDiv.classList.add('hidden');
+                }
+            });
+        });
 
         // -- MODAL KONSULTASI WA --
         const waModal = document.getElementById('waModal');
@@ -1237,15 +1274,12 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // PAYLOAD QRIS GOPAY RESMI MILIK USER (JOKI TUGAS MINPRES, PERCE - BULELENG)
         const STATIC_QRIS_PAYLOAD = "00020101021126610014COM.GO-JEK.WWW01189360091433935228740210G3935228740303UMI51440014ID.CO.QRIS.WWW0215ID10264738916810303UMI5204274153033605802ID5925Joki Tugas Minpres, Perce6008BULELENG61058111662070703A01630411A7";
 
-        // HELPER FORMAT UANG (IDR)
         function formatRupiah(angka) {
             return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
         }
 
-        // HELPER GOOGLE CALENDAR URL
         function getGoogleCalendarUrl(inv, task, deadlineStr) {
             const d = new Date(deadlineStr);
             const endFormat = d.toISOString().replace(/-|:|\.\d\d\d/g, '');
@@ -1255,7 +1289,6 @@
             return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startFormat}/${endFormat}&details=${details}`;
         }
 
-        // CONVERTER QRIS STATIS KE QRIS DINAMIS (CRC16 CCITT)
         function buildDynamicQris(staticPayload, amount) {
             let qris = staticPayload.trim().replace('010211', '010212');
             const crcIndex = qris.indexOf('6304');
@@ -1288,7 +1321,6 @@
             return qris + crc.toString(16).toUpperCase().padStart(4, '0');
         }
 
-        // HANDLER MODAL QRIS DINAMIS & DOWNLOAD QRIS GAMBAR
         let currentOrderForPay = null;
 
         window.showQrisPayment = function() {
@@ -1362,7 +1394,6 @@
             document.getElementById('qrisModal').classList.add('hidden');
         };
 
-        // ANALYTICS KUNJUNGAN
         function trackVisit() {
             if (!sessionStorage.getItem('minpres_visited')) {
                 sessionStorage.setItem('minpres_visited', 'true');
@@ -1380,7 +1411,6 @@
             { id: 4, title: 'Lunas & Siap Download', desc: 'Pembayaran lunas! File tugas sudah dapat kamu unduh di bawah.', color: 'bg-brand-green', icon: 'fa-flag-checkered' }
         ];
 
-        // AUTO SEARCH
         window.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const invQuery = urlParams.get('inv');
@@ -1392,7 +1422,6 @@
             }
         });
 
-        // TRACKER KLIEN
         let countdownInterval;
         document.getElementById('trackForm').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -1555,7 +1584,6 @@
             }, 1000);
         }
 
-        // ADMIN LOGIN & AUTH
         if(window.location.hash === '#admin'){
             document.getElementById('main-website').classList.add('hidden');
             document.getElementById('admin-workspace').classList.remove('hidden');
@@ -1614,7 +1642,6 @@
             });
         }
 
-        // DATABASE & FORM ADMIN
         document.getElementById('btnGenerateInv').addEventListener('click', () => { document.getElementById('adminInv').value = `MINPRES-${Math.floor(1000 + Math.random() * 9000)}`; });
 
         document.getElementById('adminForm').addEventListener('submit', async (e) => {
