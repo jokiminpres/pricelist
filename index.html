@@ -182,16 +182,22 @@
                         </div>
                     </div>
 
-                    <!-- TOMBOL BAYAR QRIS -->
+                    <!-- TOMBOL BAYAR QRIS (TAMPIL JIKA SISA > 0) -->
                     <div id="payQrisContainer" class="hidden mb-6">
                         <button onclick="showQrisPayment()" id="btnQrisMain" class="w-full bg-brand-yellow text-black font-black text-lg py-4 px-4 border-4 border-black rounded-xl shadow-brutal hover:-translate-y-1 active:scale-95 transition-all flex items-center justify-center gap-2">
                             <i class="fa-solid fa-qrcode text-2xl"></i> <span id="lblQrisMainBtn">BAYAR DP SEKARANG VIA QRIS</span>
                         </button>
                     </div>
 
-                    <!-- TOMBOL DOWNLOAD: Muncul jika ada link DAN status = selesai (3) -->
+                    <!-- NOTIFIKASI TUGAS SELESAI TAPI BELUM PELUNASAN -->
+                    <div id="pendingPaymentNotice" class="hidden bg-brand-yellow border-4 border-black p-4 rounded-xl shadow-brutal-sm mb-8 text-center">
+                        <h4 class="font-black uppercase text-xl mb-1">Tugas Kamu Sudah Selesai! 🎉</h4>
+                        <p class="font-bold text-sm text-gray-800">Silakan lakukan pelunasan sisa tagihan via QRIS di atas untuk membuka tombol download file tugasmu.</p>
+                    </div>
+
+                    <!-- TOMBOL DOWNLOAD: MUNCUL HANYA JIKA LUNAS (SISA <= 0 ATAU STEP 4) DAN ADA LINK FILE -->
                     <div id="fileDownloadContainer" class="hidden mb-8">
-                        <h4 class="font-black uppercase text-center mb-3">Tugas Selesai! 🎉</h4>
+                        <h4 class="font-black uppercase text-center mb-3">Tugas Selesai & Lunas! 🎉</h4>
                         <a href="#" id="btnDownloadClient" target="_blank" class="block w-full bg-brand-green text-black text-center font-black text-xl py-4 border-4 border-black rounded-xl shadow-brutal hover:-translate-y-1 hover:shadow-brutal-hover active:scale-95 transition-all">
                             <i class="fa-solid fa-cloud-arrow-down mr-2 animate-bounce"></i> DOWNLOAD FILE TUGAS
                         </a>
@@ -199,7 +205,7 @@
 
                     <!-- PESAN FALLBACK -->
                     <div id="fallbackSelesai" class="hidden bg-brand-green border-4 border-black p-4 rounded-xl shadow-brutal-sm mb-8 text-center">
-                        <h4 class="font-black uppercase text-xl mb-1">Tugas Selesai! 🎉</h4>
+                        <h4 class="font-black uppercase text-xl mb-1">Tugas Selesai & Lunas! 🎉</h4>
                         <p class="font-bold text-sm">File tugas kamu telah kami kirimkan via pesan WhatsApp.</p>
                     </div>
 
@@ -709,7 +715,8 @@
                                 <select id="adminStatus" class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50 transition-colors duration-300">
                                     <option value="1">Langkah 1 - DP Diterima (Progres Dimulai)</option>
                                     <option value="2">Langkah 2 - Sedang Dikerjakan Tim</option>
-                                    <option value="3">Langkah 3 - Tugas Selesai (Siap Pelunasan)</option>
+                                    <option value="3">Langkah 3 - Tugas Selesai (Menunggu Pelunasan)</option>
+                                    <option value="4">Langkah 4 - Lunas & Siap Download</option>
                                 </select>
                             </div>
                             <button type="submit" id="btnSaveData" class="w-full bg-brand-green text-black font-black py-3 rounded-lg hover:bg-green-500 active:scale-95 transition-all duration-300 shadow flex items-center justify-center gap-2 border-2 border-black shadow-brutal-sm">
@@ -748,7 +755,7 @@
                                 <select id="statusFilter" class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-brand-blue transition-colors">
                                     <option value="ALL">Semua Status</option>
                                     <option value="ACTIVE">Masih Proses (Aktif)</option>
-                                    <option value="DONE">Tugas Selesai</option>
+                                    <option value="DONE">Tugas Selesai / Lunas</option>
                                 </select>
                             </div>
                         </div>
@@ -929,10 +936,10 @@
             let payAmount = 0;
             let payType = "";
 
-            // LOGIKA FIXED:
-            // Jika tugas sudah selesai (status 3), tampilkan Sisa Pelunasan.
-            // Jika tugas belum selesai (status 1 atau 2), tampilkan DP di awal.
-            if (status == 3) {
+            // LOGIKA 4-STEP REVISI:
+            // Status >= 3 berarti tugas sudah selesai, maka ditagihkan sisa pelunasan.
+            // Status < 3 berarti tugas masih diproses, maka ditagihkan nominal DP di awal.
+            if (status >= 3) {
                 payAmount = sisa > 0 ? sisa : price;
                 payType = "Sisa Pelunasan Tugas";
             } else {
@@ -1007,7 +1014,8 @@
         const statusDetail = [
             { id: 1, title: 'Pembayaran Diterima', desc: 'Admin telah mengkonfirmasi pembayaranmu.', color: 'bg-brand-yellow', icon: 'fa-money-bill-wave' },
             { id: 2, title: 'Sedang Dikerjakan', desc: 'Tim Minpres sedang menyusun tugas kamu dengan teliti.', color: 'bg-brand-pink', icon: 'fa-pen-nib' },
-            { id: 3, title: 'Tugas Selesai!', desc: 'Hore! File tugas sudah siap. Silakan klik tombol download di atas.', color: 'bg-brand-green', icon: 'fa-flag-checkered' }
+            { id: 3, title: 'Tugas Selesai (Pelunasan)', desc: 'Tugas kamu sudah selesai! Silakan lunasi sisa tagihan via QRIS.', color: 'bg-brand-purple', icon: 'fa-qrcode' },
+            { id: 4, title: 'Lunas & Siap Download', desc: 'Pembayaran lunas! File tugas sudah dapat kamu unduh di bawah.', color: 'bg-brand-green', icon: 'fa-flag-checkered' }
         ];
 
         // AUTO SEARCH JIKA PELANGGAN MEMBUKA LINK DIRECT (?inv=MINPRES-XXXX)
@@ -1051,7 +1059,7 @@
                     const price = orderData.price || 0;
                     const dp = orderData.dp || 0;
                     const sisa = orderData.sisa !== undefined ? orderData.sisa : (price - dp);
-                    let fixedStatus = orderData.status > 3 ? 3 : orderData.status;
+                    let fixedStatus = orderData.status > 4 ? 4 : (orderData.status || 1);
 
                     document.getElementById('clientTotal').innerText = formatRupiah(price);
                     document.getElementById('clientDp').innerText = formatRupiah(dp);
@@ -1060,7 +1068,10 @@
                     const btnQrisMain = document.getElementById('btnQrisMain');
                     const lblQrisMainBtn = document.getElementById('lblQrisMainBtn');
 
-                    if (sisa <= 0 && price > 0) {
+                    // PENENTUAN LUNAS DARI DATA PIUTANG ATAU STEP 4
+                    const isFullyPaid = (sisa <= 0 && price > 0) || fixedStatus == 4;
+
+                    if (isFullyPaid) {
                         elSisa.innerText = "LUNAS 🎉";
                         elSisa.classList.remove('text-red-600');
                         elSisa.classList.add('text-green-600');
@@ -1071,7 +1082,7 @@
                         elSisa.classList.add('text-red-600');
                         document.getElementById('payQrisContainer').classList.remove('hidden');
 
-                        if (fixedStatus == 3) {
+                        if (fixedStatus >= 3) {
                             lblQrisMainBtn.innerText = `BAYAR SISA PELUNASAN (${formatRupiah(sisa)}) VIA QRIS`;
                             btnQrisMain.className = "w-full bg-brand-green text-black font-black text-lg py-4 px-4 border-4 border-black rounded-xl shadow-brutal hover:-translate-y-1 active:scale-95 transition-all flex items-center justify-center gap-2 animate-bounce";
                         } else {
@@ -1080,28 +1091,41 @@
                         }
                     }
 
-                    // LOGIKA TOMBOL DOWNLOAD & DEADLINE
+                    // LOGIKA TAMPILKAN TOMBOL DOWNLOAD & NOTICE
                     const dlContainer = document.getElementById('fileDownloadContainer');
                     const fallbackSelesai = document.getElementById('fallbackSelesai');
                     const countdownBox = document.getElementById('countdownBox');
+                    const pendingNotice = document.getElementById('pendingPaymentNotice');
 
-                    if (fixedStatus == 3) {
+                    // KONDISI TOMBOL DOWNLOAD HANYA TERBUKA JIKA TUGAS SUDAH SELESAI (STATUS >= 3) DAN LUNAS (isFullyPaid)
+                    if (fixedStatus >= 3) {
                         countdownBox.classList.add('hidden');
 
-                        if (orderData.fileUrl && orderData.fileUrl.trim() !== "") {
-                            let finalUrl = orderData.fileUrl.trim();
-                            if(!finalUrl.startsWith('http')) { finalUrl = 'https://' + finalUrl; } 
-                            
-                            document.getElementById('btnDownloadClient').href = finalUrl;
-                            dlContainer.classList.remove('hidden');
-                            fallbackSelesai.classList.add('hidden');
+                        if (isFullyPaid) {
+                            // SUDAH LUNAS: Buka Akses Download File
+                            pendingNotice.classList.add('hidden');
+                            if (orderData.fileUrl && orderData.fileUrl.trim() !== "") {
+                                let finalUrl = orderData.fileUrl.trim();
+                                if(!finalUrl.startsWith('http')) { finalUrl = 'https://' + finalUrl; } 
+                                
+                                document.getElementById('btnDownloadClient').href = finalUrl;
+                                dlContainer.classList.remove('hidden');
+                                fallbackSelesai.classList.add('hidden');
+                            } else {
+                                dlContainer.classList.add('hidden');
+                                fallbackSelesai.classList.remove('hidden');
+                            }
                         } else {
+                            // BELUM LUNAS (STATUS 3): Tampilkan Peringatan Pelunasan, Kunci Tombol Download
                             dlContainer.classList.add('hidden');
-                            fallbackSelesai.classList.remove('hidden');
+                            fallbackSelesai.classList.add('hidden');
+                            pendingNotice.classList.remove('hidden');
                         }
                     } else {
+                        // TUGAS MASIH DALAM PROSES (STATUS 1 & 2)
                         dlContainer.classList.add('hidden');
                         fallbackSelesai.classList.add('hidden');
+                        pendingNotice.classList.add('hidden');
                         countdownBox.classList.remove('hidden');
                         startCountdown(orderData.deadline);
 
@@ -1125,7 +1149,7 @@
             document.getElementById('resultTitle').innerText = inv;
             document.getElementById('resultCustomer').innerText = `Pelanggan: ${order.name} (${order.task})`;
             
-            let fixedStatus = order.status > 3 ? 3 : order.status; 
+            let fixedStatus = order.status > 4 ? 4 : (order.status || 1); 
             const currentStatusObj = statusDetail.find(s => s.id == fixedStatus);
             const badge = document.getElementById('resultBadge');
             badge.innerText = currentStatusObj.title;
@@ -1250,7 +1274,13 @@
             else if(wa.startsWith('+')) { wa = wa.substring(1); }
 
             const price = parseInt(document.getElementById('adminPrice').value || 0);
-            const dp = parseInt(document.getElementById('adminDp').value || 0);
+            let dp = parseInt(document.getElementById('adminDp').value || 0);
+            const selectedStatus = parseInt(document.getElementById('adminStatus').value);
+
+            // JIKA STATUS DISUMPAN KE STEP 4 (LUNAS), OTOMATIS DP DIBUAT DENGAN TOTAL HARGA
+            if (selectedStatus === 4) {
+                dp = price;
+            }
             const sisa = price - dp;
 
             try {
@@ -1263,7 +1293,7 @@
                     sisa: sisa,
                     fileUrl: document.getElementById('adminFileUrl').value.trim(),
                     deadline: document.getElementById('adminDeadline').value,
-                    status: parseInt(document.getElementById('adminStatus').value),
+                    status: selectedStatus,
                     updatedAt: new Date()
                 });
                 const notif = document.getElementById('adminNotif');
@@ -1315,13 +1345,13 @@
 
             let filteredData = allOrdersData.filter(item => {
                 const matchSearch = item.id.toLowerCase().includes(searchQuery) || item.name.toLowerCase().includes(searchQuery);
-                const matchStatus = statusQuery === 'ALL' ? true : (statusQuery === 'ACTIVE' ? item.status < 3 : item.status == 3);
+                const matchStatus = statusQuery === 'ALL' ? true : (statusQuery === 'ACTIVE' ? item.status < 3 : item.status >= 3);
                 return matchSearch && matchStatus;
             });
 
             filteredData.sort((a, b) => {
-                if (a.status == 3 && b.status < 3) return 1;
-                if (a.status < 3 && b.status == 3) return -1;
+                if (a.status >= 3 && b.status < 3) return 1;
+                if (a.status < 3 && b.status >= 3) return -1;
                 if (!a.deadline) return 1;
                 if (!b.deadline) return -1;
                 return new Date(a.deadline) - new Date(b.deadline);
@@ -1333,13 +1363,14 @@
                 emptyState.classList.add('hidden');
                 filteredData.forEach(data => {
                     const inv = data.id;
-                    let fixedStatus = data.status > 3 ? 3 : data.status; 
+                    let fixedStatus = data.status > 4 ? 4 : (data.status || 1); 
                     const statusName = statusDetail.find(s => s.id == fixedStatus).title;
                     
                     let badgeColor = 'bg-gray-200 text-gray-800';
                     if(fixedStatus == 1) badgeColor = 'bg-yellow-100 text-yellow-800 border-yellow-300';
                     if(fixedStatus == 2) badgeColor = 'bg-pink-100 text-pink-800 border-pink-300';
-                    if(fixedStatus == 3) badgeColor = 'bg-green-100 text-green-800 border-green-300';
+                    if(fixedStatus == 3) badgeColor = 'bg-purple-100 text-purple-800 border-purple-300';
+                    if(fixedStatus == 4) badgeColor = 'bg-green-100 text-green-800 border-green-300';
 
                     let deadlineText = "Belum diatur";
                     let rowHighlight = "hover:bg-gray-50"; 
@@ -1357,14 +1388,14 @@
                     const price = data.price || 0;
                     const dp = data.dp || 0;
                     const sisa = data.sisa !== undefined ? data.sisa : (price - dp);
-                    const isFullyPaid = (sisa <= 0 && price > 0);
+                    const isFullyPaid = (sisa <= 0 && price > 0) || fixedStatus == 4;
                     
                     let dpBadge = '<span class="bg-green-100 text-green-800 text-[10px] px-2 py-0.5 rounded border border-green-300 font-bold">Lunas</span>';
                     if(price === 0) {
                         dpBadge = '<span class="bg-gray-100 text-gray-600 text-[10px] px-2 py-0.5 rounded border border-gray-300 font-bold">Belum Diatur</span>';
                     } else if(dp === 0) {
                         dpBadge = '<span class="bg-red-100 text-red-800 text-[10px] px-2 py-0.5 rounded border border-red-300 font-bold">Belum DP</span>';
-                    } else if(sisa > 0) {
+                    } else if(!isFullyPaid) {
                         dpBadge = '<span class="bg-yellow-100 text-yellow-800 text-[10px] px-2 py-0.5 rounded border border-yellow-300 font-bold">Belum Lunas</span>';
                     }
 
@@ -1390,7 +1421,7 @@
                             <td class="p-4 text-center">
                                 <div class="flex flex-col items-center gap-2 bg-gray-50 p-2 rounded-lg border border-gray-200">
                                     <label class="flex items-center gap-2 cursor-pointer font-bold text-xs select-none">
-                                        <input type="checkbox" class="checkbox-lunas w-4 h-4 accent-brand-green cursor-pointer" data-id="${inv}" data-price="${price}" ${isFullyPaid ? 'checked' : ''}>
+                                        <input type="checkbox" class="checkbox-lunas w-4 h-4 accent-brand-green cursor-pointer" data-id="${inv}" data-price="${price}" data-status="${fixedStatus}" ${isFullyPaid ? 'checked' : ''}>
                                         <span class="${isFullyPaid ? 'text-green-600 font-black' : 'text-gray-700'}">Sudah Lunas?</span>
                                     </label>
                                     <div class="flex flex-wrap justify-center items-center gap-1">
@@ -1409,15 +1440,24 @@
                     chk.addEventListener('change', async (e) => {
                         const id = e.target.getAttribute('data-id');
                         const price = parseInt(e.target.getAttribute('data-price') || 0);
+                        const currentStatus = parseInt(e.target.getAttribute('data-status') || 1);
                         const isChecked = e.target.checked;
 
                         const newDp = isChecked ? price : 0;
                         const newSisa = price - newDp;
+                        let newStatus = currentStatus;
+
+                        if (isChecked && currentStatus == 3) {
+                            newStatus = 4; // Otomatis naik ke Step 4 (Lunas & Download) jika dicentang
+                        } else if (!isChecked && currentStatus == 4) {
+                            newStatus = 3; // Turun ke Step 3 jika centang dilepas
+                        }
 
                         try {
                             await updateDoc(doc(db, "orders", id), {
                                 dp: newDp,
                                 sisa: newSisa,
+                                status: newStatus,
                                 updatedAt: new Date()
                             });
                         } catch(err) {
@@ -1460,7 +1500,7 @@
                         let txt = "";
 
                         if (sisa > 0) {
-                            txt = `Halo *${name}*,\n\nTugas *${task}* (Invoice: ${id}) sudah *SELESAI* dikerjakan tim Minpres! 🎉\n\nSilakan lakukan pelunasan sisa tagihan sebesar *Rp ${sisa.toLocaleString('id-ID')}* melalui QRIS di link berikut:\n${directLink}\n\nSetelah pelunasan dikonfirmasi, tombol download file tugas kamu akan otomatis terbuka di web. Terima kasih! ✨`;
+                            txt = `Halo *${name}*,\n\nTugas *${task}* (Invoice: ${id}) sudah *SELESAI* dikerjakan tim Minpres! 🎉\n\nSilakan lakukan pelunasan sisa tagihan sebesar *Rp ${sisa.toLocaleString('id-ID')}* melalui QRIS di link berikut:\n${directLink}\n\nSetelah pelunasan dikonfirmasi admin, tombol download file tugas kamu akan otomatis terbuka di web. Terima kasih! ✨`;
                         } else {
                             txt = `Halo *${name}*,\n\nTugas *${task}* (Invoice: ${id}) sudah *SELESAI* dikerjakan tim Minpres! 🎉\n\nStatus tagihan kamu sudah *LUNAS*. Silakan klik link berikut untuk mendownload file tugasmu:\n${directLink}\n\nTerima kasih! ✨`;
                         }
@@ -1490,7 +1530,7 @@
 
                         let currentStatus = docData.status;
                         if (!currentStatus || currentStatus < 1) currentStatus = 1;
-                        if (currentStatus > 3) currentStatus = 3;
+                        if (currentStatus > 4) currentStatus = 4;
                         document.getElementById('adminStatus').value = currentStatus;
                         
                         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1514,8 +1554,8 @@
                 let p = item.price || 0;
                 let d = item.dp || 0;
                 let s = item.sisa !== undefined ? item.sisa : (p - d);
-                let st = item.status == 1 ? "Pembayaran Diterima" : (item.status == 2 ? "Sedang Dikerjakan" : "Selesai");
-                let statusBayar = s <= 0 ? "Lunas" : (d > 0 ? "DP Sebagian" : "Belum DP");
+                let st = item.status == 1 ? "Pembayaran Diterima" : (item.status == 2 ? "Sedang Dikerjakan" : (item.status == 3 ? "Tugas Selesai (Pelunasan)" : "Lunas & Selesai"));
+                let statusBayar = s <= 0 || item.status == 4 ? "Lunas" : (d > 0 ? "DP Sebagian" : "Belum DP");
                 return {
                     "Invoice": item.id,
                     "Nama Klien": item.name,
@@ -1561,8 +1601,8 @@
                 let s = item.sisa !== undefined ? item.sisa : (p - d);
                 totalKotor += p; totalBersih += d; totalSisa += s;
 
-                let st = item.status == 1 ? "Pembayaran Diterima" : (item.status == 2 ? "Proses" : "Selesai");
-                let statusBayar = s <= 0 ? "Lunas" : (d > 0 ? "DP Sebagian" : "Belum DP");
+                let st = item.status == 1 ? "DP Masuk" : (item.status == 2 ? "Proses" : (item.status == 3 ? "Selesai (Pelunasan)" : "Lunas"));
+                let statusBayar = s <= 0 || item.status == 4 ? "Lunas" : (d > 0 ? "DP Sebagian" : "Belum DP");
                 tableRows.push([
                     item.id,
                     item.name,
