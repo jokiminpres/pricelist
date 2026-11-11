@@ -926,15 +926,18 @@
             const sisa = currentOrderForPay.sisa !== undefined ? currentOrderForPay.sisa : (price - dp);
             const status = currentOrderForPay.status || 1;
 
-            let payAmount = dp;
-            let payType = "Pembayaran DP";
+            let payAmount = 0;
+            let payType = "";
 
-            if (status == 3 || sisa > 0) {
+            // LOGIKA FIXED:
+            // Jika tugas sudah selesai (status 3), tampilkan Sisa Pelunasan.
+            // Jika tugas belum selesai (status 1 atau 2), tampilkan DP di awal.
+            if (status == 3) {
                 payAmount = sisa > 0 ? sisa : price;
                 payType = "Sisa Pelunasan Tugas";
-            } else if (dp <= 0) {
-                payAmount = price;
-                payType = "Pembayaran Full";
+            } else {
+                payAmount = dp > 0 ? dp : price;
+                payType = dp > 0 ? "Pembayaran DP" : "Pembayaran Full";
             }
 
             if (payAmount <= 0) {
