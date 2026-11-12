@@ -2051,9 +2051,9 @@
         }
 
         // ==========================================
-        // SCRIPT UPLOAD FILE KE GOOGLE DRIVE
+        // SCRIPT UPLOAD FILE KE GOOGLE DRIVE & AUTO-SAVE
         // ==========================================
-        const GAS_UPLOAD_URL = "https://script.google.com/macros/s/AKfycbzLJgk8TnxYCg7hjkRsusldf-gHKGbfBSR5y9FoBM24usXGvz-cAx7wDcc4FrkfhtBp/exec"; 
+        const GAS_UPLOAD_URL = "https://script.google.com/macros/s/AKfycbxTHKA27V5Us2xk67DiiG6kKd9_Z02rHmiNeDF0EJECwlGkijlgUurCUdYAow9Z4F0V/exec"; 
 
         document.getElementById('btnUploadDrive').addEventListener('click', async () => {
             const fileInput = document.getElementById('adminUploadFile');
@@ -2089,14 +2089,28 @@
 
                     const result = await response.json();
                     
-                    if (result.status === 'success') {
-                        linkInput.value = result.url; // Otomatis mengisi kolom input URL
-                        alert("File sukses terupload ke Google Drive! Link sudah terisi otomatis.");
+                    if (result.status === 'success' && result.url) {
+                        // 1. Otomatis isi kotak input Link Drive
+                        linkInput.value = result.url;
+
+                        // 2. Otomatis simpan ke tabel Firebase jika Invoice sudah terisi
+                        const inv = document.getElementById('adminInv').value.trim().toUpperCase();
+                        const existingOrder = allOrdersData.find(d => d.id === inv);
+
+                        if (inv && existingOrder) {
+                            await updateDoc(doc(db, "orders", inv), {
+                                fileUrl: result.url,
+                                updatedAt: new Date()
+                            });
+                            alert("Sukses! Link terisi & otomatis muncul di tabel " + inv + ".");
+                        } else {
+                            alert("File terupload & link sudah terisi otomatis! Klik 'Simpan Data Real-Time' untuk menyimpan order baru.");
+                        }
                     } else {
-                        alert("Gagal upload: " + result.message);
+                        alert("Gagal upload: " + (result.message || "Respon tidak valid"));
                     }
                 } catch (error) {
-                    alert("Terjadi kesalahan sistem saat upload. Coba lagi.");
+                    alert("Terjadi kesalahan sistem saat upload. Pastikan deployment GAS sudah versi terbaru.");
                     console.error(error);
                 } finally {
                     btnUpload.innerHTML = originalText;
