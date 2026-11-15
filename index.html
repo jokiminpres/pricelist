@@ -2129,9 +2129,6 @@
                 return;
             }
 
-            const invValue = document.getElementById('adminInv').value.trim().toUpperCase();
-            const clientNameValue = document.getElementById('adminName').value.trim();
-
             // Ubah teks tombol jadi loading
             const originalText = btnUpload.innerHTML;
             btnUpload.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Uploading...';
@@ -2146,8 +2143,6 @@
                     const response = await fetch(GAS_UPLOAD_URL, {
                         method: 'POST',
                         body: JSON.stringify({
-                            invoice: invValue,
-                            clientName: clientNameValue,
                             filename: file.name,
                             mimeType: file.type,
                             base64: base64Data
@@ -2158,22 +2153,21 @@
                     const result = await response.json();
                     
                     if (result.status === 'success' && result.url) {
-                        const savedName = result.fileName || file.name;
-
                         // 1. Otomatis isi kotak input Link Drive
                         linkInput.value = result.url;
 
                         // 2. Otomatis simpan ke tabel Firebase jika Invoice sudah terisi
-                        const existingOrder = allOrdersData.find(d => d.id === invValue);
+                        const inv = document.getElementById('adminInv').value.trim().toUpperCase();
+                        const existingOrder = allOrdersData.find(d => d.id === inv);
 
-                        if (invValue && existingOrder) {
-                            await updateDoc(doc(db, "orders", invValue), {
+                        if (inv && existingOrder) {
+                            await updateDoc(doc(db, "orders", inv), {
                                 fileUrl: result.url,
                                 updatedAt: new Date()
                             });
-                            alert(`Sukses! File tersimpan sebagai "${savedName}" & link otomatis muncul di tabel ${invValue}.`);
+                            alert("Sukses! Link terisi & otomatis muncul di tabel " + inv + ".");
                         } else {
-                            alert(`File terupload sebagai "${savedName}" & link sudah terisi otomatis! Klik 'Simpan Data Real-Time' untuk menyimpan order baru.`);
+                            alert("File terupload & link sudah terisi otomatis! Klik 'Simpan Data Real-Time' untuk menyimpan order baru.");
                         }
                     } else {
                         alert("Gagal upload: " + (result.message || "Respon tidak valid"));
