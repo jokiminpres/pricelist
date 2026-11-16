@@ -163,25 +163,76 @@
                     
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
                         <div>
-                            <h3 class="font-black text-xl md:text-2xl bg-brand-yellow px-3 border-2 border-black inline-block" id="resultTitle">MINPRES-012</h3>
+                            <div class="flex flex-wrap items-center gap-2">
+                                <h3 class="font-black text-xl md:text-2xl bg-brand-yellow px-3 border-2 border-black inline-block" id="resultTitle">MINPRES-012</h3>
+                                <span id="resultGroupBadge" class="hidden bg-brand-purple text-white font-black px-2.5 py-1 border-2 border-black rounded text-xs uppercase"><i class="fa-solid fa-users mr-1"></i> Tugas Kelompok</span>
+                            </div>
                             <p id="resultCustomer" class="font-bold mt-2 text-gray-700">Pelanggan: Budi (Makalah)</p>
                         </div>
                         <span id="resultBadge" class="bg-brand-green text-black font-bold px-3 py-1 border-2 border-black rounded-full text-sm animate-pulse-fast">Sedang Dikerjakan</span>
                     </div>
 
                     <!-- KOTAK INFO KEUANGAN KLIEN -->
-                    <div id="financeBox" class="bg-white border-4 border-black p-4 rounded-xl shadow-brutal-sm mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
-                        <div class="text-center md:text-left w-full">
-                            <p class="text-[10px] font-black text-gray-500 uppercase tracking-wider mb-1">Total Harga</p>
-                            <p class="text-lg md:text-xl font-black" id="clientTotal">Rp 0</p>
+                    <div id="financeBox" class="bg-white border-4 border-black p-4 rounded-xl shadow-brutal-sm mb-4">
+                        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                            <div class="text-center md:text-left w-full">
+                                <p class="text-[10px] font-black text-gray-500 uppercase tracking-wider mb-1">Total Harga</p>
+                                <p class="text-lg md:text-xl font-black" id="clientTotal">Rp 0</p>
+                            </div>
+                            <div class="text-center md:text-left w-full border-t-2 md:border-t-0 md:border-l-2 border-dashed border-gray-300 pt-2 md:pt-0 md:pl-4">
+                                <p class="text-[10px] font-black text-green-600 uppercase tracking-wider mb-1">Sudah Dibayar / DP</p>
+                                <p class="text-lg md:text-xl font-black text-green-600" id="clientDp">Rp 0</p>
+                            </div>
+                            <div class="text-center md:text-left w-full border-t-2 md:border-t-0 md:border-l-2 border-dashed border-gray-300 pt-2 md:pt-0 md:pl-4 relative">
+                                <p class="text-[10px] font-black text-red-600 uppercase tracking-wider mb-1">Sisa Pelunasan</p>
+                                <p class="text-lg md:text-xl font-black text-red-600" id="clientSisa">Rp 0</p>
+                            </div>
                         </div>
-                        <div class="text-center md:text-left w-full border-t-2 md:border-t-0 md:border-l-2 border-dashed border-gray-300 pt-2 md:pt-0 md:pl-4">
-                            <p class="text-[10px] font-black text-green-600 uppercase tracking-wider mb-1">Sudah Dibayar / DP</p>
-                            <p class="text-lg md:text-xl font-black text-green-600" id="clientDp">Rp 0</p>
+
+                        <!-- TOMBOL TOGGLE SPLIT-BILL KELOMPOK -->
+                        <div id="splitBillToggleRow" class="mt-4 pt-3 border-t-2 border-dashed border-gray-300 flex flex-wrap justify-between items-center gap-2">
+                            <span class="text-xs font-bold text-gray-600"><i class="fa-solid fa-people-group text-brand-purple mr-1"></i> Patungan bareng teman sekelompok?</span>
+                            <button type="button" onclick="toggleSplitBill()" id="btnToggleSplit" class="bg-brand-purple text-white font-black text-xs px-3 py-1.5 border-2 border-black rounded-lg shadow-brutal-sm hover:-translate-y-0.5 active:scale-95 transition-all flex items-center gap-1.5">
+                                <i class="fa-solid fa-calculator"></i> Split-Bill Kelompok
+                            </button>
                         </div>
-                        <div class="text-center md:text-left w-full border-t-2 md:border-t-0 md:border-l-2 border-dashed border-gray-300 pt-2 md:pt-0 md:pl-4 relative">
-                            <p class="text-[10px] font-black text-red-600 uppercase tracking-wider mb-1">Sisa Pelunasan</p>
-                            <p class="text-lg md:text-xl font-black text-red-600" id="clientSisa">Rp 0</p>
+                    </div>
+
+                    <!-- KOTAK SPLIT-BILL INVOICE TUGAS KELOMPOK -->
+                    <div id="splitBillBox" class="hidden bg-purple-50 border-4 border-black p-5 rounded-xl shadow-brutal-sm mb-6 transition-all">
+                        <div class="flex flex-wrap justify-between items-center gap-2 border-b-2 border-black pb-3 mb-4">
+                            <h4 class="font-black uppercase text-sm md:text-base flex items-center gap-2">
+                                <span class="bg-brand-purple text-white px-2 py-0.5 border-2 border-black rounded text-xs"><i class="fa-solid fa-users"></i></span>
+                                Split-Bill Invoice Kelompok
+                            </h4>
+                            <span class="bg-brand-yellow text-black font-black text-[10px] px-2 py-0.5 border-2 border-black rounded uppercase">Patungan Adil</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center mb-4">
+                            <div>
+                                <label class="text-xs font-black text-gray-700 block mb-1">Jumlah Anggota Kelompok:</label>
+                                <div class="flex items-center gap-2">
+                                    <button type="button" onclick="adjustSplitMembers(-1)" class="w-10 h-10 bg-white border-2 border-black rounded-lg font-black text-lg hover:bg-brand-pink active:scale-95 transition-all">-</button>
+                                    <input type="number" id="splitMemberInput" min="2" max="50" value="2" oninput="updateSplitCalc()" class="w-20 text-center py-1.5 border-2 border-black rounded-lg font-black text-lg bg-white focus:outline-none">
+                                    <button type="button" onclick="adjustSplitMembers(1)" class="w-10 h-10 bg-white border-2 border-black rounded-lg font-black text-lg hover:bg-brand-green active:scale-95 transition-all">+</button>
+                                    <span class="text-xs font-black text-gray-600">Orang</span>
+                                </div>
+                            </div>
+
+                            <div class="bg-white border-2 border-black p-3 rounded-xl text-center sm:text-right">
+                                <p class="text-[10px] font-black text-gray-500 uppercase" id="splitBillTargetLabel">Patungan DP Per Orang (1/2)</p>
+                                <p class="text-2xl font-black text-brand-purple" id="splitPerPersonAmount">Rp 0</p>
+                                <p class="text-[10px] font-bold text-gray-400" id="splitBillTotalRef">Dari total tagihan Rp 0</p>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row gap-2.5">
+                            <button type="button" onclick="paySplitQris()" id="btnPaySplitQris" class="flex-1 bg-brand-purple text-white font-black text-xs md:text-sm py-3 px-4 border-2 border-black rounded-xl shadow-brutal-sm hover:bg-black hover:text-brand-yellow active:scale-95 transition-all flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-qrcode text-base"></i> BAYAR PATUNGAN SAYA VIA QRIS
+                            </button>
+                            <button type="button" onclick="copySplitBillInfo()" id="btnCopySplitInfo" class="bg-white text-black font-black text-xs md:text-sm py-3 px-4 border-2 border-black rounded-xl shadow-brutal-sm hover:bg-brand-yellow active:scale-95 transition-all flex items-center justify-center gap-2">
+                                <i class="fa-regular fa-copy"></i> Salin Info ke Grup WA
+                            </button>
                         </div>
                     </div>
 
@@ -859,6 +910,18 @@
                     <label class="font-black text-sm block mb-1">Nomor WhatsApp Kamu:</label>
                     <input type="tel" id="waNumber" required placeholder="Contoh: 081234567890" class="w-full px-4 py-3 border-4 border-black font-bold rounded-xl focus:outline-none focus:ring-4 focus:ring-brand-blue bg-gray-50 transition-all duration-300 ease-out">
                 </div>
+
+                <!-- OPSI SPLIT-BILL TUGAS KELOMPOK -->
+                <div class="bg-purple-50 border-2 border-black p-3 rounded-xl">
+                    <label class="flex items-center gap-2.5 cursor-pointer select-none">
+                        <input type="checkbox" id="waIsGroup" onchange="toggleWaGroupInput()" class="w-5 h-5 accent-brand-purple cursor-pointer">
+                        <span class="font-black text-xs md:text-sm text-black"><i class="fa-solid fa-users text-brand-purple mr-1"></i> Tugas Kelompok (Split-Bill Patungan)?</span>
+                    </label>
+                    <div id="waGroupCountWrapper" class="hidden mt-3 pt-2 border-t border-dashed border-gray-400">
+                        <label class="font-bold text-xs text-gray-700 block mb-1">Jumlah Anggota Kelompok (Orang):</label>
+                        <input type="number" id="waGroupCount" min="2" max="50" value="4" placeholder="Contoh: 4" class="w-full px-3 py-2 border-2 border-black font-black rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-brand-purple text-sm">
+                    </div>
+                </div>
                 
                 <button type="submit" id="btnSubmitWa" class="w-full bg-brand-green text-black font-black text-lg py-4 rounded-xl border-4 border-black hover:bg-green-500 active:scale-95 transition-all duration-300 ease-out shadow-brutal-sm flex items-center justify-center gap-2 mt-4">
                     <i class="fa-brands fa-whatsapp text-2xl"></i> Lanjut Chat Admin
@@ -1048,6 +1111,13 @@
                                 <input type="text" id="adminTask" required placeholder="Makalah Biologi Bab 2" class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50 transition-colors duration-300">
                             </div>
 
+                            <!-- JUMLAH ANGGOTA KELOMPOK (SPLIT-BILL) -->
+                            <div>
+                                <label class="font-bold text-sm text-gray-700 block mb-1"><i class="fa-solid fa-users text-brand-purple"></i> Jumlah Anggota (Split-Bill Kelompok):</label>
+                                <input type="number" id="adminGroupSize" min="1" max="50" value="1" placeholder="1 = Individu, >1 = Kelompok" class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50 transition-colors duration-300">
+                                <p class="text-[11px] font-semibold text-gray-500 mt-1">Isi <b>1</b> untuk tugas individu, atau isi jumlah anggota (cth: <b>4</b>) untuk aktifkan Split-Bill otomatis.</p>
+                            </div>
+
                             <!-- TAMBAHAN ASSIGNEE TIM -->
                             <div>
                                 <label class="font-bold text-sm text-gray-700 block mb-1">Dikerjakan Oleh (Internal):</label>
@@ -1219,9 +1289,21 @@
         const waModal = document.getElementById('waModal');
         const waModalContent = document.getElementById('waModalContent');
 
+        function toggleWaGroupInput() {
+            const isChecked = document.getElementById('waIsGroup').checked;
+            const wrapper = document.getElementById('waGroupCountWrapper');
+            if (isChecked) {
+                wrapper.classList.remove('hidden');
+            } else {
+                wrapper.classList.add('hidden');
+            }
+        }
+
         function openWaModal(layanan) {
             document.getElementById('modalServiceLabel').innerText = layanan;
             document.getElementById('waService').value = layanan;
+            document.getElementById('waIsGroup').checked = false;
+            document.getElementById('waGroupCountWrapper').classList.add('hidden');
             
             waModal.classList.remove('hidden');
             setTimeout(() => {
@@ -1248,19 +1330,24 @@
             const name = document.getElementById('waName').value.trim();
             let wa = document.getElementById('waNumber').value.trim();
             const service = document.getElementById('waService').value;
+            const isGroup = document.getElementById('waIsGroup').checked;
+            const groupCount = parseInt(document.getElementById('waGroupCount').value || 2);
 
             if(wa.startsWith('0')) { wa = '62' + wa.substring(1); }
             else if(wa.startsWith('+')) { wa = wa.substring(1); }
 
-            const fetchUrl = `${GOOGLE_SCRIPT_URL}?nama=${encodeURIComponent(name)}&wa=${encodeURIComponent(wa)}&layanan=${encodeURIComponent(service)}`;
+            const groupInfo = isGroup ? `\n- Tipe Tugas: *Tugas Kelompok (Split-Bill ${groupCount} Orang)*` : '';
+
+            const fetchUrl = `${GOOGLE_SCRIPT_URL}?nama=${encodeURIComponent(name)}&wa=${encodeURIComponent(wa)}&layanan=${encodeURIComponent(isGroup ? service + ' (Kelompok ' + groupCount + ' Org)' : service)}`;
             
             fetch(fetchUrl, { mode: 'no-cors' }).then(() => {
-                const waMessage = `Halo admin Joki Minpres!\n\nSaya *${name}*, nomor WA: ${wa}.\nSaya ingin konsultasi mengenai jasa *${service}*.\n\nMohon info harga dan prosesnya ya min. Terima kasih! 🙏`;
+                const waMessage = `Halo admin Joki Minpres!\n\nSaya *${name}*, nomor WA: ${wa}.\nSaya ingin konsultasi mengenai jasa *${service}*.${groupInfo}\n\nMohon info harga dan prosesnya ya min. Terima kasih! 🙏`;
                 window.open(`https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(waMessage)}`, '_blank');
                 closeWaModal();
                 document.getElementById('waForm').reset();
+                document.getElementById('waGroupCountWrapper').classList.add('hidden');
             }).catch(err => {
-                const waMessage = `Halo admin Joki Minpres, saya *${name}* mau tanya jasa *${service}*.`;
+                const waMessage = `Halo admin Joki Minpres, saya *${name}* mau tanya jasa *${service}*.${groupInfo}`;
                 window.open(`https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(waMessage)}`, '_blank');
             }).finally(() => {
                 btnSubmit.innerHTML = originalBtnText;
@@ -1402,7 +1489,80 @@
 
         let currentOrderForPay = null;
 
-        window.showQrisPayment = function() {
+        function getActiveBillInfo(order) {
+            const price = order.price || 0;
+            const dp = order.dp || 0;
+            const sisa = order.sisa !== undefined ? order.sisa : (price - dp);
+            const status = order.status || 1;
+            const isFullyPaid = (sisa <= 0 && price > 0) || status == 4;
+
+            if (isFullyPaid) {
+                return { amount: 0, label: "Tagihan Lunas", isPaid: true };
+            }
+            if (status >= 3) {
+                return { amount: sisa > 0 ? sisa : price, label: "Sisa Pelunasan Tugas", isPaid: false };
+            }
+            return { amount: dp > 0 ? dp : price, label: dp > 0 ? "Pembayaran DP" : "Pembayaran Full", isPaid: false };
+        }
+
+        window.toggleSplitBill = function() {
+            const box = document.getElementById('splitBillBox');
+            box.classList.toggle('hidden');
+            if (!box.classList.contains('hidden')) {
+                updateSplitCalc();
+            }
+        };
+
+        window.adjustSplitMembers = function(delta) {
+            const input = document.getElementById('splitMemberInput');
+            let val = parseInt(input.value || 2) + delta;
+            if (val < 2) val = 2;
+            if (val > 50) val = 50;
+            input.value = val;
+            updateSplitCalc();
+        };
+
+        window.updateSplitCalc = function() {
+            if (!currentOrderForPay) return;
+            const input = document.getElementById('splitMemberInput');
+            let members = parseInt(input.value || 2);
+            if (isNaN(members) || members < 2) members = 2;
+            if (members > 50) members = 50;
+
+            const billInfo = getActiveBillInfo(currentOrderForPay);
+            const targetAmount = billInfo.amount;
+            const perPerson = Math.ceil(targetAmount / members);
+
+            document.getElementById('splitBillTargetLabel').innerText = `Patungan ${billInfo.label} (1/${members} Org)`;
+            document.getElementById('splitPerPersonAmount').innerText = formatRupiah(perPerson);
+            document.getElementById('splitBillTotalRef').innerText = `Dari tagihan aktif ${formatRupiah(targetAmount)}`;
+        };
+
+        window.paySplitQris = function() {
+            const members = Math.max(2, parseInt(document.getElementById('splitMemberInput').value || 2));
+            window.showQrisPayment(members);
+        };
+
+        window.copySplitBillInfo = function() {
+            if (!currentOrderForPay) return;
+            const members = Math.max(2, parseInt(document.getElementById('splitMemberInput').value || 2));
+            const billInfo = getActiveBillInfo(currentOrderForPay);
+            const perPerson = Math.ceil(billInfo.amount / members);
+            const directLink = `https://jokiminpres.github.io/pricelist/?inv=${currentOrderForPay.id}`;
+
+            const shareText = `📌 *PATUNGAN TUGAS KELOMPOK - JOKI MINPRES*\n\n• No. Invoice: *${currentOrderForPay.id}*\n• Tugas: *${currentOrderForPay.task}*\n• Tagihan Aktif (${billInfo.label}): *${formatRupiah(billInfo.amount)}*\n• Dibagi *${members} Anggota* = *${formatRupiah(perPerson)} / orang*\n\nKlik link ini untuk langsung scan QRIS patungan masing-masing:\n${directLink}`;
+
+            navigator.clipboard.writeText(shareText).then(() => {
+                const btn = document.getElementById('btnCopySplitInfo');
+                const orig = btn.innerHTML;
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> Tersalin! ✅';
+                setTimeout(() => { btn.innerHTML = orig; }, 2500);
+            }).catch(() => {
+                alert(shareText);
+            });
+        };
+
+        window.showQrisPayment = function(splitMembers = 1) {
             if (!currentOrderForPay) return;
             
             const price = currentOrderForPay.price || 0;
@@ -1424,6 +1584,11 @@
             if (payAmount <= 0) {
                 alert("Tagihan ini sudah Lunas!");
                 return;
+            }
+
+            if (splitMembers > 1) {
+                payAmount = Math.ceil(payAmount / splitMembers);
+                payType = `${payType} (Patungan 1/${splitMembers} Org)`;
             }
 
             const dynamicQrisStr = buildDynamicQris(STATIC_QRIS_PAYLOAD, payAmount);
@@ -1448,7 +1613,7 @@
                     
                     const link = document.createElement('a');
                     link.href = blobUrl;
-                    link.download = `QRIS_${currentOrderForPay.id}_${payType.replace(/\s+/g, '_')}.png`;
+                    link.download = `QRIS_${currentOrderForPay.id}_${payType.replace(/[\s/]+/g, '_')}.png`;
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
@@ -1528,6 +1693,7 @@
                     const price = orderData.price || 0;
                     const dp = orderData.dp || 0;
                     const sisa = orderData.sisa !== undefined ? orderData.sisa : (price - dp);
+                    const groupSize = parseInt(orderData.groupSize || 1);
                     let fixedStatus = orderData.status > 4 ? 4 : (orderData.status || 1);
 
                     document.getElementById('clientTotal').innerText = formatRupiah(price);
@@ -1536,6 +1702,16 @@
                     const elSisa = document.getElementById('clientSisa');
                     const btnQrisMain = document.getElementById('btnQrisMain');
                     const lblQrisMainBtn = document.getElementById('lblQrisMainBtn');
+                    const groupBadge = document.getElementById('resultGroupBadge');
+                    const splitBox = document.getElementById('splitBillBox');
+                    const splitToggleRow = document.getElementById('splitBillToggleRow');
+
+                    if (groupSize > 1) {
+                        groupBadge.innerHTML = `<i class="fa-solid fa-users mr-1"></i> Kelompok (${groupSize} Org)`;
+                        groupBadge.classList.remove('hidden');
+                    } else {
+                        groupBadge.classList.add('hidden');
+                    }
 
                     const isFullyPaid = (sisa <= 0 && price > 0) || fixedStatus == 4;
 
@@ -1544,11 +1720,23 @@
                         elSisa.classList.remove('text-red-600');
                         elSisa.classList.add('text-green-600');
                         document.getElementById('payQrisContainer').classList.add('hidden');
+                        splitToggleRow.classList.add('hidden');
+                        splitBox.classList.add('hidden');
                     } else {
                         elSisa.innerText = formatRupiah(sisa);
                         elSisa.classList.remove('text-green-600');
                         elSisa.classList.add('text-red-600');
                         document.getElementById('payQrisContainer').classList.remove('hidden');
+                        splitToggleRow.classList.remove('hidden');
+
+                        if (groupSize > 1) {
+                            document.getElementById('splitMemberInput').value = groupSize;
+                            splitBox.classList.remove('hidden');
+                            updateSplitCalc();
+                        } else {
+                            document.getElementById('splitMemberInput').value = 2;
+                            splitBox.classList.add('hidden');
+                        }
 
                         if (fixedStatus >= 3) {
                             lblQrisMainBtn.innerText = `BAYAR SISA PELUNASAN (${formatRupiah(sisa)}) VIA QRIS`;
@@ -1736,6 +1924,7 @@
             const price = parseInt(document.getElementById('adminPrice').value || 0);
             let dp = parseInt(document.getElementById('adminDp').value || 0);
             const selectedStatus = parseInt(document.getElementById('adminStatus').value);
+            const groupSize = Math.max(1, parseInt(document.getElementById('adminGroupSize').value || 1));
 
             if (selectedStatus === 4) {
                 dp = price;
@@ -1747,6 +1936,7 @@
                     name: document.getElementById('adminName').value.trim(),
                     wa: wa, 
                     task: document.getElementById('adminTask').value.trim(),
+                    groupSize: groupSize,
                     assignee: document.getElementById('adminAssignee').value,
                     price: price,
                     dp: dp,
@@ -1759,6 +1949,7 @@
                 const notif = document.getElementById('adminNotif');
                 notif.classList.remove('hidden'); setTimeout(() => notif.classList.add('hidden'), 3000);
                 document.getElementById('adminForm').reset();
+                document.getElementById('adminGroupSize').value = 1;
             } catch (error) { alert("Gagal menyimpan data!"); } 
             finally { btnSave.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Data Real-Time'; }
         });
@@ -1848,6 +2039,7 @@
                     const price = data.price || 0;
                     const dp = data.dp || 0;
                     const sisa = data.sisa !== undefined ? data.sisa : (price - dp);
+                    const groupSize = parseInt(data.groupSize || 1);
                     const isFullyPaid = (sisa <= 0 && price > 0) || fixedStatus == 4;
                     
                     let dpBadge = '<span class="bg-green-100 text-green-800 text-[10px] px-2 py-0.5 rounded border border-green-300 font-bold">Lunas</span>';
@@ -1863,6 +2055,8 @@
                     
                     let assigneeBadge = data.assignee ? `<div class="mt-2 inline-block bg-purple-100 text-purple-800 text-[10px] px-2 py-0.5 rounded border border-purple-300 font-bold"><i class="fa-solid fa-user-pen"></i> ${data.assignee}</div>` : '';
 
+                    let groupBadgeAdmin = groupSize > 1 ? `<div class="mt-2 ml-1 inline-block bg-blue-100 text-blue-800 text-[10px] px-2 py-0.5 rounded border border-blue-300 font-bold"><i class="fa-solid fa-users"></i> Kelompok (${groupSize} org)</div>` : '';
+
                     let btnWaFile = (data.fileUrl && data.fileUrl.trim() !== "") ? 
                         `<button class="btn-wa-file bg-brand-blue text-white hover:bg-blue-600 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" data-name="${data.name}" data-task="${data.task}" data-file="${data.fileUrl}" data-wa="${data.wa || ''}" title="Kirim File via WA"><i class="fa-solid fa-cloud-arrow-down"></i> Kirim File</button>` : '';
 
@@ -1872,7 +2066,7 @@
                             <td class="p-4 min-w-[180px]">
                                 <div class="text-base text-black flex items-center">${data.name} ${fileLinkIcon}</div>
                                 <div class="text-xs text-gray-500 font-semibold mt-1">${data.task}</div>
-                                ${assigneeBadge}
+                                ${assigneeBadge} ${groupBadgeAdmin}
                             </td>
                             <td class="p-4 whitespace-nowrap">
                                 <div class="text-xs text-gray-600 font-bold">Harga: ${formatRupiah(price)}</div>
@@ -1891,8 +2085,8 @@
                                         <span class="${isFullyPaid ? 'text-green-600 font-black' : 'text-gray-700'}">Sudah Lunas?</span>
                                     </label>
                                     <div class="flex flex-wrap justify-center items-center gap-1">
-                                        <button class="btn-wa-inv bg-green-100 text-green-700 hover:bg-green-200 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" data-name="${data.name}" data-task="${data.task}" data-price="${price}" data-dp="${dp}" data-sisa="${sisa}" data-wa="${data.wa || ''}" title="Kirim WA Link Direct Invoice"><i class="fa-solid fa-paper-plane"></i> Link WA</button>
-                                        <button class="btn-wa-done bg-brand-green text-black hover:bg-green-500 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" data-name="${data.name}" data-task="${data.task}" data-sisa="${sisa}" data-wa="${data.wa || ''}" title="Kirim WA Selesai (Pelunasan)"><i class="fa-brands fa-whatsapp"></i> WA Selesai</button>
+                                        <button class="btn-wa-inv bg-green-100 text-green-700 hover:bg-green-200 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" data-name="${data.name}" data-task="${data.task}" data-price="${price}" data-dp="${dp}" data-sisa="${sisa}" data-groupsize="${groupSize}" data-wa="${data.wa || ''}" title="Kirim WA Link Direct Invoice"><i class="fa-solid fa-paper-plane"></i> Link WA</button>
+                                        <button class="btn-wa-done bg-brand-green text-black hover:bg-green-500 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" data-name="${data.name}" data-task="${data.task}" data-sisa="${sisa}" data-groupsize="${groupSize}" data-wa="${data.wa || ''}" title="Kirim WA Selesai (Pelunasan)"><i class="fa-brands fa-whatsapp"></i> WA Selesai</button>
                                         ${btnWaFile}
                                         <button class="btn-edit bg-gray-200 text-gray-700 hover:bg-gray-300 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" title="Edit"><i class="fa-solid fa-pen"></i></button>
                                         <button class="btn-delete bg-red-100 text-red-600 hover:bg-red-200 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" title="Hapus"><i class="fa-solid fa-trash"></i></button>
@@ -1941,12 +2135,14 @@
                         const price = parseInt(e.currentTarget.getAttribute('data-price') || 0);
                         const dp = parseInt(e.currentTarget.getAttribute('data-dp') || 0);
                         const sisa = parseInt(e.currentTarget.getAttribute('data-sisa') || (price - dp));
+                        const groupSize = parseInt(e.currentTarget.getAttribute('data-groupsize') || 1);
                         const wa = e.currentTarget.getAttribute('data-wa');
 
                         if(!wa) { alert("Nomor WA kosong!"); return; }
 
                         const directLink = `https://jokiminpres.github.io/pricelist/?inv=${id}`;
-                        const txt = `Halo *${name}*,\n\nTerima kasih sudah order di Joki Kilat Minpres! 🙏\n\nDetail Pengerjaan Tugas:\n- No. Invoice: *${id}*\n- Tugas: *${task}*\n- Total Harga: *Rp ${price.toLocaleString('id-ID')}*\n- Minimum DP: *Rp ${dp.toLocaleString('id-ID')}*\n- Sisa Pelunasan: *Rp ${sisa.toLocaleString('id-ID')}*\n\n📌 *Klik link ini untuk langsung cek invoice & bayar DP via QRIS:* \n${directLink}\n\nTerima kasih! ✨`;
+                        const splitNote = groupSize > 1 ? `\n- Split-Bill Kelompok (${groupSize} Org): *Rp ${Math.ceil((dp > 0 ? dp : price) / groupSize).toLocaleString('id-ID')} / orang*` : '';
+                        const txt = `Halo *${name}*,\n\nTerima kasih sudah order di Joki Kilat Minpres! 🙏\n\nDetail Pengerjaan Tugas:\n- No. Invoice: *${id}*\n- Tugas: *${task}*\n- Total Harga: *Rp ${price.toLocaleString('id-ID')}*\n- Minimum DP: *Rp ${dp.toLocaleString('id-ID')}*\n- Sisa Pelunasan: *Rp ${sisa.toLocaleString('id-ID')}*${splitNote}\n\n📌 *Klik link ini untuk langsung cek invoice & bayar DP via QRIS:* \n${directLink}\n\nTerima kasih! ✨`;
                         window.open(`https://wa.me/${wa}?text=${encodeURIComponent(txt)}`, '_blank');
                     });
                 });
@@ -1957,6 +2153,7 @@
                         const name = e.currentTarget.getAttribute('data-name');
                         const task = e.currentTarget.getAttribute('data-task');
                         const sisa = parseInt(e.currentTarget.getAttribute('data-sisa') || 0);
+                        const groupSize = parseInt(e.currentTarget.getAttribute('data-groupsize') || 1);
                         const wa = e.currentTarget.getAttribute('data-wa');
 
                         if(!wa) { alert("Nomor WA kosong!"); return; }
@@ -1965,7 +2162,8 @@
                         let txt = "";
 
                         if (sisa > 0) {
-                            txt = `Halo *${name}*,\n\nTugas *${task}* (Invoice: ${id}) sudah *SELESAI* dikerjakan tim Minpres! 🎉\n\nSilakan lakukan pelunasan sisa tagihan sebesar *Rp ${sisa.toLocaleString('id-ID')}* melalui QRIS di link berikut:\n${directLink}\n\nSetelah pelunasan dikonfirmasi admin, tombol download file tugas kamu akan otomatis terbuka di web. Terima kasih! ✨`;
+                            const splitNote = groupSize > 1 ? ` (atau *Rp ${Math.ceil(sisa / groupSize).toLocaleString('id-ID')} / orang* untuk ${groupSize} anggota via fitur Split-Bill)` : '';
+                            txt = `Halo *${name}*,\n\nTugas *${task}* (Invoice: ${id}) sudah *SELESAI* dikerjakan tim Minpres! 🎉\n\nSilakan lakukan pelunasan sisa tagihan sebesar *Rp ${sisa.toLocaleString('id-ID')}*${splitNote} melalui QRIS di link berikut:\n${directLink}\n\nSetelah pelunasan dikonfirmasi admin, tombol download file tugas kamu akan otomatis terbuka di web. Terima kasih! ✨`;
                         } else {
                             txt = `Halo *${name}*,\n\nTugas *${task}* (Invoice: ${id}) sudah *SELESAI* dikerjakan tim Minpres! 🎉\n\nStatus tagihan kamu sudah *LUNAS*. Silakan klik link berikut untuk mendownload file tugasmu:\n${directLink}\n\nTerima kasih! ✨`;
                         }
@@ -1999,6 +2197,7 @@
                         document.getElementById('adminName').value = docData.name;
                         document.getElementById('adminWa').value = docData.wa || "";
                         document.getElementById('adminTask').value = docData.task;
+                        document.getElementById('adminGroupSize').value = docData.groupSize || 1;
                         document.getElementById('adminAssignee').value = docData.assignee || ""; 
                         document.getElementById('adminPrice').value = docData.price || "";
                         document.getElementById('adminDp').value = docData.dp || "";
@@ -2035,6 +2234,7 @@
                 let p = item.price || 0;
                 let d = item.dp || 0;
                 let s = item.sisa !== undefined ? item.sisa : (p - d);
+                let g = parseInt(item.groupSize || 1);
                 let st = item.status == 1 ? "Pembayaran Diterima" : (item.status == 2 ? "Sedang Dikerjakan" : (item.status == 3 ? "Tugas Selesai (Pelunasan)" : "Lunas & Selesai"));
                 let statusBayar = s <= 0 || item.status == 4 ? "Lunas" : (d > 0 ? "DP Sebagian" : "Belum DP");
                 return {
@@ -2042,6 +2242,7 @@
                     "Nama Klien": item.name,
                     "No WA": item.wa || "-",
                     "Detail Tugas": item.task,
+                    "Jumlah Anggota": g > 1 ? `Kelompok (${g} Org)` : "Individu (1 Org)",
                     "Assignee (Tim)": item.assignee || "-",
                     "Total Harga": p,
                     "DP Masuk": d,
