@@ -751,43 +751,127 @@
         </div>
     </section>
 
-    <!-- FAQ Section -->
-    <section class="py-16 px-4 bg-brand-yellow border-y-4 border-black mt-10 overflow-hidden">
+    <!-- FAQ Section (DROPDOWN / ACCORDION) -->
+    <section id="faq" class="py-16 px-4 bg-brand-yellow border-y-4 border-black mt-10 overflow-hidden">
         <div class="max-w-4xl mx-auto">
-            <div class="flex justify-center mb-10 md:mb-12" data-aos="fade-up">
+            <div class="flex flex-col items-center mb-10 md:mb-12" data-aos="fade-up">
                 <h2 class="text-2xl md:text-5xl font-black text-center uppercase bg-white px-4 md:px-6 py-3 border-4 border-black shadow-brutal">
                     FAQ (Tanya Jawab) 🤔
                 </h2>
+                <p class="font-bold text-xs md:text-sm text-black/80 mt-3 text-center">Klik pertanyaan di bawah untuk melihat jawabannya</p>
             </div>
             
-            <div class="space-y-4" data-aos="fade-up">
-                <div class="bg-white border-4 border-black p-4 md:p-5 rounded-xl shadow-brutal-sm hover:-translate-y-1 transition-transform">
-                    <h3 class="font-black text-base md:text-lg flex gap-3 items-start">
-                        <i class="fa-solid fa-circle-question text-brand-blue mt-1 text-xl md:text-2xl shrink-0"></i> 
-                        <span>Kak, kalau ketahuan guru atau dosen gimana?</span>
-                    </h3>
-                    <p class="font-bold text-gray-700 text-xs md:text-sm mt-2 ml-8 md:ml-10">Tenang! Sistem kami 100% rahasia dan aman. Kami tidak pernah mempublikasikan tugas atau identitas kamu di mana pun. File yang kami kerjakan murni milik kamu seutuhnya.</p>
+            <div class="space-y-3" data-aos="fade-up">
+                <!-- FAQ 1 -->
+                <div class="bg-white border-4 border-black rounded-xl shadow-brutal-sm overflow-hidden transition-all">
+                    <button type="button" onclick="toggleFaq(this)" class="w-full p-4 md:p-5 text-left flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors cursor-pointer">
+                        <span class="font-black text-base md:text-lg flex gap-3 items-center">
+                            <i class="fa-solid fa-circle-question text-brand-blue text-xl md:text-2xl shrink-0"></i>
+                            <span>Kak, kalau ketahuan guru atau dosen gimana?</span>
+                        </span>
+                        <i class="fa-solid fa-chevron-down faq-icon text-lg md:text-xl shrink-0 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer hidden px-4 md:px-5 pb-4 md:pb-5 pt-2 border-t-2 border-dashed border-gray-300 bg-gray-50/70">
+                        <p class="font-bold text-gray-700 text-xs md:text-sm ml-8 md:ml-9 leading-relaxed">Tenang! Sistem kami 100% rahasia dan aman. Kami tidak pernah mempublikasikan tugas atau identitas kamu di mana pun. File yang kami kerjakan murni milik kamu seutuhnya.</p>
+                    </div>
                 </div>
-                <div class="bg-white border-4 border-black p-4 md:p-5 rounded-xl shadow-brutal-sm hover:-translate-y-1 transition-transform">
-                    <h3 class="font-black text-base md:text-lg flex gap-3 items-start">
-                        <i class="fa-solid fa-circle-question text-brand-pink mt-1 text-xl md:text-2xl shrink-0"></i> 
-                        <span>Pembayarannya harus full di awal nggak?</span>
-                    </h3>
-                    <p class="font-bold text-gray-700 text-xs md:text-sm mt-2 ml-8 md:ml-10">Tentu tidak! Kamu bisa melakukan DP (Down Payment) terlebih dahulu. Sisanya baru kamu lunasi ketika tugas sudah selesai kami kerjakan dan siap untuk dikirim.</p>
+
+                <!-- FAQ 2 -->
+                <div class="bg-white border-4 border-black rounded-xl shadow-brutal-sm overflow-hidden transition-all">
+                    <button type="button" onclick="toggleFaq(this)" class="w-full p-4 md:p-5 text-left flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors cursor-pointer">
+                        <span class="font-black text-base md:text-lg flex gap-3 items-center">
+                            <i class="fa-solid fa-circle-question text-brand-pink text-xl md:text-2xl shrink-0"></i>
+                            <span>Pembayarannya harus full di awal nggak?</span>
+                        </span>
+                        <i class="fa-solid fa-chevron-down faq-icon text-lg md:text-xl shrink-0 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer hidden px-4 md:px-5 pb-4 md:pb-5 pt-2 border-t-2 border-dashed border-gray-300 bg-gray-50/70">
+                        <p class="font-bold text-gray-700 text-xs md:text-sm ml-8 md:ml-9 leading-relaxed">Tentu tidak! Kamu bisa melakukan DP (Down Payment) terlebih dahulu. Sisanya baru kamu lunasi ketika tugas sudah selesai kami kerjakan dan siap untuk dikirim.</p>
+                    </div>
                 </div>
-                <div class="bg-white border-4 border-black p-4 md:p-5 rounded-xl shadow-brutal-sm hover:-translate-y-1 transition-transform">
-                    <h3 class="font-black text-base md:text-lg flex gap-3 items-start">
-                        <i class="fa-solid fa-circle-question text-brand-green mt-1 text-xl md:text-2xl shrink-0"></i> 
-                        <span>Gimana cara tahu tugas aku udah sampai mana?</span>
-                    </h3>
-                    <p class="font-bold text-gray-700 text-xs md:text-sm mt-2 ml-8 md:ml-10">Kami punya fitur <b>Lacak Progres</b> di halaman web ini! Kamu tinggal masukin Nomor Invoice kamu, nanti akan kelihatan total tagihan, deadline, dan status pengerjaannya secara real-time.</p>
+
+                <!-- FAQ 3 -->
+                <div class="bg-white border-4 border-black rounded-xl shadow-brutal-sm overflow-hidden transition-all">
+                    <button type="button" onclick="toggleFaq(this)" class="w-full p-4 md:p-5 text-left flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors cursor-pointer">
+                        <span class="font-black text-base md:text-lg flex gap-3 items-center">
+                            <i class="fa-solid fa-circle-question text-brand-purple text-xl md:text-2xl shrink-0"></i>
+                            <span>Bisa patungan bayar kalau tugasnya tugas kelompok?</span>
+                        </span>
+                        <i class="fa-solid fa-chevron-down faq-icon text-lg md:text-xl shrink-0 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer hidden px-4 md:px-5 pb-4 md:pb-5 pt-2 border-t-2 border-dashed border-gray-300 bg-gray-50/70">
+                        <p class="font-bold text-gray-700 text-xs md:text-sm ml-8 md:ml-9 leading-relaxed">Bisa banget! Gunakan fitur <b>Split-Bill Kelompok</b> di halaman Lacak Progres. Sistem akan otomatis membagi tagihan sesuai jumlah anggota kelompok dan membuatkan QRIS patungan per orang yang bisa langsung dibagikan ke grup WA.</p>
+                    </div>
                 </div>
-                <div class="bg-white border-4 border-black p-4 md:p-5 rounded-xl shadow-brutal-sm hover:-translate-y-1 transition-transform">
-                    <h3 class="font-black text-base md:text-lg flex gap-3 items-start">
-                        <i class="fa-solid fa-circle-question text-brand-purple mt-1 text-xl md:text-2xl shrink-0"></i> 
-                        <span>Kalau ternyata disuruh revisi sama dosen bisa?</span>
-                    </h3>
-                    <p class="font-bold text-gray-700 text-xs md:text-sm mt-2 ml-8 md:ml-10">Bisa banget! Kami menyediakan layanan garansi revisi apabila ada bagian yang kurang sesuai dengan kesepakatan awal saat order (Syarat & Ketentuan berlaku).</p>
+
+                <!-- FAQ 4 -->
+                <div class="bg-white border-4 border-black rounded-xl shadow-brutal-sm overflow-hidden transition-all">
+                    <button type="button" onclick="toggleFaq(this)" class="w-full p-4 md:p-5 text-left flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors cursor-pointer">
+                        <span class="font-black text-base md:text-lg flex gap-3 items-center">
+                            <i class="fa-solid fa-circle-question text-brand-green text-xl md:text-2xl shrink-0"></i>
+                            <span>Gimana cara tahu tugas aku udah sampai mana?</span>
+                        </span>
+                        <i class="fa-solid fa-chevron-down faq-icon text-lg md:text-xl shrink-0 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer hidden px-4 md:px-5 pb-4 md:pb-5 pt-2 border-t-2 border-dashed border-gray-300 bg-gray-50/70">
+                        <p class="font-bold text-gray-700 text-xs md:text-sm ml-8 md:ml-9 leading-relaxed">Kami punya fitur <b>Lacak Progres</b> di bagian atas web ini! Kamu tinggal masukin Nomor Invoice kamu, nanti akan kelihatan total tagihan, sisa waktu deadline, dan status pengerjaannya secara real-time.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 5 -->
+                <div class="bg-white border-4 border-black rounded-xl shadow-brutal-sm overflow-hidden transition-all">
+                    <button type="button" onclick="toggleFaq(this)" class="w-full p-4 md:p-5 text-left flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors cursor-pointer">
+                        <span class="font-black text-base md:text-lg flex gap-3 items-center">
+                            <i class="fa-solid fa-circle-question text-brand-blue text-xl md:text-2xl shrink-0"></i>
+                            <span>Kalau ternyata disuruh revisi sama dosen bisa?</span>
+                        </span>
+                        <i class="fa-solid fa-chevron-down faq-icon text-lg md:text-xl shrink-0 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer hidden px-4 md:px-5 pb-4 md:pb-5 pt-2 border-t-2 border-dashed border-gray-300 bg-gray-50/70">
+                        <p class="font-bold text-gray-700 text-xs md:text-sm ml-8 md:ml-9 leading-relaxed">Bisa banget! Kami menyediakan layanan garansi revisi apabila ada bagian yang kurang sesuai dengan kesepakatan awal saat order (Syarat & Ketentuan berlaku).</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 6 -->
+                <div class="bg-white border-4 border-black rounded-xl shadow-brutal-sm overflow-hidden transition-all">
+                    <button type="button" onclick="toggleFaq(this)" class="w-full p-4 md:p-5 text-left flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors cursor-pointer">
+                        <span class="font-black text-base md:text-lg flex gap-3 items-center">
+                            <i class="fa-solid fa-circle-question text-brand-pink text-xl md:text-2xl shrink-0"></i>
+                            <span>Deadline mepet kurang dari 24 jam, masih bisa diterima?</span>
+                        </span>
+                        <i class="fa-solid fa-chevron-down faq-icon text-lg md:text-xl shrink-0 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer hidden px-4 md:px-5 pb-4 md:pb-5 pt-2 border-t-2 border-dashed border-gray-300 bg-gray-50/70">
+                        <p class="font-bold text-gray-700 text-xs md:text-sm ml-8 md:ml-9 leading-relaxed">Bisa! Sesuai nama kami <b>Joki Kilat Minpres</b>, kami terbiasa menangani tugas urgent / deadline mepet. Langsung chat admin via WhatsApp dan infokan jam deadlinenya agar segera diprioritaskan.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 7 -->
+                <div class="bg-white border-4 border-black rounded-xl shadow-brutal-sm overflow-hidden transition-all">
+                    <button type="button" onclick="toggleFaq(this)" class="w-full p-4 md:p-5 text-left flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors cursor-pointer">
+                        <span class="font-black text-base md:text-lg flex gap-3 items-center">
+                            <i class="fa-solid fa-circle-question text-brand-green text-xl md:text-2xl shrink-0"></i>
+                            <span>Tanya-tanya estimasi harga dulu boleh nggak sebelum order?</span>
+                        </span>
+                        <i class="fa-solid fa-chevron-down faq-icon text-lg md:text-xl shrink-0 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer hidden px-4 md:px-5 pb-4 md:pb-5 pt-2 border-t-2 border-dashed border-gray-300 bg-gray-50/70">
+                        <p class="font-bold text-gray-700 text-xs md:text-sm ml-8 md:ml-9 leading-relaxed">Boleh banget dan <b>100% Gratis!</b> Kirimkan saja detail atau ketentuan tugasmu ke WhatsApp admin, nanti kami hitungkan harga terbaik yang pas di kantong pelajar & mahasiswa.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 8 -->
+                <div class="bg-white border-4 border-black rounded-xl shadow-brutal-sm overflow-hidden transition-all">
+                    <button type="button" onclick="toggleFaq(this)" class="w-full p-4 md:p-5 text-left flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors cursor-pointer">
+                        <span class="font-black text-base md:text-lg flex gap-3 items-center">
+                            <i class="fa-solid fa-circle-question text-brand-purple text-xl md:text-2xl shrink-0"></i>
+                            <span>Metode pembayarannya bisa lewat apa saja?</span>
+                        </span>
+                        <i class="fa-solid fa-chevron-down faq-icon text-lg md:text-xl shrink-0 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer hidden px-4 md:px-5 pb-4 md:pb-5 pt-2 border-t-2 border-dashed border-gray-300 bg-gray-50/70">
+                        <p class="font-bold text-gray-700 text-xs md:text-sm ml-8 md:ml-9 leading-relaxed">Kami mendukung <b>QRIS Dinamis</b> langsung di web (bisa discan dari semua m-Banking, DANA, OVO, GoPay, ShopeePay) maupun transfer manual ke Bank dan e-Wallet.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1239,10 +1323,25 @@
         AOS.init({ once: true, offset: 50, duration: 600, easing: 'ease-out-cubic' });
     </script>
 
-    <!-- LOGIKA UI (SEARCH, WA, ULASAN) -->
+    <!-- LOGIKA UI (SEARCH, FAQ DROPDOWN, WA, ULASAN) -->
     <script>
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby1FaPkk2V-NkJw2Qbx3GYYgaAgjFhOR-EHYPp_gAW-H1JQYhtxjkf-kSwZlflnLelC1w/exec"; 
         const ADMIN_WA_NUMBER = "6283115784598"; 
+
+        // -- LOGIKA DROPDOWN FAQ --
+        function toggleFaq(btn) {
+            const answer = btn.nextElementSibling;
+            const icon = btn.querySelector('.faq-icon');
+            const isHidden = answer.classList.contains('hidden');
+
+            document.querySelectorAll('.faq-answer').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.faq-icon').forEach(ic => ic.classList.remove('rotate-180'));
+
+            if (isHidden) {
+                answer.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            }
+        }
 
         // -- LOGIKA SEARCH LAYANAN --
         document.addEventListener('DOMContentLoaded', () => {
