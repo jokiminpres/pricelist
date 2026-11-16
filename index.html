@@ -189,11 +189,64 @@
                             </div>
                         </div>
 
+                        <!-- INFO POTONGAN REFERRAL AKTIF (MUNCUL JIKA ADA POTONGAN DARI NGAJAK TEMAN) -->
+                        <div id="clientRefDiscountRow" class="hidden mt-3 pt-2.5 border-t-2 border-dashed border-green-300 bg-green-50 px-3 py-2 rounded-lg flex flex-wrap justify-between items-center gap-2">
+                            <span class="text-xs font-black text-green-800"><i class="fa-solid fa-tag mr-1"></i> Potongan Referral Teman:</span>
+                            <span class="text-sm font-black text-green-700" id="clientRefDiscountVal">- Rp 0</span>
+                        </div>
+
                         <!-- TOMBOL TOGGLE SPLIT-BILL KELOMPOK -->
                         <div id="splitBillToggleRow" class="mt-4 pt-3 border-t-2 border-dashed border-gray-300 flex flex-wrap justify-between items-center gap-2">
                             <span class="text-xs font-bold text-gray-600"><i class="fa-solid fa-people-group text-brand-purple mr-1"></i> Patungan bareng teman sekelompok?</span>
                             <button type="button" onclick="toggleSplitBill()" id="btnToggleSplit" class="bg-brand-purple text-white font-black text-xs px-3 py-1.5 border-2 border-black rounded-lg shadow-brutal-sm hover:-translate-y-0.5 active:scale-95 transition-all flex items-center gap-1.5">
                                 <i class="fa-solid fa-calculator"></i> Split-Bill Kelompok
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- KOTAK PROGRAM REFERRAL / AFILIASI KLIEN -->
+                    <div id="referralClientBox" class="bg-yellow-50 border-4 border-black p-5 rounded-xl shadow-brutal-sm mb-6">
+                        <div class="flex flex-wrap justify-between items-center gap-2 border-b-2 border-black pb-3 mb-3">
+                            <h4 class="font-black uppercase text-sm md:text-base flex items-center gap-2">
+                                <span class="bg-brand-yellow text-black px-2 py-0.5 border-2 border-black rounded text-xs"><i class="fa-solid fa-gift"></i></span>
+                                Program Afiliasi & Potongan Harga
+                            </h4>
+                            <span class="bg-black text-brand-yellow font-black text-[10px] px-2.5 py-0.5 rounded uppercase">Ajak Teman = Dapat Potongan!</span>
+                        </div>
+                        
+                        <p class="text-xs font-bold text-gray-700 mb-4 leading-relaxed">
+                            Bagikan kode referral atau link di bawah ke temanmu. Setiap teman yang deal joki pakai kodemu, <strong class="text-black underline">tagihanmu otomatis terpotong</strong> (atau masuk saldo bonus jika sudah lunas)!
+                        </p>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
+                            <div class="bg-white border-2 border-black p-3 rounded-xl flex flex-col justify-between">
+                                <span class="text-[10px] font-black text-gray-500 uppercase">Kode Referral Kamu</span>
+                                <div class="flex items-center justify-between gap-2 mt-1">
+                                    <span class="font-black text-lg text-brand-pink tracking-wider" id="clientRefCode">REF-012</span>
+                                    <button type="button" onclick="copyReferralCode()" id="btnCopyRefCode" class="bg-gray-100 hover:bg-brand-yellow border-2 border-black px-2 py-1 rounded text-xs font-black active:scale-95 transition-all" title="Salin Kode">
+                                        <i class="fa-regular fa-copy"></i> Salin
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="bg-white border-2 border-black p-3 rounded-xl">
+                                <span class="text-[10px] font-black text-gray-500 uppercase">Teman Berhasil Joki</span>
+                                <p class="font-black text-lg text-black mt-1" id="clientRefCount">0 Orang</p>
+                            </div>
+
+                            <div class="bg-white border-2 border-black p-3 rounded-xl">
+                                <span class="text-[10px] font-black text-gray-500 uppercase">Total Potongan / Bonus</span>
+                                <p class="font-black text-lg text-green-600 mt-1" id="clientRefTotalEarned">Rp 0</p>
+                                <p class="text-[10px] font-bold text-purple-700 hidden mt-0.5" id="clientRefCashbackNote">Saldo Bonus: Rp 0</p>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row gap-2.5">
+                            <button type="button" onclick="copyReferralShare()" id="btnCopyRefShare" class="flex-1 bg-brand-yellow text-black font-black text-xs md:text-sm py-3 px-4 border-2 border-black rounded-xl shadow-brutal-sm hover:bg-black hover:text-brand-yellow active:scale-95 transition-all flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-share-nodes"></i> Salin Pesan & Link Afiliasi
+                            </button>
+                            <button type="button" onclick="shareReferralToWa()" class="bg-brand-green text-black font-black text-xs md:text-sm py-3 px-4 border-2 border-black rounded-xl shadow-brutal-sm hover:bg-green-500 active:scale-95 transition-all flex items-center justify-center gap-2">
+                                <i class="fa-brands fa-whatsapp text-base"></i> Share ke WA Teman
                             </button>
                         </div>
                     </div>
@@ -795,6 +848,20 @@
                     <button type="button" onclick="toggleFaq(this)" class="w-full p-4 md:p-5 text-left flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors cursor-pointer">
                         <span class="font-black text-base md:text-lg flex gap-3 items-center">
                             <i class="fa-solid fa-circle-question text-brand-purple text-xl md:text-2xl shrink-0"></i>
+                            <span>Gimana cara dapat potongan harga dari kode referral?</span>
+                        </span>
+                        <i class="fa-solid fa-chevron-down faq-icon text-lg md:text-xl shrink-0 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer hidden px-4 md:px-5 pb-4 md:pb-5 pt-2 border-t-2 border-dashed border-gray-300 bg-gray-50/70">
+                        <p class="font-bold text-gray-700 text-xs md:text-sm ml-8 md:ml-9 leading-relaxed">Setelah order, cek nomor invoice kamu di menu <b>Lacak Progres</b>. Di sana akan muncul <b>Kode Referral</b> pribadimu. Bagikan kode atau link afiliasinya ke temanmu; setiap teman yang deal order pakai kodemu, sisa tagihanmu otomatis terpotong (atau masuk saldo bonus jika sudah lunas)!</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="bg-white border-4 border-black rounded-xl shadow-brutal-sm overflow-hidden transition-all">
+                    <button type="button" onclick="toggleFaq(this)" class="w-full p-4 md:p-5 text-left flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors cursor-pointer">
+                        <span class="font-black text-base md:text-lg flex gap-3 items-center">
+                            <i class="fa-solid fa-circle-question text-brand-green text-xl md:text-2xl shrink-0"></i>
                             <span>Bisa patungan bayar kalau tugasnya tugas kelompok?</span>
                         </span>
                         <i class="fa-solid fa-chevron-down faq-icon text-lg md:text-xl shrink-0 transition-transform duration-300"></i>
@@ -804,11 +871,11 @@
                     </div>
                 </div>
 
-                <!-- FAQ 4 -->
+                <!-- FAQ 5 -->
                 <div class="bg-white border-4 border-black rounded-xl shadow-brutal-sm overflow-hidden transition-all">
                     <button type="button" onclick="toggleFaq(this)" class="w-full p-4 md:p-5 text-left flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors cursor-pointer">
                         <span class="font-black text-base md:text-lg flex gap-3 items-center">
-                            <i class="fa-solid fa-circle-question text-brand-green text-xl md:text-2xl shrink-0"></i>
+                            <i class="fa-solid fa-circle-question text-brand-blue text-xl md:text-2xl shrink-0"></i>
                             <span>Gimana cara tahu tugas aku udah sampai mana?</span>
                         </span>
                         <i class="fa-solid fa-chevron-down faq-icon text-lg md:text-xl shrink-0 transition-transform duration-300"></i>
@@ -818,11 +885,11 @@
                     </div>
                 </div>
 
-                <!-- FAQ 5 -->
+                <!-- FAQ 6 -->
                 <div class="bg-white border-4 border-black rounded-xl shadow-brutal-sm overflow-hidden transition-all">
                     <button type="button" onclick="toggleFaq(this)" class="w-full p-4 md:p-5 text-left flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors cursor-pointer">
                         <span class="font-black text-base md:text-lg flex gap-3 items-center">
-                            <i class="fa-solid fa-circle-question text-brand-blue text-xl md:text-2xl shrink-0"></i>
+                            <i class="fa-solid fa-circle-question text-brand-pink text-xl md:text-2xl shrink-0"></i>
                             <span>Kalau ternyata disuruh revisi sama dosen bisa?</span>
                         </span>
                         <i class="fa-solid fa-chevron-down faq-icon text-lg md:text-xl shrink-0 transition-transform duration-300"></i>
@@ -832,31 +899,17 @@
                     </div>
                 </div>
 
-                <!-- FAQ 6 -->
+                <!-- FAQ 7 -->
                 <div class="bg-white border-4 border-black rounded-xl shadow-brutal-sm overflow-hidden transition-all">
                     <button type="button" onclick="toggleFaq(this)" class="w-full p-4 md:p-5 text-left flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors cursor-pointer">
                         <span class="font-black text-base md:text-lg flex gap-3 items-center">
-                            <i class="fa-solid fa-circle-question text-brand-pink text-xl md:text-2xl shrink-0"></i>
+                            <i class="fa-solid fa-circle-question text-brand-green text-xl md:text-2xl shrink-0"></i>
                             <span>Deadline mepet kurang dari 24 jam, masih bisa diterima?</span>
                         </span>
                         <i class="fa-solid fa-chevron-down faq-icon text-lg md:text-xl shrink-0 transition-transform duration-300"></i>
                     </button>
                     <div class="faq-answer hidden px-4 md:px-5 pb-4 md:pb-5 pt-2 border-t-2 border-dashed border-gray-300 bg-gray-50/70">
                         <p class="font-bold text-gray-700 text-xs md:text-sm ml-8 md:ml-9 leading-relaxed">Bisa! Sesuai nama kami <b>Joki Kilat Minpres</b>, kami terbiasa menangani tugas urgent / deadline mepet. Langsung chat admin via WhatsApp dan infokan jam deadlinenya agar segera diprioritaskan.</p>
-                    </div>
-                </div>
-
-                <!-- FAQ 7 -->
-                <div class="bg-white border-4 border-black rounded-xl shadow-brutal-sm overflow-hidden transition-all">
-                    <button type="button" onclick="toggleFaq(this)" class="w-full p-4 md:p-5 text-left flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors cursor-pointer">
-                        <span class="font-black text-base md:text-lg flex gap-3 items-center">
-                            <i class="fa-solid fa-circle-question text-brand-green text-xl md:text-2xl shrink-0"></i>
-                            <span>Tanya-tanya estimasi harga dulu boleh nggak sebelum order?</span>
-                        </span>
-                        <i class="fa-solid fa-chevron-down faq-icon text-lg md:text-xl shrink-0 transition-transform duration-300"></i>
-                    </button>
-                    <div class="faq-answer hidden px-4 md:px-5 pb-4 md:pb-5 pt-2 border-t-2 border-dashed border-gray-300 bg-gray-50/70">
-                        <p class="font-bold text-gray-700 text-xs md:text-sm ml-8 md:ml-9 leading-relaxed">Boleh banget dan <b>100% Gratis!</b> Kirimkan saja detail atau ketentuan tugasmu ke WhatsApp admin, nanti kami hitungkan harga terbaik yang pas di kantong pelajar & mahasiswa.</p>
                     </div>
                 </div>
 
@@ -969,30 +1022,39 @@
 
     <!-- MODAL POPUP INPUT NOMOR WA PELANGGAN -->
     <div id="waModal" class="hidden fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 transition-all duration-300 ease-out">
-        <div class="bg-white w-full max-w-md border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] rounded-2xl p-6 relative transform scale-95 transition-transform duration-300 ease-out" id="waModalContent">
+        <div class="bg-white w-full max-w-md border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] rounded-2xl p-6 relative transform scale-95 transition-transform duration-300 ease-out max-h-[92vh] overflow-y-auto" id="waModalContent">
             
-            <button onclick="closeWaModal()" class="absolute -top-4 -right-4 bg-brand-pink border-4 border-black text-black w-10 h-10 rounded-full font-black text-xl hover:bg-red-500 hover:text-white active:scale-95 transition-all duration-300 ease-out flex items-center justify-center z-10 shadow-brutal-sm">
+            <button onclick="closeWaModal()" class="absolute top-3 right-3 bg-brand-pink border-4 border-black text-black w-9 h-9 rounded-full font-black text-lg hover:bg-red-500 hover:text-white active:scale-95 transition-all duration-300 ease-out flex items-center justify-center z-10 shadow-brutal-sm">
                 <i class="fa-solid fa-xmark"></i>
             </button>
 
-            <div class="text-center mb-6 mt-2">
-                <div class="bg-brand-yellow border-2 border-black px-3 py-1 font-black text-sm inline-block rounded mb-3" id="modalServiceLabel">
+            <div class="text-center mb-5 mt-1">
+                <div class="bg-brand-yellow border-2 border-black px-3 py-1 font-black text-sm inline-block rounded mb-2" id="modalServiceLabel">
                     Tugas Makalah
                 </div>
                 <h3 class="text-2xl font-black mb-1">Konsultasi Admin</h3>
                 <p class="font-bold text-gray-500 text-sm">Isi form singkat ini agar admin tahu siapa kamu!</p>
             </div>
 
-            <form id="waForm" class="space-y-4">
+            <form id="waForm" class="space-y-3.5">
                 <input type="hidden" id="waService" value="">
                 
                 <div>
                     <label class="font-black text-sm block mb-1">Nama Panggilan Kamu:</label>
-                    <input type="text" id="waName" required placeholder="Contoh: Budi" class="w-full px-4 py-3 border-4 border-black font-bold rounded-xl focus:outline-none focus:ring-4 focus:ring-brand-blue bg-gray-50 transition-all duration-300 ease-out">
+                    <input type="text" id="waName" required placeholder="Contoh: Budi" class="w-full px-4 py-2.5 border-4 border-black font-bold rounded-xl focus:outline-none focus:ring-4 focus:ring-brand-blue bg-gray-50 transition-all duration-300 ease-out">
                 </div>
                 <div>
                     <label class="font-black text-sm block mb-1">Nomor WhatsApp Kamu:</label>
-                    <input type="tel" id="waNumber" required placeholder="Contoh: 081234567890" class="w-full px-4 py-3 border-4 border-black font-bold rounded-xl focus:outline-none focus:ring-4 focus:ring-brand-blue bg-gray-50 transition-all duration-300 ease-out">
+                    <input type="tel" id="waNumber" required placeholder="Contoh: 081234567890" class="w-full px-4 py-2.5 border-4 border-black font-bold rounded-xl focus:outline-none focus:ring-4 focus:ring-brand-blue bg-gray-50 transition-all duration-300 ease-out">
+                </div>
+
+                <!-- KOLOM KODE REFERRAL TEMAN (AFILIASI) -->
+                <div class="bg-yellow-50 border-2 border-black p-3 rounded-xl">
+                    <label class="font-black text-xs text-black block mb-1">
+                        <i class="fa-solid fa-gift text-brand-pink mr-1"></i> Kode Referral Teman (Opsional):
+                    </label>
+                    <input type="text" id="waRefCode" placeholder="Contoh: REF-012 (Kosongkan jika tidak ada)" class="w-full px-3 py-2 border-2 border-black font-black uppercase rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-brand-yellow text-sm">
+                    <p id="waRefAutoNotice" class="hidden text-[10px] font-bold text-green-700 mt-1"><i class="fa-solid fa-circle-check"></i> Kode referral teman terdeteksi otomatis dari link!</p>
                 </div>
 
                 <!-- OPSI SPLIT-BILL TUGAS KELOMPOK -->
@@ -1007,7 +1069,7 @@
                     </div>
                 </div>
                 
-                <button type="submit" id="btnSubmitWa" class="w-full bg-brand-green text-black font-black text-lg py-4 rounded-xl border-4 border-black hover:bg-green-500 active:scale-95 transition-all duration-300 ease-out shadow-brutal-sm flex items-center justify-center gap-2 mt-4">
+                <button type="submit" id="btnSubmitWa" class="w-full bg-brand-green text-black font-black text-lg py-3.5 rounded-xl border-4 border-black hover:bg-green-500 active:scale-95 transition-all duration-300 ease-out shadow-brutal-sm flex items-center justify-center gap-2 mt-3">
                     <i class="fa-brands fa-whatsapp text-2xl"></i> Lanjut Chat Admin
                 </button>
             </form>
@@ -1195,6 +1257,25 @@
                                 <input type="text" id="adminTask" required placeholder="Makalah Biologi Bab 2" class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-gray-50 transition-colors duration-300">
                             </div>
 
+                            <!-- KODE REFERRAL AFILIASI (JIKA KLIEN DIAJAK TEMAN) -->
+                            <div class="bg-yellow-50 border-2 border-yellow-300 p-3 rounded-xl space-y-2.5">
+                                <div>
+                                    <label class="font-bold text-xs text-gray-800 block mb-1">
+                                        <i class="fa-solid fa-gift text-brand-pink"></i> Kode Referral Pengajak (Opsional):
+                                    </label>
+                                    <input type="text" id="adminUsedRef" placeholder="Cth: REF-012 (Kosongkan jika tidak ada)" class="w-full px-3 py-2 border-2 border-gray-300 font-bold uppercase rounded-lg focus:outline-none focus:border-black bg-white text-xs">
+                                </div>
+                                <div>
+                                    <label class="font-bold text-xs text-gray-800 block mb-1">Potongan / Komisi ke Pemilik Kode (Rp):</label>
+                                    <div class="flex gap-1.5">
+                                        <input type="number" id="adminRefReward" value="15000" min="0" placeholder="15000" class="flex-1 px-3 py-1.5 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-white text-xs">
+                                        <button type="button" onclick="setRefRewardPercent(10)" class="bg-black text-brand-yellow font-black text-[10px] px-2.5 rounded-lg hover:bg-gray-800 active:scale-95" title="Set 10% dari Harga Tugas">10%</button>
+                                        <button type="button" onclick="document.getElementById('adminRefReward').value = 15000" class="bg-gray-200 text-black font-black text-[10px] px-2.5 rounded-lg hover:bg-gray-300 active:scale-95">15rb</button>
+                                    </div>
+                                    <p class="text-[10px] font-semibold text-gray-600 mt-1">Otomatis memotong sisa tagihan pengajak (atau masuk saldo bonus jika sudah lunas).</p>
+                                </div>
+                            </div>
+
                             <!-- JUMLAH ANGGOTA KELOMPOK (SPLIT-BILL) -->
                             <div>
                                 <label class="font-bold text-sm text-gray-700 block mb-1"><i class="fa-solid fa-users text-brand-purple"></i> Jumlah Anggota (Split-Bill Kelompok):</label>
@@ -1279,7 +1360,7 @@
                         <div class="flex flex-col md:flex-row gap-3 mb-4 bg-gray-50 p-3 rounded-lg border border-gray-200">
                             <div class="flex-1 relative">
                                 <i class="fa-solid fa-search absolute left-3 top-3 text-gray-400"></i>
-                                <input type="text" id="searchFilter" placeholder="Cari Nama atau Invoice..." class="w-full pl-10 pr-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-brand-blue transition-colors">
+                                <input type="text" id="searchFilter" placeholder="Cari Nama, Invoice, atau Kode REF..." class="w-full pl-10 pr-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-brand-blue transition-colors">
                             </div>
                             <div class="md:w-48">
                                 <select id="statusFilter" class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-brand-blue transition-colors">
@@ -1291,10 +1372,10 @@
                         </div>
 
                         <div class="overflow-x-auto flex-1 admin-table-wrapper">
-                            <table class="w-full text-left border-collapse min-w-[850px]">
+                            <table class="w-full text-left border-collapse min-w-[880px]">
                                 <thead>
                                     <tr class="bg-gray-100 text-gray-700 text-sm">
-                                        <th class="p-4 font-black rounded-tl-lg whitespace-nowrap">INVOICE</th>
+                                        <th class="p-4 font-black rounded-tl-lg whitespace-nowrap">INVOICE & REF</th>
                                         <th class="p-4 font-black">NAMA & TUGAS</th>
                                         <th class="p-4 font-black whitespace-nowrap">KEUANGAN (HARGA/DP)</th>
                                         <th class="p-4 font-black whitespace-nowrap">STATUS & DEADLINE</th>
@@ -1343,8 +1424,14 @@
             }
         }
 
-        // -- LOGIKA SEARCH LAYANAN --
+        // -- DETEKSI LINK REFERRAL (?ref=REF-XXX) --
         document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const refParam = urlParams.get('ref');
+            if (refParam) {
+                localStorage.setItem('minpres_ref_code', refParam.trim().toUpperCase());
+            }
+
             const searchInput = document.getElementById('searchLayanan');
             const layananContainer = document.querySelector('#layanan .grid');
             const layananCards = document.querySelectorAll('#layanan .grid > div');
@@ -1403,6 +1490,17 @@
             document.getElementById('waService').value = layanan;
             document.getElementById('waIsGroup').checked = false;
             document.getElementById('waGroupCountWrapper').classList.add('hidden');
+
+            const savedRef = localStorage.getItem('minpres_ref_code') || '';
+            const refInput = document.getElementById('waRefCode');
+            const refNotice = document.getElementById('waRefAutoNotice');
+            if (savedRef) {
+                refInput.value = savedRef;
+                refNotice.classList.remove('hidden');
+            } else {
+                refInput.value = '';
+                refNotice.classList.add('hidden');
+            }
             
             waModal.classList.remove('hidden');
             setTimeout(() => {
@@ -1429,24 +1527,27 @@
             const name = document.getElementById('waName').value.trim();
             let wa = document.getElementById('waNumber').value.trim();
             const service = document.getElementById('waService').value;
+            const refCode = document.getElementById('waRefCode').value.trim().toUpperCase();
             const isGroup = document.getElementById('waIsGroup').checked;
             const groupCount = parseInt(document.getElementById('waGroupCount').value || 2);
 
             if(wa.startsWith('0')) { wa = '62' + wa.substring(1); }
             else if(wa.startsWith('+')) { wa = wa.substring(1); }
 
+            const refInfo = refCode ? `\n- Kode Referral Teman: *${refCode}*` : '';
             const groupInfo = isGroup ? `\n- Tipe Tugas: *Tugas Kelompok (Split-Bill ${groupCount} Orang)*` : '';
 
-            const fetchUrl = `${GOOGLE_SCRIPT_URL}?nama=${encodeURIComponent(name)}&wa=${encodeURIComponent(wa)}&layanan=${encodeURIComponent(isGroup ? service + ' (Kelompok ' + groupCount + ' Org)' : service)}`;
+            const layananLog = `${service}${isGroup ? ' (Kelompok ' + groupCount + ' Org)' : ''}${refCode ? ' [Ref: ' + refCode + ']' : ''}`;
+            const fetchUrl = `${GOOGLE_SCRIPT_URL}?nama=${encodeURIComponent(name)}&wa=${encodeURIComponent(wa)}&layanan=${encodeURIComponent(layananLog)}`;
             
             fetch(fetchUrl, { mode: 'no-cors' }).then(() => {
-                const waMessage = `Halo admin Joki Minpres!\n\nSaya *${name}*, nomor WA: ${wa}.\nSaya ingin konsultasi mengenai jasa *${service}*.${groupInfo}\n\nMohon info harga dan prosesnya ya min. Terima kasih! 🙏`;
+                const waMessage = `Halo admin Joki Minpres!\n\nSaya *${name}*, nomor WA: ${wa}.\nSaya ingin konsultasi mengenai jasa *${service}*.${refInfo}${groupInfo}\n\nMohon info harga dan prosesnya ya min. Terima kasih! 🙏`;
                 window.open(`https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(waMessage)}`, '_blank');
                 closeWaModal();
                 document.getElementById('waForm').reset();
                 document.getElementById('waGroupCountWrapper').classList.add('hidden');
             }).catch(err => {
-                const waMessage = `Halo admin Joki Minpres, saya *${name}* mau tanya jasa *${service}*.${groupInfo}`;
+                const waMessage = `Halo admin Joki Minpres, saya *${name}* mau tanya jasa *${service}*.${refInfo}${groupInfo}`;
                 window.open(`https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(waMessage)}`, '_blank');
             }).finally(() => {
                 btnSubmit.innerHTML = originalBtnText;
@@ -1519,11 +1620,11 @@
         });
     </script>
 
-    <!-- FIREBASE & LOGIKA APLIKASI LENGKAP (DB & ADMIN) -->
+    <!-- FIREBASE & LOGIKA APLIKASI LENGKAP (DB, REFERRAL & ADMIN) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, updateDoc, getDoc, collection, onSnapshot, deleteDoc, increment } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, updateDoc, getDoc, getDocs, collection, onSnapshot, deleteDoc, increment } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCy5s2FMCYNed3kTDk6bt49fcTq05DgCp8",
@@ -1544,6 +1645,23 @@
         function formatRupiah(angka) {
             return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
         }
+
+        function getReferralCode(inv) {
+            const clean = inv.trim().toUpperCase();
+            if (clean.startsWith('MINPRES-')) {
+                return 'REF-' + clean.slice(8);
+            }
+            return 'REF-' + clean;
+        }
+
+        window.setRefRewardPercent = function(pct) {
+            const price = parseInt(document.getElementById('adminPrice').value || 0);
+            if (price <= 0) {
+                alert("Isi Total Harga tugas terlebih dahulu!");
+                return;
+            }
+            document.getElementById('adminRefReward').value = Math.round((price * pct) / 100);
+        };
 
         function getGoogleCalendarUrl(inv, task, deadlineStr) {
             const d = new Date(deadlineStr);
@@ -1588,10 +1706,20 @@
 
         let currentOrderForPay = null;
 
+        function computeOrderSisa(order) {
+            const price = order.price || 0;
+            const dp = order.dp || 0;
+            const refDisc = order.referralDiscount || 0;
+            if (order.sisa !== undefined) {
+                return Math.max(0, order.sisa);
+            }
+            return Math.max(0, price - dp - refDisc);
+        }
+
         function getActiveBillInfo(order) {
             const price = order.price || 0;
             const dp = order.dp || 0;
-            const sisa = order.sisa !== undefined ? order.sisa : (price - dp);
+            const sisa = computeOrderSisa(order);
             const status = order.status || 1;
             const isFullyPaid = (sisa <= 0 && price > 0) || status == 4;
 
@@ -1603,6 +1731,41 @@
             }
             return { amount: dp > 0 ? dp : price, label: dp > 0 ? "Pembayaran DP" : "Pembayaran Full", isPaid: false };
         }
+
+        // -- FUNGSI COPY & SHARE REFERRAL PELANGGAN --
+        window.copyReferralCode = function() {
+            if (!currentOrderForPay) return;
+            const code = currentOrderForPay.refCode || getReferralCode(currentOrderForPay.id);
+            navigator.clipboard.writeText(code).then(() => {
+                const btn = document.getElementById('btnCopyRefCode');
+                const orig = btn.innerHTML;
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> Disalin';
+                setTimeout(() => { btn.innerHTML = orig; }, 2000);
+            });
+        };
+
+        function buildReferralShareMessage() {
+            const code = currentOrderForPay.refCode || getReferralCode(currentOrderForPay.id);
+            const refLink = `https://jokiminpres.github.io/pricelist/?ref=${code}`;
+            return `Lagi pusing tugas numpuk atau mepet deadline? Jokiin aja di *Joki Kilat Minpres*! 🚀\n\nMulai 5k aja, privasi 100% aman, dan pengerjaan kilat.\nPas order jangan lupa masukin kode referral aku: *${code}*\n\nLangsung klik link ini aja biar otomatis keisi:\n${refLink}`;
+        }
+
+        window.copyReferralShare = function() {
+            if (!currentOrderForPay) return;
+            const msg = buildReferralShareMessage();
+            navigator.clipboard.writeText(msg).then(() => {
+                const btn = document.getElementById('btnCopyRefShare');
+                const orig = btn.innerHTML;
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> Pesan & Link Tersalin! ✅';
+                setTimeout(() => { btn.innerHTML = orig; }, 2500);
+            }).catch(() => alert(msg));
+        };
+
+        window.shareReferralToWa = function() {
+            if (!currentOrderForPay) return;
+            const msg = buildReferralShareMessage();
+            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+        };
 
         window.toggleSplitBill = function() {
             const box = document.getElementById('splitBillBox');
@@ -1666,7 +1829,7 @@
             
             const price = currentOrderForPay.price || 0;
             const dp = currentOrderForPay.dp || 0;
-            const sisa = currentOrderForPay.sisa !== undefined ? currentOrderForPay.sisa : (price - dp);
+            const sisa = computeOrderSisa(currentOrderForPay);
             const status = currentOrderForPay.status || 1;
 
             let payAmount = 0;
@@ -1791,12 +1954,40 @@
                     
                     const price = orderData.price || 0;
                     const dp = orderData.dp || 0;
-                    const sisa = orderData.sisa !== undefined ? orderData.sisa : (price - dp);
+                    const refDisc = orderData.referralDiscount || 0;
+                    const sisa = computeOrderSisa(orderData);
                     const groupSize = parseInt(orderData.groupSize || 1);
                     let fixedStatus = orderData.status > 4 ? 4 : (orderData.status || 1);
 
                     document.getElementById('clientTotal').innerText = formatRupiah(price);
                     document.getElementById('clientDp').innerText = formatRupiah(dp);
+
+                    // Tampilkan baris potongan referral jika sudah pernah dapat potongan
+                    const refDiscRow = document.getElementById('clientRefDiscountRow');
+                    if (refDisc > 0) {
+                        document.getElementById('clientRefDiscountVal').innerText = `- ${formatRupiah(refDisc)}`;
+                        refDiscRow.classList.remove('hidden');
+                    } else {
+                        refDiscRow.classList.add('hidden');
+                    }
+
+                    // Isi kotak Program Referral / Afiliasi Klien
+                    const myRefCode = orderData.refCode || getReferralCode(inputVal);
+                    const myRefCount = orderData.referralCount || 0;
+                    const myRefEarned = orderData.referralEarned || 0;
+                    const myRefCashback = orderData.referralCashback || 0;
+
+                    document.getElementById('clientRefCode').innerText = myRefCode;
+                    document.getElementById('clientRefCount').innerText = `${myRefCount} Orang`;
+                    document.getElementById('clientRefTotalEarned').innerText = formatRupiah(myRefEarned);
+
+                    const cashbackNote = document.getElementById('clientRefCashbackNote');
+                    if (myRefCashback > 0) {
+                        cashbackNote.innerText = `Saldo Bonus/Cashback: ${formatRupiah(myRefCashback)}`;
+                        cashbackNote.classList.remove('hidden');
+                    } else {
+                        cashbackNote.classList.add('hidden');
+                    }
 
                     const elSisa = document.getElementById('clientSisa');
                     const btnQrisMain = document.getElementById('btnQrisMain');
@@ -2010,6 +2201,8 @@
 
         document.getElementById('btnGenerateInv').addEventListener('click', () => { document.getElementById('adminInv').value = `MINPRES-${Math.floor(1000 + Math.random() * 9000)}`; });
 
+        let allOrdersData = [];
+
         document.getElementById('adminForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btnSave = document.getElementById('btnSaveData');
@@ -2020,21 +2213,92 @@
             if(wa.startsWith('0')) { wa = '62' + wa.substring(1); }
             else if(wa.startsWith('+')) { wa = wa.substring(1); }
 
+            const existingOrder = allOrdersData.find(d => d.id === inv);
             const price = parseInt(document.getElementById('adminPrice').value || 0);
             let dp = parseInt(document.getElementById('adminDp').value || 0);
             const selectedStatus = parseInt(document.getElementById('adminStatus').value);
             const groupSize = Math.max(1, parseInt(document.getElementById('adminGroupSize').value || 1));
 
+            const usedRef = document.getElementById('adminUsedRef').value.trim().toUpperCase();
+            const refReward = Math.max(0, parseInt(document.getElementById('adminRefReward').value || 0));
+
+            const existingRefDisc = existingOrder ? (existingOrder.referralDiscount || 0) : 0;
+            const existingRefCount = existingOrder ? (existingOrder.referralCount || 0) : 0;
+            const existingRefEarned = existingOrder ? (existingOrder.referralEarned || 0) : 0;
+            const existingRefCashback = existingOrder ? (existingOrder.referralCashback || 0) : 0;
+            let refRewardApplied = existingOrder ? Boolean(existingOrder.refRewardApplied) : false;
+
             if (selectedStatus === 4) {
-                dp = price;
+                dp = Math.max(0, price - existingRefDisc);
             }
-            const sisa = price - dp;
+            const sisa = Math.max(0, price - dp - existingRefDisc);
 
             try {
+                // Jika ada kode referral pengajak & belum pernah dicairkan ke pengajak
+                let rewardAppliedNow = false;
+                let referrerTargetInv = null;
+
+                if (usedRef && refReward > 0 && !refRewardApplied) {
+                    let refOrder = allOrdersData.find(o => (o.refCode || getReferralCode(o.id)) === usedRef || o.id === usedRef);
+                    if (!refOrder && usedRef.startsWith('REF-')) {
+                        const guessInv = 'MINPRES-' + usedRef.slice(4);
+                        refOrder = allOrdersData.find(o => o.id === guessInv);
+                    }
+
+                    if (refOrder && refOrder.id !== inv) {
+                        referrerTargetInv = refOrder.id;
+                        const rPrice = refOrder.price || 0;
+                        const rDp = refOrder.dp || 0;
+                        const rDisc = refOrder.referralDiscount || 0;
+                        const rCurrentSisa = computeOrderSisa(refOrder);
+
+                        let deductToBill = 0;
+                        let extraCashback = 0;
+                        let newRDisc = rDisc;
+                        let newRSisa = rCurrentSisa;
+                        let newRStatus = refOrder.status || 1;
+
+                        if (rCurrentSisa > 0) {
+                            deductToBill = Math.min(rCurrentSisa, refReward);
+                            extraCashback = refReward - deductToBill;
+                            newRDisc = rDisc + deductToBill;
+                            newRSisa = Math.max(0, rPrice - rDp - newRDisc);
+                            if (newRSisa === 0 && newRStatus == 3) {
+                                newRStatus = 4;
+                            }
+                        } else {
+                            extraCashback = refReward;
+                        }
+
+                        await updateDoc(doc(db, "orders", refOrder.id), {
+                            referralCount: (refOrder.referralCount || 0) + 1,
+                            referralEarned: (refOrder.referralEarned || 0) + refReward,
+                            referralDiscount: newRDisc,
+                            referralCashback: (refOrder.referralCashback || 0) + extraCashback,
+                            sisa: newRSisa,
+                            status: newRStatus,
+                            updatedAt: new Date()
+                        });
+
+                        refRewardApplied = true;
+                        rewardAppliedNow = true;
+                    } else if (!refOrder) {
+                        alert(`Peringatan: Kode referral "${usedRef}" tidak ditemukan di database invoice. Data order tetap disimpan tanpa memotong invoice pengajak.`);
+                    }
+                }
+
                 await setDoc(doc(db, "orders", inv), {
                     name: document.getElementById('adminName').value.trim(),
                     wa: wa, 
                     task: document.getElementById('adminTask').value.trim(),
+                    refCode: existingOrder?.refCode || getReferralCode(inv),
+                    usedRef: usedRef,
+                    refReward: refReward,
+                    refRewardApplied: refRewardApplied,
+                    referralCount: existingRefCount,
+                    referralEarned: existingRefEarned,
+                    referralDiscount: existingRefDisc,
+                    referralCashback: existingRefCashback,
                     groupSize: groupSize,
                     assignee: document.getElementById('adminAssignee').value,
                     price: price,
@@ -2045,15 +2309,23 @@
                     status: selectedStatus,
                     updatedAt: new Date()
                 });
+
                 const notif = document.getElementById('adminNotif');
-                notif.classList.remove('hidden'); setTimeout(() => notif.classList.add('hidden'), 3000);
+                notif.innerText = rewardAppliedNow 
+                    ? `Data Tersimpan & Potongan ${formatRupiah(refReward)} Otomatis Masuk ke ${referrerTargetInv}! 🎉` 
+                    : "Data Berhasil Tersimpan! ✅";
+                notif.classList.remove('hidden'); 
+                setTimeout(() => notif.classList.add('hidden'), 4000);
+                
                 document.getElementById('adminForm').reset();
                 document.getElementById('adminGroupSize').value = 1;
-            } catch (error) { alert("Gagal menyimpan data!"); } 
+                document.getElementById('adminRefReward').value = 15000;
+            } catch (error) { 
+                console.error(error);
+                alert("Gagal menyimpan data!"); 
+            } 
             finally { btnSave.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Data Real-Time'; }
         });
-
-        let allOrdersData = [];
 
         function fetchDataRealtime() {
             onSnapshot(collection(db, "orders"), (querySnapshot) => {
@@ -2083,7 +2355,7 @@
             allOrdersData.forEach(item => {
                 let p = item.price || 0;
                 let d = item.dp || 0;
-                let s = item.sisa !== undefined ? item.sisa : (p - d);
+                let s = computeOrderSisa(item);
                 omzetKotor += p;       
                 omzetBersih += d;      
                 totalSisa += s;        
@@ -2094,7 +2366,8 @@
             document.getElementById('dashTotalSisa').innerText = formatRupiah(totalSisa);
 
             let filteredData = allOrdersData.filter(item => {
-                const matchSearch = item.id.toLowerCase().includes(searchQuery) || item.name.toLowerCase().includes(searchQuery);
+                const myRef = (item.refCode || getReferralCode(item.id)).toLowerCase();
+                const matchSearch = item.id.toLowerCase().includes(searchQuery) || item.name.toLowerCase().includes(searchQuery) || myRef.includes(searchQuery);
                 const matchStatus = statusQuery === 'ALL' ? true : (statusQuery === 'ACTIVE' ? item.status < 3 : item.status >= 3);
                 return matchSearch && matchStatus;
             });
@@ -2113,6 +2386,12 @@
                 emptyState.classList.add('hidden');
                 filteredData.forEach(data => {
                     const inv = data.id;
+                    const myRefCode = data.refCode || getReferralCode(inv);
+                    const refCount = data.referralCount || 0;
+                    const refEarned = data.referralEarned || 0;
+                    const refDisc = data.referralDiscount || 0;
+                    const refCashback = data.referralCashback || 0;
+
                     let fixedStatus = data.status > 4 ? 4 : (data.status || 1); 
                     const statusName = statusDetail.find(s => s.id == fixedStatus).title;
                     
@@ -2137,14 +2416,14 @@
 
                     const price = data.price || 0;
                     const dp = data.dp || 0;
-                    const sisa = data.sisa !== undefined ? data.sisa : (price - dp);
+                    const sisa = computeOrderSisa(data);
                     const groupSize = parseInt(data.groupSize || 1);
                     const isFullyPaid = (sisa <= 0 && price > 0) || fixedStatus == 4;
                     
                     let dpBadge = '<span class="bg-green-100 text-green-800 text-[10px] px-2 py-0.5 rounded border border-green-300 font-bold">Lunas</span>';
                     if(price === 0) {
                         dpBadge = '<span class="bg-gray-100 text-gray-600 text-[10px] px-2 py-0.5 rounded border border-gray-300 font-bold">Belum Diatur</span>';
-                    } else if(dp === 0) {
+                    } else if(dp === 0 && refDisc === 0) {
                         dpBadge = '<span class="bg-red-100 text-red-800 text-[10px] px-2 py-0.5 rounded border border-red-300 font-bold">Belum DP</span>';
                     } else if(!isFullyPaid) {
                         dpBadge = '<span class="bg-yellow-100 text-yellow-800 text-[10px] px-2 py-0.5 rounded border border-yellow-300 font-bold">Belum Lunas</span>';
@@ -2152,25 +2431,40 @@
 
                     let fileLinkIcon = (data.fileUrl && data.fileUrl.trim() !== "") ? `<a href="${data.fileUrl.startsWith('http') ? data.fileUrl : 'https://'+data.fileUrl}" target="_blank" class="text-blue-500 hover:text-blue-700 ml-1 inline-block" title="Link File Aktif"><i class="fa-solid fa-link"></i></a>` : '';
                     
-                    let assigneeBadge = data.assignee ? `<div class="mt-2 inline-block bg-purple-100 text-purple-800 text-[10px] px-2 py-0.5 rounded border border-purple-300 font-bold"><i class="fa-solid fa-user-pen"></i> ${data.assignee}</div>` : '';
+                    let assigneeBadge = data.assignee ? `<div class="mt-1.5 inline-block bg-purple-100 text-purple-800 text-[10px] px-2 py-0.5 rounded border border-purple-300 font-bold"><i class="fa-solid fa-user-pen"></i> ${data.assignee}</div>` : '';
 
-                    let groupBadgeAdmin = groupSize > 1 ? `<div class="mt-2 ml-1 inline-block bg-blue-100 text-blue-800 text-[10px] px-2 py-0.5 rounded border border-blue-300 font-bold"><i class="fa-solid fa-users"></i> Kelompok (${groupSize} org)</div>` : '';
+                    let groupBadgeAdmin = groupSize > 1 ? `<div class="mt-1.5 ml-1 inline-block bg-blue-100 text-blue-800 text-[10px] px-2 py-0.5 rounded border border-blue-300 font-bold"><i class="fa-solid fa-users"></i> Kelompok (${groupSize} org)</div>` : '';
+
+                    let usedRefBadge = data.usedRef ? `<div class="mt-1.5 ml-1 inline-block bg-pink-100 text-pink-800 text-[10px] px-2 py-0.5 rounded border border-pink-300 font-bold"><i class="fa-solid fa-user-plus"></i> Diajak: ${data.usedRef}</div>` : '';
+
+                    let refStatsBadge = refCount > 0 ? `<div class="mt-1.5 inline-block bg-yellow-100 text-yellow-900 text-[10px] px-2 py-0.5 rounded border border-yellow-400 font-black"><i class="fa-solid fa-gift text-brand-pink"></i> Ajak ${refCount} org (Potongan: ${formatRupiah(refEarned)})</div>` : '';
+
+                    let refDiscText = refDisc > 0 ? `<div class="text-xs text-green-600 font-bold">Pot. Ref: -${formatRupiah(refDisc)}</div>` : '';
+                    let refCashbackText = refCashback > 0 ? `<div class="text-[11px] text-purple-700 font-black">Bonus Cashback: ${formatRupiah(refCashback)}</div>` : '';
+
+                    let btnWaRef = refCount > 0 ? 
+                        `<button class="btn-wa-ref bg-brand-yellow text-black hover:bg-yellow-400 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" data-name="${data.name}" data-refcode="${myRefCode}" data-refcount="${refCount}" data-refearned="${refEarned}" data-sisa="${sisa}" data-cashback="${refCashback}" data-wa="${data.wa || ''}" title="Infokan Bonus Referral via WA"><i class="fa-solid fa-gift"></i> WA Bonus</button>` : '';
 
                     let btnWaFile = (data.fileUrl && data.fileUrl.trim() !== "") ? 
                         `<button class="btn-wa-file bg-brand-blue text-white hover:bg-blue-600 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" data-name="${data.name}" data-task="${data.task}" data-file="${data.fileUrl}" data-wa="${data.wa || ''}" title="Kirim File via WA"><i class="fa-solid fa-cloud-arrow-down"></i> Kirim File</button>` : '';
 
                     tbody.innerHTML += `
                         <tr class="${rowHighlight} transition-colors group border-b">
-                            <td class="p-4 tracking-wider whitespace-nowrap">${inv}</td>
-                            <td class="p-4 min-w-[180px]">
+                            <td class="p-4 tracking-wider whitespace-nowrap">
+                                <div class="font-black">${inv}</div>
+                                <div class="inline-block mt-1 bg-yellow-100 text-black border border-black px-2 py-0.5 rounded text-[10px] font-black">${myRefCode}</div>
+                            </td>
+                            <td class="p-4 min-w-[200px]">
                                 <div class="text-base text-black flex items-center">${data.name} ${fileLinkIcon}</div>
                                 <div class="text-xs text-gray-500 font-semibold mt-1">${data.task}</div>
-                                ${assigneeBadge} ${groupBadgeAdmin}
+                                <div class="flex flex-wrap gap-1">${assigneeBadge} ${groupBadgeAdmin} ${usedRefBadge} ${refStatsBadge}</div>
                             </td>
                             <td class="p-4 whitespace-nowrap">
                                 <div class="text-xs text-gray-600 font-bold">Harga: ${formatRupiah(price)}</div>
                                 <div class="text-xs text-blue-600 font-bold">DP: ${formatRupiah(dp)}</div>
+                                ${refDiscText}
                                 <div class="text-xs text-red-600 font-bold">Sisa: ${formatRupiah(sisa)}</div>
+                                ${refCashbackText}
                                 <div class="mt-1">${dpBadge}</div>
                             </td>
                             <td class="p-4 whitespace-nowrap">
@@ -2180,11 +2474,12 @@
                             <td class="p-4 text-center">
                                 <div class="flex flex-col items-center gap-2 bg-gray-50 p-2 rounded-lg border border-gray-200">
                                     <label class="flex items-center gap-2 cursor-pointer font-bold text-xs select-none">
-                                        <input type="checkbox" class="checkbox-lunas w-4 h-4 accent-brand-green cursor-pointer" data-id="${inv}" data-price="${price}" data-status="${fixedStatus}" ${isFullyPaid ? 'checked' : ''}>
+                                        <input type="checkbox" class="checkbox-lunas w-4 h-4 accent-brand-green cursor-pointer" data-id="${inv}" data-price="${price}" data-refdisc="${refDisc}" data-status="${fixedStatus}" ${isFullyPaid ? 'checked' : ''}>
                                         <span class="${isFullyPaid ? 'text-green-600 font-black' : 'text-gray-700'}">Sudah Lunas?</span>
                                     </label>
                                     <div class="flex flex-wrap justify-center items-center gap-1">
-                                        <button class="btn-wa-inv bg-green-100 text-green-700 hover:bg-green-200 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" data-name="${data.name}" data-task="${data.task}" data-price="${price}" data-dp="${dp}" data-sisa="${sisa}" data-groupsize="${groupSize}" data-wa="${data.wa || ''}" title="Kirim WA Link Direct Invoice"><i class="fa-solid fa-paper-plane"></i> Link WA</button>
+                                        <button class="btn-wa-inv bg-green-100 text-green-700 hover:bg-green-200 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" data-name="${data.name}" data-task="${data.task}" data-refcode="${myRefCode}" data-price="${price}" data-dp="${dp}" data-sisa="${sisa}" data-groupsize="${groupSize}" data-wa="${data.wa || ''}" title="Kirim WA Link Direct Invoice & Kode Ref"><i class="fa-solid fa-paper-plane"></i> Link WA</button>
+                                        ${btnWaRef}
                                         <button class="btn-wa-done bg-brand-green text-black hover:bg-green-500 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" data-name="${data.name}" data-task="${data.task}" data-sisa="${sisa}" data-groupsize="${groupSize}" data-wa="${data.wa || ''}" title="Kirim WA Selesai (Pelunasan)"><i class="fa-brands fa-whatsapp"></i> WA Selesai</button>
                                         ${btnWaFile}
                                         <button class="btn-edit bg-gray-200 text-gray-700 hover:bg-gray-300 active:scale-95 px-2.5 py-1.5 rounded transition-all duration-300 text-xs" data-id="${inv}" title="Edit"><i class="fa-solid fa-pen"></i></button>
@@ -2200,11 +2495,12 @@
                     chk.addEventListener('change', async (e) => {
                         const id = e.target.getAttribute('data-id');
                         const price = parseInt(e.target.getAttribute('data-price') || 0);
+                        const refDisc = parseInt(e.target.getAttribute('data-refdisc') || 0);
                         const currentStatus = parseInt(e.target.getAttribute('data-status') || 1);
                         const isChecked = e.target.checked;
 
-                        const newDp = isChecked ? price : 0;
-                        const newSisa = price - newDp;
+                        const newDp = isChecked ? Math.max(0, price - refDisc) : 0;
+                        const newSisa = Math.max(0, price - newDp - refDisc);
                         let newStatus = currentStatus;
 
                         if (isChecked && currentStatus == 3) {
@@ -2231,9 +2527,10 @@
                         const id = e.currentTarget.getAttribute('data-id');
                         const name = e.currentTarget.getAttribute('data-name');
                         const task = e.currentTarget.getAttribute('data-task');
+                        const refCode = e.currentTarget.getAttribute('data-refcode');
                         const price = parseInt(e.currentTarget.getAttribute('data-price') || 0);
                         const dp = parseInt(e.currentTarget.getAttribute('data-dp') || 0);
-                        const sisa = parseInt(e.currentTarget.getAttribute('data-sisa') || (price - dp));
+                        const sisa = parseInt(e.currentTarget.getAttribute('data-sisa') || 0);
                         const groupSize = parseInt(e.currentTarget.getAttribute('data-groupsize') || 1);
                         const wa = e.currentTarget.getAttribute('data-wa');
 
@@ -2241,7 +2538,30 @@
 
                         const directLink = `https://jokiminpres.github.io/pricelist/?inv=${id}`;
                         const splitNote = groupSize > 1 ? `\n- Split-Bill Kelompok (${groupSize} Org): *Rp ${Math.ceil((dp > 0 ? dp : price) / groupSize).toLocaleString('id-ID')} / orang*` : '';
-                        const txt = `Halo *${name}*,\n\nTerima kasih sudah order di Joki Kilat Minpres! 🙏\n\nDetail Pengerjaan Tugas:\n- No. Invoice: *${id}*\n- Tugas: *${task}*\n- Total Harga: *Rp ${price.toLocaleString('id-ID')}*\n- Minimum DP: *Rp ${dp.toLocaleString('id-ID')}*\n- Sisa Pelunasan: *Rp ${sisa.toLocaleString('id-ID')}*${splitNote}\n\n📌 *Klik link ini untuk langsung cek invoice & bayar DP via QRIS:* \n${directLink}\n\nTerima kasih! ✨`;
+                        const txt = `Halo *${name}*,\n\nTerima kasih sudah order di Joki Kilat Minpres! 🙏\n\nDetail Pengerjaan Tugas:\n- No. Invoice: *${id}*\n- Tugas: *${task}*\n- Total Harga: *Rp ${price.toLocaleString('id-ID')}*\n- Minimum DP: *Rp ${dp.toLocaleString('id-ID')}*\n- Sisa Pelunasan: *Rp ${sisa.toLocaleString('id-ID')}*${splitNote}\n\n🎁 *Kode Referral Pribadi Kamu:* *${refCode}*\n(Bagikan ke temanmu! Setiap teman yang deal joki pakai kodemu, sisa tagihanmu otomatis terpotong!)\n\n📌 *Klik link ini untuk cek progres, share referral & bayar QRIS:* \n${directLink}\n\nTerima kasih! ✨`;
+                        window.open(`https://wa.me/${wa}?text=${encodeURIComponent(txt)}`, '_blank');
+                    });
+                });
+
+                document.querySelectorAll('.btn-wa-ref').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = e.currentTarget.getAttribute('data-id');
+                        const name = e.currentTarget.getAttribute('data-name');
+                        const refCode = e.currentTarget.getAttribute('data-refcode');
+                        const refCount = e.currentTarget.getAttribute('data-refcount');
+                        const refEarned = parseInt(e.currentTarget.getAttribute('data-refearned') || 0);
+                        const sisa = parseInt(e.currentTarget.getAttribute('data-sisa') || 0);
+                        const cashback = parseInt(e.currentTarget.getAttribute('data-cashback') || 0);
+                        const wa = e.currentTarget.getAttribute('data-wa');
+
+                        if(!wa) { alert("Nomor WA kosong!"); return; }
+
+                        const directLink = `https://jokiminpres.github.io/pricelist/?inv=${id}`;
+                        const statusInfo = sisa > 0 
+                            ? `Sisa tagihan tugasmu otomatis berkurang dan sekarang tinggal *Rp ${sisa.toLocaleString('id-ID')}*!`
+                            : `Karena tugasmu sudah lunas, saldo bonus referralmu terkumpul sebesar *Rp ${cashback.toLocaleString('id-ID')}*!`;
+
+                        const txt = `Halo *${name}*! 🎉\n\nKabar baik! Ada teman yang baru saja deal joki pakai kode referral kamu (*${refCode}*).\n\n• Total teman diajak: *${refCount} Orang*\n• Total potongan/bonus terkumpul: *Rp ${refEarned.toLocaleString('id-ID')}*\n\n${statusInfo}\n\nCek detailnya di link berikut:\n${directLink}`;
                         window.open(`https://wa.me/${wa}?text=${encodeURIComponent(txt)}`, '_blank');
                     });
                 });
@@ -2296,6 +2616,8 @@
                         document.getElementById('adminName').value = docData.name;
                         document.getElementById('adminWa').value = docData.wa || "";
                         document.getElementById('adminTask').value = docData.task;
+                        document.getElementById('adminUsedRef').value = docData.usedRef || "";
+                        document.getElementById('adminRefReward').value = docData.refReward !== undefined ? docData.refReward : 15000;
                         document.getElementById('adminGroupSize').value = docData.groupSize || 1;
                         document.getElementById('adminAssignee').value = docData.assignee || ""; 
                         document.getElementById('adminPrice').value = docData.price || "";
@@ -2332,15 +2654,21 @@
             let exportData = allOrdersData.map(item => {
                 let p = item.price || 0;
                 let d = item.dp || 0;
-                let s = item.sisa !== undefined ? item.sisa : (p - d);
+                let rDisc = item.referralDiscount || 0;
+                let s = computeOrderSisa(item);
                 let g = parseInt(item.groupSize || 1);
                 let st = item.status == 1 ? "Pembayaran Diterima" : (item.status == 2 ? "Sedang Dikerjakan" : (item.status == 3 ? "Tugas Selesai (Pelunasan)" : "Lunas & Selesai"));
                 let statusBayar = s <= 0 || item.status == 4 ? "Lunas" : (d > 0 ? "DP Sebagian" : "Belum DP");
                 return {
                     "Invoice": item.id,
+                    "Kode Referral": item.refCode || getReferralCode(item.id),
                     "Nama Klien": item.name,
                     "No WA": item.wa || "-",
                     "Detail Tugas": item.task,
+                    "Diajak Kode Ref": item.usedRef || "-",
+                    "Teman Diajak": item.referralCount || 0,
+                    "Potongan Ref": rDisc,
+                    "Saldo Bonus Ref": item.referralCashback || 0,
                     "Jumlah Anggota": g > 1 ? `Kelompok (${g} Org)` : "Individu (1 Org)",
                     "Assignee (Tim)": item.assignee || "-",
                     "Total Harga": p,
@@ -2379,13 +2707,12 @@
             allOrdersData.forEach(item => {
                 let p = item.price || 0;
                 let d = item.dp || 0;
-                let s = item.sisa !== undefined ? item.sisa : (p - d);
+                let s = computeOrderSisa(item);
                 totalKotor += p; totalBersih += d; totalSisa += s;
 
-                let st = item.status == 1 ? "DP Masuk" : (item.status == 2 ? "Proses" : (item.status == 3 ? "Selesai (Pelunasan)" : "Lunas"));
                 let statusBayar = s <= 0 || item.status == 4 ? "Lunas" : (d > 0 ? "DP Sebagian" : "Belum DP");
                 tableRows.push([
-                    item.id,
+                    `${item.id} (${item.refCode || getReferralCode(item.id)})`,
                     item.name,
                     item.task,
                     item.assignee || "-",
@@ -2397,7 +2724,7 @@
 
             doc.autoTable({
                 startY: 35,
-                head: [['Invoice', 'Klien', 'Tugas', 'Tim', 'Total Harga', 'DP Masuk', 'Status Bayar']],
+                head: [['Invoice & Ref', 'Klien', 'Tugas', 'Tim', 'Total Harga', 'DP Masuk', 'Status Bayar']],
                 theme: 'grid',
                 headStyles: { fillColor: [17, 17, 17] },
                 styles: { fontSize: 8 },
@@ -2429,12 +2756,10 @@
                 return;
             }
 
-            // Ubah teks tombol jadi loading
             const originalText = btnUpload.innerHTML;
             btnUpload.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Uploading...';
             btnUpload.disabled = true;
 
-            // Membaca file menjadi format Base64
             const reader = new FileReader();
             reader.onload = async function() {
                 const base64Data = reader.result.split(',')[1];
@@ -2453,10 +2778,8 @@
                     const result = await response.json();
                     
                     if (result.status === 'success' && result.url) {
-                        // 1. Otomatis isi kotak input Link Drive
                         linkInput.value = result.url;
 
-                        // 2. Otomatis simpan ke tabel Firebase jika Invoice sudah terisi
                         const inv = document.getElementById('adminInv').value.trim().toUpperCase();
                         const existingOrder = allOrdersData.find(d => d.id === inv);
 
@@ -2478,7 +2801,7 @@
                 } finally {
                     btnUpload.innerHTML = originalText;
                     btnUpload.disabled = false;
-                    fileInput.value = ""; // Reset input file
+                    fileInput.value = "";
                 }
             };
             reader.readAsDataURL(file);
