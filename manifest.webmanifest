@@ -1,0 +1,26 @@
+{
+  "id": "./",
+  "name": "Joki Kilat Minpres",
+  "short_name": "Minpres",
+  "description": "Joki Kilat Minpres - Tugas Beres, Hati Tenang!",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fdfbf7",
+  "theme_color": "#FFD800",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
