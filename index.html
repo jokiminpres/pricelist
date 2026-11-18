@@ -139,6 +139,15 @@
                     <i class="fa-solid fa-bag-shopping text-2xl"></i> PRODUK DIGITAL
                 </a>
             </div>
+            <div class="mt-8 inline-flex items-center gap-3 bg-white border-4 border-black rounded-xl px-5 py-3 shadow-brutal-sm">
+                <div class="bg-brand-yellow border-2 border-black rounded-full w-11 h-11 flex items-center justify-center">
+                    <i class="fa-solid fa-eye text-xl"></i>
+                </div>
+                <div class="text-left">
+                    <p class="text-xs font-black uppercase tracking-wide text-gray-500">Total Kunjungan Website</p>
+                    <p id="totalWebsiteVisits" class="text-2xl font-black leading-tight">...</p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1915,15 +1924,35 @@
             document.getElementById('qrisModal').classList.add('hidden');
         };
 
+        async function updateTotalWebsiteVisits() {
+            const totalElement = document.getElementById('totalWebsiteVisits');
+            if (!totalElement) return;
+
+            try {
+                const snapshot = await getDocs(collection(db, "analytics"));
+                const totalVisits = snapshot.docs.reduce((total, item) => {
+                    return total + (Number(item.data().visits) || 0);
+                }, 0);
+                totalElement.textContent = totalVisits.toLocaleString('id-ID');
+            } catch (error) {
+                totalElement.textContent = '—';
+            }
+        }
+
         function trackVisit() {
             if (!sessionStorage.getItem('minpres_visited')) {
                 sessionStorage.setItem('minpres_visited', 'true');
                 const today = new Date();
                 const dateStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
-                setDoc(doc(db, "analytics", dateStr), { visits: increment(1), date: dateStr }, { merge: true }).catch(e=>{});
+                setDoc(doc(db, "analytics", dateStr), { visits: increment(1), date: dateStr }, { merge: true })
+                    .then(updateTotalWebsiteVisits)
+                    .catch(e=>{});
             }
         }
-        if(window.location.hash !== '#admin') { trackVisit(); }
+        if(window.location.hash !== '#admin') {
+            trackVisit();
+            updateTotalWebsiteVisits();
+        }
 
         const statusDetail = [
             { id: 1, title: 'Pembayaran Diterima', desc: 'Admin telah mengkonfirmasi pembayaranmu.', color: 'bg-brand-yellow', icon: 'fa-money-bill-wave' },
