@@ -139,13 +139,14 @@
                     <i class="fa-solid fa-bag-shopping text-2xl"></i> PRODUK DIGITAL
                 </a>
             </div>
-            <div class="mt-8 inline-flex items-center gap-3 bg-white border-4 border-black rounded-xl px-5 py-3 shadow-brutal-sm">
-                <div class="bg-brand-yellow border-2 border-black rounded-full w-11 h-11 flex items-center justify-center">
+            <div class="mt-8 mx-auto flex w-fit flex-col items-center justify-center gap-2 bg-white border-4 border-black rounded-2xl px-8 py-5 text-center shadow-brutal-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-brutal">
+                <div class="bg-brand-yellow border-2 border-black rounded-full w-12 h-12 flex items-center justify-center animate-pulse">
                     <i class="fa-solid fa-eye text-xl"></i>
                 </div>
-                <div class="text-left">
+                <div class="text-center">
                     <p class="text-xs font-black uppercase tracking-wide text-gray-500">Total Kunjungan Website</p>
-                    <p id="totalWebsiteVisits" class="text-2xl font-black leading-tight">...</p>
+                    <p id="totalWebsiteVisits" class="text-3xl font-black leading-tight tabular-nums">0</p>
+                    <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mt-1">Terima kasih sudah berkunjung!</p>
                 </div>
             </div>
         </div>
@@ -1933,7 +1934,29 @@
                 const totalVisits = snapshot.docs.reduce((total, item) => {
                     return total + (Number(item.data().visits) || 0);
                 }, 0);
-                totalElement.textContent = totalVisits.toLocaleString('id-ID');
+
+                // Animasi hitung dari 0 hingga total kunjungan
+                const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                if (prefersReducedMotion) {
+                    totalElement.textContent = totalVisits.toLocaleString('id-ID');
+                    return;
+                }
+
+                const duration = 1400;
+                const startTime = performance.now();
+                const animateCount = (currentTime) => {
+                    const progress = Math.min((currentTime - startTime) / duration, 1);
+                    const easedProgress = 1 - Math.pow(1 - progress, 3);
+                    const currentCount = Math.floor(totalVisits * easedProgress);
+                    totalElement.textContent = currentCount.toLocaleString('id-ID');
+
+                    if (progress < 1) {
+                        requestAnimationFrame(animateCount);
+                    } else {
+                        totalElement.textContent = totalVisits.toLocaleString('id-ID');
+                    }
+                };
+                requestAnimationFrame(animateCount);
             } catch (error) {
                 totalElement.textContent = '—';
             }
