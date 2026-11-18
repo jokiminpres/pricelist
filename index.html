@@ -330,13 +330,7 @@
                     <!-- TOMBOL DOWNLOAD: MUNCUL HANYA JIKA LUNAS (SISA <= 0 ATAU STEP 4) DAN ADA LINK FILE -->
                     <div id="fileDownloadContainer" class="hidden mb-8">
                         <h4 class="font-black uppercase text-center mb-3">Tugas Selesai & Lunas! 🎉</h4>
-                        <div id="downloadFormatPicker" class="mb-3">
-                            <label for="clientDownloadFormat" class="block text-sm font-black text-center mb-2">PILIH FORMAT DOWNLOAD</label>
-                            <select id="clientDownloadFormat" class="w-full bg-white text-black font-bold text-base p-3 border-2 border-black rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-green">
-                            </select>
-                            <p id="downloadFormatHint" class="text-xs text-gray-500 text-center font-semibold mt-2">Pilih format file sesuai kebutuhanmu</p>
-                        </div>
-                        <a href="#" id="btnDownloadClient" target="_blank" rel="noopener" class="block w-full bg-brand-green text-black text-center font-black text-xl py-4 border-4 border-black rounded-xl shadow-brutal hover:-translate-y-1 hover:shadow-brutal-hover active:scale-95 transition-all">
+                        <a href="#" id="btnDownloadClient" target="_blank" class="block w-full bg-brand-green text-black text-center font-black text-xl py-4 border-4 border-black rounded-xl shadow-brutal hover:-translate-y-1 hover:shadow-brutal-hover active:scale-95 transition-all">
                             <i class="fa-solid fa-cloud-arrow-down mr-2 animate-bounce"></i> DOWNLOAD FILE TUGAS
                         </a>
                     </div>
@@ -1346,8 +1340,6 @@
                                 
                                 <label class="font-bold text-xs text-gray-500 block mb-1">Link Drive (Otomatis terisi setelah upload):</label>
                                 <input type="text" id="adminFileUrl" placeholder="Link akan otomatis muncul di sini atau bisa diisi manual..." class="w-full px-4 py-2 border-2 border-gray-300 font-bold rounded-lg focus:outline-none focus:border-black bg-white transition-colors duration-300 text-xs">
-                                <input type="hidden" id="adminFileName">
-                                <input type="hidden" id="adminFileMimeType">
                             </div>
 
                             <div>
@@ -2126,7 +2118,7 @@
                                 let finalUrl = orderData.fileUrl.trim();
                                 if(!finalUrl.startsWith('http')) { finalUrl = 'https://' + finalUrl; } 
                                 
-                                setupCustomerDownload(orderData, finalUrl);
+                                document.getElementById('btnDownloadClient').href = finalUrl;
                                 dlContainer.classList.remove('hidden');
                                 fallbackSelesai.classList.add('hidden');
                             } else {
@@ -2384,8 +2376,6 @@
                     dp: dp,
                     sisa: sisa,
                     fileUrl: document.getElementById('adminFileUrl').value.trim(),
-                    fileName: document.getElementById('adminFileName').value.trim(),
-                    fileMimeType: document.getElementById('adminFileMimeType').value.trim(),
                     deadline: document.getElementById('adminDeadline').value,
                     status: selectedStatus,
                     updatedAt: new Date()
@@ -2703,9 +2693,7 @@
                         document.getElementById('adminAssignee').value = docData.assignee || ""; 
                         document.getElementById('adminPrice').value = docData.price || "";
                         document.getElementById('adminDp').value = docData.dp || "";
-                        document.getElementById('adminFileUrl').value = docData.fileUrl || "";
-                        document.getElementById('adminFileName').value = docData.fileName || "";
-                        document.getElementById('adminFileMimeType').value = docData.fileMimeType || ""; 
+                        document.getElementById('adminFileUrl').value = docData.fileUrl || ""; 
                         
                         if(docData.deadline) {
                             document.getElementById('adminDeadline').value = docData.deadline;
@@ -2828,93 +2816,14 @@
         // ==========================================
         const GAS_UPLOAD_URL = "https://script.google.com/macros/s/AKfycbxTHKA27V5Us2xk67DiiG6kKd9_Z02rHmiNeDF0EJECwlGkijlgUurCUdYAow9Z4F0V/exec";
 
-        // Deteksi jenis file dan siapkan pilihan format download untuk customer
-        function getGoogleFileId(fileUrl, type) {
-            if (!fileUrl || typeof fileUrl !== 'string') return null;
-            const patterns = type === 'sheet'
-                ? [/spreadsheets\\/d\\/([a-zA-Z0-9_-]+)/]
-                : type === 'doc'
-                    ? [/document\\/d\\/([a-zA-Z0-9_-]+)/]
-                    : [/\\/file\\/d\\/([a-zA-Z0-9_-]+)/, /[?&]id=([a-zA-Z0-9_-]+)/];
-            for (const pattern of patterns) {
-                const match = fileUrl.match(pattern);
-                if (match) return match[1];
-            }
-            return null;
-        }
+        // Ubah link Google Docs menjadi link unduh format .docx
+        function convertGoogleDocsToDownloadUrl(fileUrl) {
+            if (!fileUrl || typeof fileUrl !== 'string') return fileUrl;
 
-        function getCustomerDownloadOptions(orderData, fileUrl) {
-            const fileName = String(orderData.fileName || '').toLowerCase();
-            const mimeType = String(orderData.fileMimeType || '').toLowerCase();
-            const isGoogleSheet = /spreadsheets\\/d\\//i.test(fileUrl);
-            const isGoogleDoc = /docs\\.google\\.com\\/document\\/d\\//i.test(fileUrl);
-            const isExcel = /\\.(xlsx|xls|csv)$/i.test(fileName) ||
-                mimeType.includes('spreadsheet') ||
-                mimeType.includes('excel') ||
-                isGoogleSheet;
-            const isPdf = /\\.pdf$/i.test(fileName) || mimeType === 'application/pdf';
-            const isWord = /\\.(doc|docx)$/i.test(fileName) ||
-                mimeType.includes('word') ||
-                mimeType.includes('msword') ||
-                mimeType.includes('wordprocessingml');
+            const match = fileUrl.match(/https?:\\/\\/docs\\.google\\.com\\/document\\/d\\/([a-zA-Z0-9_-]+)/);
+            if (!match) return fileUrl;
 
-            if (isExcel) return [{ value: 'excel', label: 'Excel (.xlsx)' }];
-            if (isGoogleDoc) return [
-                { value: 'pdf', label: 'PDF (.pdf)' },
-                { value: 'word', label: 'Word (.docx)' }
-            ];
-            if (isPdf) return [{ value: 'pdf', label: 'PDF (.pdf)' }];
-            if (isWord) return [{ value: 'word', label: 'Word (.docx)' }];
-            return [{ value: 'original', label: 'Format asli file' }];
-        }
-
-        function getCustomerDownloadUrl(fileUrl, format, orderData) {
-            if (!fileUrl) return '#';
-
-            const docId = getGoogleFileId(fileUrl, 'doc');
-            const sheetId = getGoogleFileId(fileUrl, 'sheet');
-            if (docId) {
-                const exportFormat = format === 'pdf' ? 'pdf' : 'docx';
-                return `https://docs.google.com/document/d/${docId}/export?format=${exportFormat}`;
-            }
-            if (sheetId) {
-                return `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=xlsx`;
-            }
-
-            const fileId = getGoogleFileId(fileUrl, 'drive');
-            const fileName = String(orderData.fileName || '').toLowerCase();
-            const mimeType = String(orderData.fileMimeType || '').toLowerCase();
-            const isExcel = /\\.(xlsx|xls|csv)$/i.test(fileName) ||
-                mimeType.includes('spreadsheet') || mimeType.includes('excel');
-
-            // Untuk file Excel biasa di Google Drive, unduh file aslinya tanpa mengubah format.
-            if (isExcel && fileId) {
-                return `https://drive.google.com/uc?export=download&id=${fileId}`;
-            }
-            return fileUrl;
-        }
-
-        function setupCustomerDownload(orderData, fileUrl) {
-            const select = document.getElementById('clientDownloadFormat');
-            const button = document.getElementById('btnDownloadClient');
-            const hint = document.getElementById('downloadFormatHint');
-            const options = getCustomerDownloadOptions(orderData, fileUrl);
-
-            select.innerHTML = options.map(option =>
-                `<option value="${option.value}">${option.label}</option>`
-            ).join('');
-
-            const updateLink = () => {
-                button.href = getCustomerDownloadUrl(fileUrl, select.value, orderData);
-                hint.textContent = options.length > 1
-                    ? 'Kamu bisa memilih PDF atau Word sesuai kebutuhan'
-                    : options[0].value === 'excel'
-                        ? 'File spreadsheet akan selalu diunduh dalam format Excel'
-                        : 'File tersedia dalam format aslinya';
-            };
-
-            select.onchange = updateLink;
-            updateLink();
+            return `https://docs.google.com/document/d/${match[1]}/export?format=docx`;
         }
 
         document.getElementById('btnUploadDrive').addEventListener('click', async () => {
@@ -2950,20 +2859,15 @@
                     const result = await response.json();
                     
                     if (result.status === 'success' && result.url) {
-                        // Simpan link sumber agar customer bisa memilih format ekspor yang tersedia.
-                        const sourceUrl = result.url;
-                        linkInput.value = sourceUrl;
-                        document.getElementById('adminFileName').value = file.name;
-                        document.getElementById('adminFileMimeType').value = file.type || '';
+                        const downloadUrl = convertGoogleDocsToDownloadUrl(result.url);
+                        linkInput.value = downloadUrl;
 
                         const inv = document.getElementById('adminInv').value.trim().toUpperCase();
                         const existingOrder = allOrdersData.find(d => d.id === inv);
 
                         if (inv && existingOrder) {
                             await updateDoc(doc(db, "orders", inv), {
-                                fileUrl: sourceUrl,
-                                fileName: file.name,
-                                fileMimeType: file.type || '',
+                                fileUrl: downloadUrl,
                                 updatedAt: new Date()
                             });
                             alert("Sukses! Link terisi & otomatis muncul di tabel " + inv + ".");
