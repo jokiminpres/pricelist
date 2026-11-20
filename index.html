@@ -1933,56 +1933,77 @@
             document.getElementById('qrisModal').classList.add('hidden');
         };
 
+        let visitCountAnimationFrame = null;
+        let visitCountRequest = null;
+
         async function updateTotalWebsiteVisits() {
             const totalElement = document.getElementById('totalWebsiteVisits');
             if (!totalElement) return;
 
             try {
-                const snapshot = await getDocs(collection(db, "analytics"));
+                // Reuse a request that is already in progress so the counter does not
+                // trigger multiple Firestore reads during the initial page load.
+                if (!visitCountRequest) {
+                    visitCountRequest = getDocs(collection(db, "analytics"));
+                }
+                const snapshot = await visitCountRequest;
+                visitCountRequest = null;
                 const totalVisits = snapshot.docs.reduce((total, item) => {
                     return total + (Number(item.data().visits) || 0);
                 }, 0);
 
-                // Animasi hitung dari 0 hingga total kunjungan
+                if (visitCountAnimationFrame) {
+                    cancelAnimationFrame(visitCountAnimationFrame);
+                    visitCountAnimationFrame = null;
+                }
+
+                // Continue from the number currently visible instead of restarting
+                // from zero, which keeps refreshes and late updates visually smooth.
                 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
                 if (prefersReducedMotion) {
                     totalElement.textContent = totalVisits.toLocaleString('id-ID');
                     return;
                 }
 
-                const duration = 1400;
+                const displayedValue = Number(totalElement.textContent.replace(/\D/g, '')) || 0;
+                if (displayedValue === totalVisits) {
+                    totalElement.textContent = totalVisits.toLocaleString('id-ID');
+                    return;
+                }
+
+                const duration = 700;
                 const startTime = performance.now();
                 const animateCount = (currentTime) => {
                     const progress = Math.min((currentTime - startTime) / duration, 1);
                     const easedProgress = 1 - Math.pow(1 - progress, 3);
-                    const currentCount = Math.floor(totalVisits * easedProgress);
+                    const currentCount = Math.floor(displayedValue + ((totalVisits - displayedValue) * easedProgress));
                     totalElement.textContent = currentCount.toLocaleString('id-ID');
 
                     if (progress < 1) {
-                        requestAnimationFrame(animateCount);
+                        visitCountAnimationFrame = requestAnimationFrame(animateCount);
                     } else {
                         totalElement.textContent = totalVisits.toLocaleString('id-ID');
+                        visitCountAnimationFrame = null;
                     }
                 };
-                requestAnimationFrame(animateCount);
+                visitCountAnimationFrame = requestAnimationFrame(animateCount);
             } catch (error) {
+                visitCountRequest = null;
                 totalElement.textContent = '—';
             }
         }
 
         function trackVisit() {
-            if (!sessionStorage.getItem('minpres_visited')) {
-                sessionStorage.setItem('minpres_visited', 'true');
-                const today = new Date();
-                const dateStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
-                setDoc(doc(db, "analytics", dateStr), { visits: increment(1), date: dateStr }, { merge: true })
-                    .then(updateTotalWebsiteVisits)
-                    .catch(e=>{});
-            }
+            if (sessionStorage.getItem('minpres_visited')) return Promise.resolve();
+
+            sessionStorage.setItem('minpres_visited', 'true');
+            const today = new Date();
+            const dateStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
+            return setDoc(doc(db, "analytics", dateStr), { visits: increment(1), date: dateStr }, { merge: true })
+                .catch(e=>{});
         }
         if(window.location.hash !== '#admin') {
-            trackVisit();
-            updateTotalWebsiteVisits();
+            trackVisit().then(updateTotalWebsiteVisits);
         }
 
         const statusDetail = [
